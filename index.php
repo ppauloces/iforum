@@ -55,7 +55,7 @@
 										</div>
 									</div>
 								</form>
-								<p class="text-center">Não é um membro? <a class="text-ifba" href="login/cadastro.html">Cadastre-se!</a></p>
+								<p class="text-center">Não é um membro? <a class="text-ifba" href="login/cadastro.php">Cadastre-se!</a></p>
 							</div>
 						</div>
 					</div>
