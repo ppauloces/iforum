@@ -22,23 +22,21 @@
           <a href="#"><span class="fa fa-home"></span> Home</a>
         </li>
         <li>
-          <a href="#"><span class="fa fa-user"></span> About</a>
+          <a href="#"><span class="fa fa-user"></span> Perfil</a>
         </li>
         <li>
-          <a href="#"><span class="fa fa-sticky-note"></span> Blog</a>
+          <a href="#"><span class="fa fa-paper-plane-o"></span> Direct</a>
         </li>
         <li>
           <a href="#"><span class="fa fa-cogs"></span> Services</a>
         </li>
         <li>
-          <a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
+          <a href="#"><span class="fa fa-cog"></span> Definições</a>
         </li>
       </ul>
 
-      <div class="footer">
-        <li>
-          <a href="#"><span class="fa fa-paper-plane"></span> Contacts</a>
-        </li>
+      <div class="footer" style="padding-top:14rem">
+
       </div>
     </nav>
 
@@ -56,6 +54,13 @@
             <li class="nav-item" style="padding-top: 8px;list-style-type: none;">
               <div class="header_img"><a href="https://www.google.com"><img src="https://i.imgur.com/hczKIze.jpg" alt=""></a></div>
             </li>
+
+            <div class="fixed-bottom">
+              <a href="#" class="btn btn-primary btn-custom float-right" style="margin: 20px;">
+                <span class="glyphicon glyphicon-ok img-circle text-primary btn-icon"></span>
+                Acessar
+              </a>
+            </div>
           </button>
 
           <div class="collapse navbar-collapse" id="">
@@ -73,6 +78,13 @@
       <h2 class="mb-4">Sidebar #07</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+
+    <div class="fixed-bottom">
+      <a href="#" class="btn btn-primary btn-custom float-right" style="margin: 20px;">
+        <span class="glyphicon glyphicon-ok img-circle text-primary btn-icon"></span>
+        Acessar
+      </a>
     </div>
   </div>
 

@@ -23,4 +23,15 @@
 .list-unstyled {
     color: #2f9e41;
 }
-    
+
+.footer .logout{
+	padding-right: 5rem;
+}
+
+.footer .logout a:hover{
+	color: #cd191e !important;
+}
+
+.footer .logout {
+	color: #cd191e;
+}

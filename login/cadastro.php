@@ -31,25 +31,25 @@
 									</p>
 								</div>
 							</div>
-							<form action="#" class="signin-form">
+							<form method="POST" class="signin-form" id="cadastro">
 								<div class="form-group mb-3">
 									<label class="label" for="name">Nome</label>
-									<input type="text" class="form-control" placeholder="Seu nome" required>
+									<input type="text" class="form-control" name="nome_aluno" placeholder="Seu nome" >
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">Email</label>
-									<input type="text" class="form-control" placeholder="Ex: fulano@tal.com" required>
+									<input type="text" class="form-control" name="email_aluno" placeholder="Ex: fulano@tal.com" >
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">N° de matrícula</label>
-									<input type="text" class="form-control" placeholder="Ex: 20XX136000XX" required>
+									<input type="text" class="form-control" name="num_mat_aluno" placeholder="Ex: 20XX136000XX" >
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="password">Senha</label>
-									<input type="password" class="form-control" placeholder="Senha" required>
+									<input type="password" class="form-control" name="senha_aluno" placeholder="Senha" >
 								</div>
 								<div class="form-group">
-									<button type="submit" class="form-control rounded submit px-3 btnifba">Cadastrar</button>
+									<button type="submit" id="botao" name="cad_btn" class="form-control rounded submit px-3 btnifba">Cadastrar</button>
 								</div>
 								<div class="form-group d-md-flex">
 										<!--<div class="w-50 text-left">
@@ -60,18 +60,45 @@
 										</div>-->
 									</div>
 								</form>
-								<p class="text-center">Já tem uma conta? <a class="text-ifba" href="../index.html">Faça login!</a></p>
+								<p class="text-center">Já tem uma conta? <a class="text-ifba" href="../index.php">Faça login!</a></p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
-
+		<div id="linkResultado"></div> 
 		<script src="js/jquery.min.js"></script>
 		<script src="js/popper.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
+
+		<script>
+			jQuery('#cadastro').submit(function () {
+				event.preventDefault();
+				var dados = jQuery(this).serialize();
+
+				$("#botao").attr("disabled", true);
+				$("#botao").css({'background':'grey'});
+				$("#botao").text("AGUARDE..."); 
+
+				jQuery.ajax({
+					type: "POST",
+					url: "../functions/valid_cad.php",
+					data: dados,
+					success: function (data)
+					{
+          //alert("TUDO CERTO");
+          $("#linkResultado").html(data);
+          $("#botao").attr("disabled", false);
+          $("#botao").css({'background':'#2F9E41'});
+          $("#botao").text("CADASTRAR");
+      }
+  });
+				return false;
+			});
+		</script>
 
 	</body>
 	</html>

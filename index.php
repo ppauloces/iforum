@@ -31,17 +31,17 @@
 										</p>
 									</div>
 								</div>
-								<form action="#" class="signin-form">
+								<form method="POST" class="signin-form" id="login">
 									<div class="form-group mb-3">
-										<label class="label" for="name">Email ou N° de matrícula</label>
-										<input type="text" class="form-control" placeholder="Email ou N° de matrícula" required>
+										<label class="label" for="name">N° de matrícula</label>
+										<input type="text" class="form-control" name="num_mat_aluno" placeholder="N° de matrícula">
 									</div>
 									<div class="form-group mb-3">
 										<label class="label" for="password">Senha</label>
-										<input type="password" class="form-control" placeholder="Senha" required>
+										<input type="password" class="form-control" name="senha_aluno" placeholder="Senha">
 									</div>
 									<div class="form-group">
-										<button type="submit" class="form-control rounded submit px-3 btnifba">Entrar</button>
+										<button type="submit" id="botao"class="form-control rounded submit px-3 btnifba">Entrar</button>
 									</div>
 									<div class="form-group d-md-flex">
 										<!--<div class="w-50 text-left">
@@ -62,12 +62,38 @@
 				</div>
 			</div>
 		</section>
-
+		<div id="linkResultado"></div> 
 		<script src="login/js/jquery.min.js"></script>
 		<script src="login/js/popper.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="login/js/bootstrap.min.js"></script>
 		<script src="login/js/main.js"></script>
 
+				<script>
+			jQuery('#login').submit(function () {
+				event.preventDefault();
+				var dados = jQuery(this).serialize();
+
+				$("#botao").attr("disabled", true);
+				$("#botao").css({'background':'grey'});
+				$("#botao").text("AGUARDE..."); 
+
+				jQuery.ajax({
+					type: "POST",
+					url: "functions/valid_login.php",
+					data: dados,
+					success: function (data)
+					{
+          //alert("TUDO CERTO");
+          $("#linkResultado").html(data);
+          $("#botao").attr("disabled", false);
+          $("#botao").css({'background':'#2F9E41'});
+          $("#botao").text("Logando...");
+      }
+  });
+				return false;
+			});
+		</script>
 	</body>
 	</html>
 
