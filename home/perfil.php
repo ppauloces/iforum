@@ -33,9 +33,6 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 				<div class="main-body">
 
 					<!-- Breadcrumb -->
-
-					<!-- /Breadcrumb -->
-
 					<div class="row gutters-sm">
 						<div class="col-md-4 mb-3">
 							<div class="card">
@@ -56,23 +53,19 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 								<ul class="list-group list-group-flush">
 									<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 										<h6 class="mb-0"><?= website() ?>Website</h6>
-										<span class="text-secondary">https://bootdey.com</span>
+										<a href="<?= $row_verifica['website'] ?>" target="__blank" class="" style='color:grey'>Meu site</a>
 									</li>
 									<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 										<h6 class="mb-0"><?= github() ?>Github</h6>
-										<span class="text-secondary">bootdey</span>
+										<a href="https://github.com/<?= $row_verifica['github'] ?>" target="__blank" class="" style='color:grey'><?= $row_verifica['github'] ?></a>
 									</li>
 									<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 										<h6 class="mb-0"><?= twitter() ?>Twitter</h6>
-										<span class="text-secondary">@bootdey</span>
+										<a href="https://twitter.com/<?= $row_verifica['twitter'] ?>" class="" target="__blank"  style='color:grey'><?= $row_verifica['twitter'] ?></a>
 									</li>
 									<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
 										<h6 class="mb-0"><?= instagram() ?>Instagram</h6>
-										<span class="text-secondary">bootdey</span>
-									</li>
-									<li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-										<h6 class="mb-0"><?= facebook() ?>Facebook</h6>
-										<span class="text-secondary">bootdey</span>
+										<a href="https://www.instagram.com/<?= $row_verifica['instagram'] ?>/" target="__blank" class="" style='color:grey'><?= $row_verifica['instagram'] ?></a>
 									</li>
 								</ul>
 							</div>

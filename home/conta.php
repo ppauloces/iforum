@@ -50,6 +50,31 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
             <label for="exampleInputPassword1">Nome de usuário</label>
             <input type="text" class="form-control" name="name_user_aluno" value="<?= $row_verifica['name_user_aluno'] ?>">            
           </div>
+          <br>
+          <div class="fs-2 fw-semibold">
+            Conexões
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Website</label>
+            <input type="text" class="form-control" name="website" value="<?= $row_verifica['website'] ?>">
+            <small id="emailHelp" class="form-text text-muted">Você tem um site/portifólio? Adicione o link aqui.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Github</label>
+            <input type="text" class="form-control" name="github" value="<?= $row_verifica['github'] ?>">
+            <small id="emailHelp" class="form-text text-muted">Seu usuário do Github.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Twitter</label>
+            <input type="text" class="form-control" name="twitter" value="<?= $row_verifica['twitter'] ?>">
+            <small id="emailHelp" class="form-text text-muted">Seu usuário do Twitter.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Instagram</label>
+            <input type="text" class="form-control" name="instagram" value="<?= $row_verifica['instagram'] ?>">
+            <small id="emailHelp" class="form-text text-muted">Seu usuário do Instagram.</small>
+          </div>
           <button type="submit" id="botao" class="btn ifcolor">Atualizar Informações</button>
           <input type="hidden" name="email_antigo" value="<?php echo $row_verifica['email_aluno']; ?>">
           <input type="hidden" name="id_aluno" value="<?= $row_verifica['id_aluno'] ?>">

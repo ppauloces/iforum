@@ -73,7 +73,11 @@ if(empty($nome_aluno) || empty($email_aluno) || empty($name_user_aluno)){
 		UPDATE alunos SET 
 		nome_aluno=:nome_aluno, 
 		email_aluno=:email_aluno,  
-		name_user_aluno=:name_user_aluno
+		name_user_aluno=:name_user_aluno,
+		website=:website,
+		github=:github,
+		twitter=:twitter,
+		instagram=:instagram
 		WHERE 
 		id_aluno = :id_aluno 
 		");
@@ -81,6 +85,10 @@ if(empty($nome_aluno) || empty($email_aluno) || empty($name_user_aluno)){
 			':nome_aluno' => $nome_aluno,
 			':email_aluno' => $email_aluno,
 			':name_user_aluno' => $name_user_aluno,
+			'website'=>$website,
+			'github'=>$github,
+			'twitter'=>$twitter,
+			'instagram'=>$instagram,
 			':id_aluno' => $id_aluno
 		));
 
