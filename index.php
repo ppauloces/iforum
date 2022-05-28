@@ -84,7 +84,7 @@
 					data: dados,
 					success: function (data)
 					{
-          //alert("TUDO CERTO");
+          //alert(dados);
           $("#linkResultado").html(data);
           $("#botao").attr("disabled", false);
           $("#botao").css({'background':'#2F9E41'});

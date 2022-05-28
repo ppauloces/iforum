@@ -20,11 +20,11 @@ $res_verificaUser = $verificaUser->rowCount();
 $row_verificaUser = $verificaUser->fetchAll( PDO::FETCH_ASSOC );
 
 //VERIFICA SE JÁ EXISTE O MESMO EMAIL
-$verificaUser = $pdo->prepare("SELECT * FROM alunos WHERE email_aluno = :email_aluno");
-$verificaUser->bindParam(':email_aluno', $email_aluno);
-$verificaUser->execute();
-$res_verificaUser = $verificaUser->rowCount();
-$row_verificaUser = $verificaUser->fetchAll( PDO::FETCH_ASSOC );
+$verificaMail = $pdo->prepare("SELECT * FROM alunos WHERE email_aluno = :email_aluno");
+$verificaMail->bindParam(':email_aluno', $email_aluno);
+$verificaMail->execute();
+$res_verificaMail = $verificaMail->rowCount();
+$row_verificaMail = $verificaMail->fetchAll( PDO::FETCH_ASSOC );
 
 if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty($username) || empty($_POST['senha_aluno'])) {
 

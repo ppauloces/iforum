@@ -4,13 +4,17 @@ require '../home/functions/conn.php';
 
 extract($_POST);
 
+$senha = md5($senha_aluno);
+
 //VERIFICA SE JÁ EXISTE UM USUÁRIO
-$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno AND senha_aluno = :senha_aluno");
+$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno AND senha_aluno =:senha_aluno");
 $verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
-$verifica->bindParam(':senha_aluno', $senha_aluno);
+$verifica->bindParam(':senha_aluno', $senha);
 $verifica->execute();
 $res_verifica = $verifica->rowCount();
-$row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
+$row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
+
+
 
 if (empty($num_mat_aluno) || empty($senha_aluno)) {
 
