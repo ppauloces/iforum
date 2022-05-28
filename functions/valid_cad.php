@@ -3,14 +3,30 @@ require '../home/functions/conn.php';
 
 extract($_POST);
 
-//VERIFICA SE JÁ EXISTE UM USUÁRIO
+
+
+//VERIFICA SE JÁ EXISTE UM USUÁRIO COM O MESMO NUMERO DE MATRICULA
 $verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno");
 $verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
 $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
 
-if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty($_POST['senha_aluno'])) {
+//VERIFICA SE JÁ EXISTE O MESMO USERNAME
+$verificaUser = $pdo->prepare("SELECT * FROM alunos WHERE name_user_aluno = :name_user_aluno");
+$verificaUser->bindParam(':name_user_aluno', $username);
+$verificaUser->execute();
+$res_verificaUser = $verificaUser->rowCount();
+$row_verificaUser = $verificaUser->fetchAll( PDO::FETCH_ASSOC );
+
+//VERIFICA SE JÁ EXISTE O MESMO EMAIL
+$verificaUser = $pdo->prepare("SELECT * FROM alunos WHERE email_aluno = :email_aluno");
+$verificaUser->bindParam(':email_aluno', $email_aluno);
+$verificaUser->execute();
+$res_verificaUser = $verificaUser->rowCount();
+$row_verificaUser = $verificaUser->fetchAll( PDO::FETCH_ASSOC );
+
+if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty($username) || empty($_POST['senha_aluno'])) {
 
 
   echo "<script>  
@@ -44,14 +60,26 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
         </script>";
         die;
 
+      }else if ($res_verificaUser > 0) {
+
+      echo "<script>
+      Swal.fire({
+        icon: 'warning',
+        title: 'Atenção',
+        text: 'Esse nome de usuário já foi cadastrado',
+        });
+        </script>";
+        die;
+
       }else{
 
         $senha_aluno = md5($_POST['senha_aluno']);
 
-        $cad_empresa = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno, num_matricula_aluno, senha_aluno) VALUES (:nome_aluno, :email_aluno, :num_matricula_aluno, :senha_aluno)");
+        $cad_empresa = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno)");
         $cad_empresa->execute(array(
           ':nome_aluno' => $nome_aluno,
           ':email_aluno' => $email_aluno,
+          ':name_user_aluno' => $username,
           ':num_matricula_aluno' => $num_mat_aluno,
           ':senha_aluno' => $senha_aluno,
         ));

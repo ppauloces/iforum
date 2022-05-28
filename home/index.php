@@ -32,8 +32,6 @@ $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
 
-      <?php include 'includes/menu.php';?>
-
       <table class="table table-striped">
         <h4>Alunos Matriculados:</h4>
         <thead>
@@ -71,7 +69,7 @@ $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
     </div>
   </div>
 
-  <script src="assets/js/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.4.2.slim.min.js"integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
   <script src="assets/js/popper.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   <script src="assets/js/bootstrap.min.js"></script>

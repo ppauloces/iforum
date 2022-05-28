@@ -11,10 +11,7 @@
           <a href="#"><span class="fa fa-paper-plane-o"></span> Direct</a>
         </li>
         <li>
-          <a href="#"><span class="fa fa-cogs"></span> Services</a>
-        </li>
-        <li>
-          <a href="#"><span class="fa fa-cog"></span> Definições</a>
+          <a href="definicoes.php"><span class="fa fa-cog"></span> Definições</a>
         </li>
       </ul>
 

@@ -41,6 +41,16 @@
 									<input type="text" class="form-control" name="email_aluno" placeholder="Ex: fulano@tal.com" >
 								</div>
 								<div class="form-group mb-3">
+									<label class="label" for="name">Username</label>
+									<div class="input-group mb-2">
+										<div class="input-group-prepend">
+											<div class="input-group-text">@</div>
+										</div>
+										<input type="text" class="form-control" name="username" placeholder="Username">	
+									</div>
+									
+								</div>
+								<div class="form-group mb-3">
 									<label class="label" for="name">N° de matrícula</label>
 									<input type="text" class="form-control" name="num_mat_aluno" placeholder="Ex: 20XX136000XX" >
 								</div>
