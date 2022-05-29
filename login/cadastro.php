@@ -47,8 +47,29 @@
 											<div class="input-group-text">@</div>
 										</div>
 										<input type="text" class="form-control" name="username" placeholder="Username">	
+									</div>	
+								</div>
+								<div class="form-group mb-3">
+									<label class="label" for="name">Estado</label>
+									<div class="input-group mb-2">
+										<select class="custom-select">
+											<option selected>Selecione o estado</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
 									</div>
-									
+								</div>
+								<div class="form-group mb-3">
+									<label class="label" for="name">Campus</label>
+									<div class="input-group mb-2">
+										<select class="custom-select">
+											<option selected>Selecione seu campus</option>
+											<option value="1">One</option>
+											<option value="2">Two</option>
+											<option value="3">Three</option>
+										</select>
+									</div>
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">N° de matrícula</label>
