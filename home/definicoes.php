@@ -17,12 +17,21 @@ $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/mystyle.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="home/sidebar/fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="home/css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="home/css/bootstrap.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="home/css/style.css">
   </head>
   <body>
 
@@ -30,7 +39,7 @@ $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
       <?php include 'includes/sidebar.php';?>
 
       <!-- Page Content  -->
-      <div id="content" class="p-4 p-md-5">
+      <div id="content" class="container">
 
         <div class="fs-2 fw-semibold">
           Definições da conta
@@ -55,10 +64,9 @@ $row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-1.4.2.slim.min.js"integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
-    <script src="assets/js/popper.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="home/js/jquery-3.3.1.min.js"></script>
+    <script src="home/js/popper.min.js"></script>
+    <script src="home/js/bootstrap.min.js"></script>
+    <script src="home/js/main.js"></script>
   </body>
   </html>
