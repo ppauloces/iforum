@@ -1,3 +1,8 @@
+<?php 
+require("../home/functions/conn.php");
+
+
+?>
 <!doctype html>
 	<html lang="en">
 	<head>
@@ -52,22 +57,28 @@
 								<div class="form-group mb-3">
 									<label class="label" for="name">Estado</label>
 									<div class="input-group mb-2">
-										<select class="custom-select">
-											<option selected>Selecione o estado</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
+										<select class="custom-select" id="estados" name="estado">
+											<?php 
+
+											$estados = $pdo->prepare("SELECT * FROM estado ORDER BY nome ASC");
+											$estados->execute();
+											$fetchAll = $estados->fetchAll();
+											foreach($fetchAll as $estados){
+
+												$selected = "";
+												//if ($rowemp['emp_uf'] == $estados['id']) { $selected = " selected"; }	
+
+												echo '<option value='.$estados['id'].$selected.'>'.$estados['nome'].'</option>';
+											}
+											?>
 										</select>
 									</div>
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">Campus</label>
 									<div class="input-group mb-2">
-										<select class="custom-select">
-											<option selected>Selecione seu campus</option>
-											<option value="1">One</option>
-											<option value="2">Two</option>
-											<option value="3">Three</option>
+										<select class="custom-select" id="institutos" name="nome_instituto">
+											
 										</select>
 									</div>
 								</div>
@@ -104,6 +115,20 @@
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="js/main.js"></script>
+
+		<script>
+			$('#estados').on("change",function(){
+				var idEstado = $('#estados').val();
+				$.ajax({
+					url: 'functions/pega_institutos.php',
+					type: 'POST',
+					data:{id:idEstado},
+					success: function(data){
+						$('#institutos').html(data);
+					}
+				});
+			})
+		</script>
 
 		<script>
 			jQuery('#cadastro').submit(function () {
