@@ -1,12 +1,7 @@
 <?php 
 require 'functions/conn.php';
 require 'functions/session.php';
-
-$verifica = $pdo->prepare("SELECT * FROM alunos ORDER BY nome_aluno ASC");
-//$verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
-$verifica->execute();
-$res_verifica = $verifica->rowCount();
-$row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
+require 'functions/selects.php';
 ?>
 
 <!doctype html>
@@ -39,6 +34,8 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous">
 
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+
         <!-- Bootstrap CSS -->
         
         <!-- Style Sidebar-->
@@ -49,7 +46,7 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 
-        <title>Sidebar #1</title>
+        <title>Ifórum | Home</title>
     </head>
     <body>
 
@@ -57,23 +54,27 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
         <nav class="navbar navbar-light bg-white">
             <a href="#" class="navbar-brand"></a>
-            <form class="form-inline">
+
+            <form class="form-inline" method="GET" id="buscar_aluno" action="users.php">
                 <div class="input-group" style="margin-top:15px">
-                    <input type="text" class="form-control" aria-label="Recipient's username" placeholder="Pesquise um usuário" aria-describedby="button-addon2">
+                    <!--<input type="text" class="form-control" id="buscar_aluno_auto" name="buscar_aluno_auto">-->
+                    <input type="text" name="users" id="assunto" placeholder="Pesquisar usuários">
                     <div class="input-group-append" >
-                        <button class="btn back-ifba" type="button" id="button-addon2">
+                        <button class="btn back-ifba" type="submit" id="button-addon2">
                             <i class="fa fa-search text-white"></i>
                         </button>
                     </div>
                 </div>
+                <div id="linkResultado"></div>
             </form>
+
         </nav>
 
 
         <div class="container-fluid gedf-wrapper" style="margin-top:15px">
             <div class="row">
                 <div class="col-md-3">
-                 <div class="card gedf-card">
+                   <div class="card gedf-card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -162,8 +163,37 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
     crossorigin="anonymous"></script>
+    <script src="assets/js/autocomplete.js"></script>
     <script src="assets/js/main.js"></script>
+
+    <script>
+        /*$(function(){
+            $("#assunto").autocomplete({
+                source: 'functions/busca_aluno.php'
+            });
+        });*/
+    </script>
+
+    <script>
+        /*
+        jQuery('#buscar_aluno').submit(function () {
+            event.preventDefault();
+            var dados = jQuery(this).serialize();
+            jQuery.ajax({
+                type: "GET",
+                url: "functions/busca_aluno.php",
+                data: dados,
+                success: function (data)
+                {
+                  //$("#linkResultado").html(data);
+              }
+          });
+            return false;
+        });
+        */
+    </script>
 </body>
 </html>

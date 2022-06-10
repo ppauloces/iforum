@@ -85,6 +85,30 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
           ':campus_aluno' => $nome_instituto
         ));
 
+        if (!isset($_SESSION)) {
+          session_start();
+        }
+        
+
+        $loginUsername=$num_mat_aluno;
+        $password = md5($senha);
+        $MM_fldUserAuthorization = "";
+        $MM_redirectLoginSuccess = "home/";
+        $MM_redirectLoginFailed = "index.php?err";
+        $MM_redirecttoReferrer = false;
+
+        $loginStrGroup = "";
+
+        if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
+    //declare two session variables and assign them
+        $_SESSION['MM_Username'] = $loginUsername;
+        $_SESSION['MM_UserGroup'] = $loginStrGroup;       
+
+        if (isset($_SESSION['PrevUrl']) && false) {
+      //$MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
+          echo "<script>window.location.href = 'home/'</script>";
+        }
+
         echo "<script>
         Swal.fire({
           icon: 'success',  
@@ -95,7 +119,7 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
           confirmButtonColor: '#3085d6',
           }).then((result) => {
             if (result.isConfirmed) {
-              setTimeout(function () { window.location.href = '../index.php'; }, 1000);
+              setTimeout(function () { window.location.href = 'index.php'; }, 1000);
             } 
             })
 

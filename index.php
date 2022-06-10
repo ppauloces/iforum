@@ -1,5 +1,5 @@
 <!doctype html>
-	<html lang="en">
+	<html lang="pt-br">
 	<head>
 		<title>IForúm - Login</title>
 		<meta charset="utf-8">
@@ -28,22 +28,22 @@
 									</div>
 									<div class="w-100">
 										<img src="login/images/logo.png" class="ml-5" width="100px" height="40px">
-										</p>
-									</div>
+									</p>
 								</div>
-								<form method="POST" class="signin-form" id="login">
-									<div class="form-group mb-3">
-										<label class="label" for="name">N° de matrícula</label>
-										<input type="text" class="form-control" name="num_mat_aluno" placeholder="N° de matrícula">
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="password">Senha</label>
-										<input type="password" class="form-control" name="senha_aluno" placeholder="Senha">
-									</div>
-									<div class="form-group">
-										<button type="submit" id="botao"class="form-control rounded submit px-3 btnifba">Entrar</button>
-									</div>
-									<div class="form-group d-md-flex">
+							</div>
+							<form method="POST" class="signin-form" id="login">
+								<div class="form-group mb-3">
+									<label class="label" for="name">N° de matrícula</label>
+									<input type="text" class="form-control" name="num_mat_aluno" placeholder="N° de matrícula">
+								</div>
+								<div class="form-group mb-3">
+									<label class="label" for="password">Senha</label>
+									<input type="password" class="form-control" name="senha_aluno" placeholder="Senha">
+								</div>
+								<div class="form-group">
+									<button type="submit" id="botao"class="form-control rounded submit px-3 btnifba">Entrar</button>
+								</div>
+								<div class="form-group d-md-flex">
 										<!--<div class="w-50 text-left">
 											<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
 												<input type="checkbox" checked>
@@ -55,7 +55,7 @@
 										</div>
 									</div>
 								</form>
-								<p class="text-center">Não é um membro? <a class="text-ifba" href="login/cadastro.php">Cadastre-se!</a></p>
+								<p class="text-center">Não é um membro? <a class="text-ifba" href="cadastro.php">Cadastre-se!</a></p>
 							</div>
 						</div>
 					</div>
@@ -69,7 +69,7 @@
 		<script src="login/js/bootstrap.min.js"></script>
 		<script src="login/js/main.js"></script>
 
-				<script>
+		<script>
 			jQuery('#login').submit(function () {
 				event.preventDefault();
 				var dados = jQuery(this).serialize();

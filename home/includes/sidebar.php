@@ -37,7 +37,7 @@
           <li><a href="#"><span class="icon-notifications mr-3"></span>Notificações</a></li>
           <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
           <li><a href="definicoes.php"><span class="icon-gear mr-3"></span>Configurações</a></li>
-          <li><a href="#"><span class="icon-sign-out mr-3"></span>Sair</a></li>
+          <li><a href="<?php echo $logoutAction ?>"><span class="icon-sign-out mr-3"></span>Sair</a></li>
         </ul>
       </div>
     </div>

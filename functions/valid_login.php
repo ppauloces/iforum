@@ -31,8 +31,13 @@ if (empty($num_mat_aluno) || empty($senha_aluno)) {
 
 	} else if ($res_verifica > 0) {
 
-		$_SESSION['num_mat_aluno'] = $num_mat_aluno;
-		$_SESSION['senha_aluno'] = $senha_aluno;
+		if (!isset($_SESSION)) {
+			session_start();
+		}
+
+		$_SESSION['login'] = $num_mat_aluno;
+
+		
 
 		echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
 		echo "<script>
@@ -50,9 +55,6 @@ if (empty($num_mat_aluno) || empty($senha_aluno)) {
 				</script>";
 
 			}else{
-
-			 	unset($_SESSION['num_mat_aluno']);
-				unset($_SESSION['senha_aluno']);
 
 				echo "<script>
 

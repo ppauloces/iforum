@@ -1,10 +1,10 @@
 <?php 
-require("../home/functions/conn.php");
+require("home/functions/conn.php");
 
 
 ?>
 <!doctype html>
-	<html lang="en">
+	<html lang="pt-br">
 	<head>
 		<title>IForúm - Cadastro</title>
 		<meta charset="utf-8">
@@ -14,8 +14,8 @@ require("../home/functions/conn.php");
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/meustyle.css">
+		<link rel="stylesheet" href="login/css/style.css">
+		<link rel="stylesheet" href="login/css/meustyle.css">
 
 	</head>
 	<body>
@@ -24,7 +24,7 @@ require("../home/functions/conn.php");
 				<div class="row justify-content-center">
 					<div class="col-md-12 col-lg-10">
 						<div class="wrap d-md-flex">
-							<div class="img" style="background-image: url(images/ifba.png);">
+							<div class="img" style="background-image: url(login/images/ifba.png);">
 							</div>
 							<div class="login-wrap p-4 p-md-5">
 								<div class="d-flex">
@@ -32,7 +32,7 @@ require("../home/functions/conn.php");
 										<h3 class="mb-4" style="font-weight: 600;">Cadastro</h3>
 									</div>
 									<div class="w-100">
-										<img src="images/logo.png" class="ml-5" width="100px" height="40px">
+										<img src="login/images/logo.png" class="ml-5" width="100px" height="40px">
 									</p>
 								</div>
 							</div>
@@ -102,7 +102,7 @@ require("../home/functions/conn.php");
 										</div>-->
 									</div>
 								</form>
-								<p class="text-center">Já tem uma conta? <a class="text-ifba" href="../index.php">Faça login!</a></p>
+								<p class="text-center">Já tem uma conta? <a class="text-ifba" href="index.php">Faça login!</a></p>
 							</div>
 						</div>
 					</div>
@@ -110,17 +110,17 @@ require("../home/functions/conn.php");
 			</div>
 		</section>
 		<div id="linkResultado"></div> 
-		<script src="js/jquery.min.js"></script>
-		<script src="js/popper.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+		<script src="login/js/popper.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="login/js/bootstrap.min.js"></script>
+		<script src="login/js/main.js"></script>
 
 		<script>
 			$('#estados').on("change",function(){
 				var idEstado = $('#estados').val();
 				$.ajax({
-					url: 'functions/pega_institutos.php',
+					url: 'login/functions/pega_institutos.php',
 					type: 'POST',
 					data:{id:idEstado},
 					success: function(data){
@@ -141,7 +141,7 @@ require("../home/functions/conn.php");
 
 				jQuery.ajax({
 					type: "POST",
-					url: "../functions/valid_cad.php",
+					url: "functions/valid_cad.php",
 					data: dados,
 					success: function (data)
 					{
