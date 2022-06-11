@@ -114,8 +114,8 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
                         </div>
                         </div>';
                     }
-                }else{
-                    echo "Nenhum resultado encontrado...";
+                }else if($resBuscaAluno == 0){
+                    echo "<h1>Nenhum resultado encontrado...</h1>";
                 }
 
             } 

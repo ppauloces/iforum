@@ -1,7 +1,47 @@
 <?php 
 require 'functions/conn.php';
 require 'functions/session.php';
-require 'functions/selects.php';
+
+$pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_usuario DESC");
+//$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
+$pubs->execute();
+$res_pubs = $pubs->rowCount();
+$row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
+ 
+
+if(isset($_POST['publish'])){
+    if($_FILES['file']['error'] > 0){
+        $texto = $_POST['post_text'];
+        $hoje = date("Y-m-d");
+
+        if($texto == ""){
+            echo "Você precisa preencher todos os campos";
+        }else{
+            $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post,data) VALUES (:id_usuario,:texto_post,:data)");
+            $post->execute(array(
+              ':id_usuario' => $row_verifica['id_aluno'],
+              ':texto_post' => $texto,
+              ':data' => $hoje
+          ));
+        }
+    }else{
+        $ext = rand(0,1000000);
+        $img = $ext.$_FILES['file']['name'];
+
+        move_uploaded_file($_FILES['file']['tmp_name'], "uploads/posts/".$img);
+
+        $texto = $_POST['post_text'];
+        $hoje = date("Y-m-d");
+
+        $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post, media_post,data) VALUES (:id_usuario,:texto_post, :media_post,:data)");
+            $post->execute(array(
+              ':id_usuario' => $row_verifica['id_aluno'],
+              ':texto_post' => $texto,
+              ':media_post' => $img,
+              ':data' => $hoje
+          ));
+    }
+}
 ?>
 
 <!doctype html>
@@ -99,12 +139,13 @@ require 'functions/selects.php';
                             </li>-->
                         </ul>
                     </div>
+                    <form method="POST" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
                                 <div class="form-group">
                                     <label class="sr-only" for="message">post</label>
-                                    <textarea class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
+                                    <textarea name="post_text" class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
                                 </div>
 
                             </div>
@@ -114,14 +155,25 @@ require 'functions/selects.php';
                         </div>
                         <div class="btn-toolbar justify-content-between">
                             <div class="btn-group">
-                                <button type="submit" class="btn back-ifba text-white">Compartilhar</button>
+                                <button type="submit" name="publish" class="btn back-ifba text-white">Compartilhar</button>
+                                <label for="file-input">
+                                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>        
+                                </label>
+                                <input type="file" id="file-input" name="file" style="display:none">
                             </div>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <br>
                 <!-- POST -->
-                <div class="card gedf-card">
+                <?php
+                   foreach($pubs as $pub){
+                       $id = $pub['id_usuario'];
+                       $idpub = $pub['id_post'];
+
+                       if($pub['media_post']== ""){
+                        echo '<div class="card gedf-card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex justify-content-between align-items-center">
@@ -129,25 +181,18 @@ require 'functions/selects.php';
                                     <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
                                 </div>
                                 <div class="ml-2">
-                                    <div class="h5 m-0">@<?= $row_verifica['name_user_aluno'] ?></div>
-                                    <div class="h7 text-muted"><?= $row_verifica['nome_aluno'] ?></div>
+                                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
+                                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
-                        <a class="card-link" href="#">
-                            <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
-                            cum.</h5>
-                        </a>
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
 
-                        <p class="card-text">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
-                            quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
-                            eius maxime quaerat.
-                            <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
+                        <p class="card-text">            
+                                '.$pub['texto_post'].'
                         </p>
                     </div>
                     <div class="card-footer">
@@ -155,8 +200,40 @@ require 'functions/selects.php';
                         <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
                         <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     </div>
-                </div>
-                
+                </div>';
+                       }else{
+                        echo '<div class="card gedf-card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="mr-2">
+                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                </div>
+                                <div class="ml-2">
+                                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
+                                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
+
+                        <p class="card-text">            
+                                '.$pub['texto_post'].'
+                        </p>
+                        <img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120">
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
+                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    </div>
+                </div>';
+                       }
+                   }
+                ?> 
             </div>
         </div>
     </div>

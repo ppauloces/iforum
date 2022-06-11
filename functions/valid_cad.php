@@ -75,8 +75,8 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
 
         $senha_aluno = md5($_POST['senha_aluno']);
 
-        $cad_empresa = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno)");
-        $cad_empresa->execute(array(
+        $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno)");
+        $cad_aluno->execute(array(
           ':nome_aluno' => $nome_aluno,
           ':email_aluno' => $email_aluno,
           ':name_user_aluno' => $username,
