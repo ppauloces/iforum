@@ -8,7 +8,7 @@
   <div class="side-inner">
 
     <div class="profile">
-      <img src="https://www.w3schools.com/howto/img_avatar2.png" alt="Image" class="img-fluid">
+      <img src="<?= $row_verifica['foto_perfil'] ?>" alt="Image" class="img-fluid">
       <h3 class="name"><?= $row_verifica['nome_aluno'] ?></h3>
       <span class="country"><?= $row_verifica['campus_aluno']  ?></span>
     </div>

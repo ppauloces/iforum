@@ -2,46 +2,12 @@
 require 'functions/conn.php';
 require 'functions/session.php';
 
-$pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_usuario DESC");
+$pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_usuario ASC");
 //$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
 $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
- 
 
-if(isset($_POST['publish'])){
-    if($_FILES['file']['error'] > 0){
-        $texto = $_POST['post_text'];
-        $hoje = date("Y-m-d");
-
-        if($texto == ""){
-            echo "Você precisa preencher todos os campos";
-        }else{
-            $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post,data) VALUES (:id_usuario,:texto_post,:data)");
-            $post->execute(array(
-              ':id_usuario' => $row_verifica['id_aluno'],
-              ':texto_post' => $texto,
-              ':data' => $hoje
-          ));
-        }
-    }else{
-        $ext = rand(0,1000000);
-        $img = $ext.$_FILES['file']['name'];
-
-        move_uploaded_file($_FILES['file']['tmp_name'], "uploads/posts/".$img);
-
-        $texto = $_POST['post_text'];
-        $hoje = date("Y-m-d");
-
-        $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post, media_post,data) VALUES (:id_usuario,:texto_post, :media_post,:data)");
-            $post->execute(array(
-              ':id_usuario' => $row_verifica['id_aluno'],
-              ':texto_post' => $texto,
-              ':media_post' => $img,
-              ':data' => $hoje
-          ));
-    }
-}
 ?>
 
 <!doctype html>
@@ -114,7 +80,7 @@ if(isset($_POST['publish'])){
         <div class="container-fluid gedf-wrapper" style="margin-top:15px">
             <div class="row">
                 <div class="col-md-3">
-                   <div class="card gedf-card">
+                 <div class="card gedf-card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
@@ -139,138 +105,130 @@ if(isset($_POST['publish'])){
                             </li>-->
                         </ul>
                     </div>
-                    <form method="POST" enctype="multipart/form-data">
-                    <div class="card-body">
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                                <div class="form-group">
-                                    <label class="sr-only" for="message">post</label>
-                                    <textarea name="post_text" class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
+                    <form method="POST" enctype="multipart/form-data" id="postagem">
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="message">post</label>
+                                        <textarea name="post_text" class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
+                                    </div>
+
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                                <div class="py-4"></div>
+                            <div class="btn-toolbar justify-content-between">
+                                <div class="btn-group">
+                                    <button type="submit" name="publish" class="btn back-ifba text-white">Compartilhar</button>
+                                    <label for="file-input">
+                                        <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>        
+                                    </label>
+                                    <input type="file" id="file-input" name="file" style="display:none">
+                                </div>
                             </div>
                         </div>
-                        <div class="btn-toolbar justify-content-between">
-                            <div class="btn-group">
-                                <button type="submit" name="publish" class="btn back-ifba text-white">Compartilhar</button>
-                                <label for="file-input">
-                                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>        
-                                </label>
-                                <input type="file" id="file-input" name="file" style="display:none">
-                            </div>
-                        </div>
-                    </div>
                     </form>
                 </div>
                 <br>
                 <!-- POST -->
                 <?php
-                   foreach($pubs as $pub){
-                       $id = $pub['id_usuario'];
-                       $idpub = $pub['id_post'];
+                foreach($pubs as $pub){
+                 $id = $pub['id_usuario'];
+                 $idpub = $pub['id_post'];
 
-                       if($pub['media_post']== ""){
-                        echo '<div class="card gedf-card">
+                 if($pub['media_post']== ""){
+                    echo '<div class="card gedf-card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
-                                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="mr-2">
+                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                    </div>
+                    <div class="ml-2">
+                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
+                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
+                    </div>
+                    </div>
+                    </div>
 
                     </div>
                     <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
 
-                        <p class="card-text">            
-                                '.$pub['texto_post'].'
-                        </p>
+                    <p class="card-text">            
+                    '.$pub['texto_post'].'
+                    </p>
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
-                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     </div>
-                </div>';
-                       }else{
-                        echo '<div class="card gedf-card">
+                    </div>';
+                }else{
+                    echo '<div class="card gedf-card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="mr-2">
-                                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
-                                </div>
-                                <div class="ml-2">
-                                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
-                                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="mr-2">
+                    <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                    </div>
+                    <div class="ml-2">
+                    <div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
+                    <div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
+                    </div>
+                    </div>
+                    </div>
 
                     </div>
                     <div class="card-body">
-                        <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
+                    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>'.$pub['data'].'</div>
 
-                        <p class="card-text">            
-                                '.$pub['texto_post'].'
-                        </p>
-                        <img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120">
+                    <p class="card-text">            
+                    '.$pub['texto_post'].'
+                    </p>
+                    <img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120">
                     </div>
                     <div class="card-footer">
-                        <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
-                        <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                        <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                    <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
+                    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
                     </div>
-                </div>';
-                       }
-                   }
-                ?> 
-            </div>
+                    </div>';
+                }
+            }
+            ?> 
         </div>
     </div>
+</div>
+<div id="linkResultado"></div>
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-    <script src="assets/js/autocomplete.js"></script>
-    <script src="assets/js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+crossorigin="anonymous"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="assets/js/autocomplete.js"></script>
+<script src="assets/js/main.js"></script>
 
-    <script>
-        /*$(function(){
-            $("#assunto").autocomplete({
-                source: 'functions/busca_aluno.php'
-            });
-        });*/
-    </script>
+<script>
 
-    <script>
-        /*
-        jQuery('#buscar_aluno').submit(function () {
-            event.preventDefault();
-            var dados = jQuery(this).serialize();
-            jQuery.ajax({
-                type: "GET",
-                url: "functions/busca_aluno.php",
-                data: dados,
-                success: function (data)
-                {
-                  //$("#linkResultado").html(data);
-              }
-          });
-            return false;
-        });
-        */
-    </script>
+    jQuery('#postagem').submit(function () {
+        event.preventDefault();
+        var dados = jQuery(this).serialize();
+        jQuery.ajax({
+            type: "POST",
+            url: "functions/post.php",
+            data: dados,
+            success: function (data)
+            {
+              $("#linkResultado").html(data);
+          }
+      });
+        return false;
+    });
+
+</script>
 </body>
 </html>
