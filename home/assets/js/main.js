@@ -21,16 +21,17 @@ $(function() {
   });
 
   // click outisde offcanvas
-	$(document).mouseup(function(e) {
+  $(document).mouseup(function(e) {
     var container = $(".sidebar");
     if (!container.is(e.target) && container.has(e.target).length === 0) {
       if ( $('body').hasClass('show-sidebar') ) {
-				$('body').removeClass('show-sidebar');
-				$('body').find('.js-menu-toggle').removeClass('active');
-			}
+        $('body').removeClass('show-sidebar');
+        $('body').find('.js-menu-toggle').removeClass('active');
+      }
     }
-	}); 
+  }); 
 
-    
+
 
 });
+

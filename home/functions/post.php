@@ -1,47 +1,94 @@
 <?php
 require 'conn.php';
+require 'session.php';
+require 'class.upload.php';
 
-extract($_POST);
+$pubs = $pdo->prepare("SELECT * FROM post ");
+//$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
+$pubs->execute();
+$res_pubs = $pubs->rowCount();
+$row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
 
-	if($_FILES['file'] > 0){
-		$texto = $_POST['post_text'];
-		$hoje = date("Y-m-d");
-		echo $post_text;
-		die();
-		if($texto == ""){
-			echo "<script>  
-			Swal.fire({
-				icon: 'warning',
-				title: 'Atenção',
-				text: 'Você precisa preencher todos os campos!',
-				});
-				</script>";
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "publi")) {
 
-			}else{
-				$post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post,data) VALUES (:id_usuario,:texto_post,:data)");
-				$post->execute(array(
-					':id_usuario' => $row_verifica['id_aluno'],
-					':texto_post' => $texto,
-					':data' => $hoje
-				));
-			}
-		}else if($_FILES['file']['error'] == 0){
-			$ext = rand(0,1000000);
-			$img = $ext.$_FILES['file']['name'];
+    if(empty($_POST['post_text']) && empty($_FILES['file'])){
 
-			move_uploaded_file($_FILES['file']['tmp_name'], "uploads/posts/".$img);
+        echo "<script>  
+        Swal.fire({
+            icon: 'warning',
+            title: 'Atenção',
+            text: 'Você precisa preencher todos os campos!',
+            });
+            </script>";
+            die;
+            
+        }
 
-			$texto = $_POST['post_text'];
-			$hoje = date("Y-m-d");
+        if($_FILES['file']['error'] > 0){
+            $texto = $_POST['post_text'];
+            $hoje = date('Y-m-d');
+            $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post,data) VALUES (:id_usuario,:texto_post,:data)");
+            $post->execute(array(
+                ':id_usuario' => $row_verifica['id_aluno'],
+                ':texto_post' => $texto,
+                ':data' => $hoje
+            ));
+        }
 
-			$post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post, media_post,data) VALUES (:id_usuario,:texto_post, :media_post,:data)");
-			$post->execute(array(
-				':id_usuario' => $row_verifica['id_aluno'],
-				':texto_post' => $texto,
-				':media_post' => $img,
-				':data' => $hoje
-			));
-		}
+        $handle = new Upload($_FILES['file']);
+        $novo_nome = md5(uniqid()); 
+
+        if (empty($handle)) {
+           echo "<div class=\"card-panel amber darken-2 center-align\">Preencha todos os campos</div>";
+       } else {
+
+        if ($handle->uploaded) 
+        { 
+            $handle->image_resize = true;
+            $handle->image_ratio_y = true;
+            $handle->image_ratio_fill = false;
+//$handle->image_ratio_crop = 'T';
+            $handle->image_x = 300;
+//$handle->image_y = 300;
+            $handle->jpeg_quality = 100;
+            $handle->file_new_name_body = $novo_nome;
+            $handle->mime_check = true;
+            $handle->allowed = array('image/*');
+$handle->file_max_size = '20242880'; // 1KB
+$handle->Process('../uploads/posts/');
+
+if ($handle->processed) 
+{
+
+    $nome_do_arquivo = $handle->file_dst_name;  
+
+    $texto = $_POST['post_text'];
+    $hoje = date("Y-m-d");
+
+    $post = $pdo->prepare("INSERT INTO post (id_usuario, texto_post, media_post,data) VALUES (:id_usuario,:texto_post, :media_post,:data)");
+    $post->execute(array(
+        ':id_usuario' => $row_verifica['id_aluno'],
+        ':texto_post' => $texto,
+        ':media_post' => $nome_do_arquivo,
+        ':data' => $hoje
+    ));
 
 
+    
+    
+    //echo "<div class=\"card-panel indigo lighten-4 center-align\">CADASTRO REALIZADO</div>";  
+    //echo "<script>M.toast({html: 'CADASTRO REALIZADO!'})</script>";   
+    $updateGoTo = "../index.php";
+    if (isset($_SERVER['QUERY_STRING'])) {
+        $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+        $updateGoTo .= $_SERVER['QUERY_STRING'];
+    }
+    header(sprintf("Location: %s", $updateGoTo));
+} else {
+   echo 'error : ' . $handle->error;
+}
+} 
+
+}   
+}
 ?>

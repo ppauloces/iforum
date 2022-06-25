@@ -140,7 +140,7 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
         </script>
 
         <script>
-        /*
+        
         jQuery('#buscar_aluno').submit(function () {
             event.preventDefault();
             var dados = jQuery(this).serialize();
@@ -155,7 +155,7 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
           });
             return false;
         });
-        */
+        
     </script>
 </body>
 </html>

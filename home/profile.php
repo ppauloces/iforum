@@ -45,7 +45,7 @@
 			<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 			<link rel="stylesheet" type="text/css" href="assets/css/profile.css">
 
-			<title>Sidebar #1</title>
+			<title><?= $row_verifica['nome_aluno']?> (@<?= $row_verifica['name_user_aluno']?>)</title>
 		</head>
 		<body>
 

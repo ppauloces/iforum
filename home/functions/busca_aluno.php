@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+echo "OI";
+/* 
 require 'conn.php';
 
 $assunto = filter_input(INPUT_GET, 'term', FILTER_SANITIZE_STRING);
@@ -16,7 +19,7 @@ while($row_msg_cont = $resultado_msg_cont->fetch(PDO::FETCH_ASSOC)){
 }
 
 echo json_encode($data);
-
+*/
 /*
 if(!isset($_GET['busca_aluno'])){
 	//header("Location: ../index.php");
