@@ -7,6 +7,10 @@ $verifica = $pdo->prepare("SELECT * FROM alunos ORDER BY nome_aluno ASC");
 $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
+
+if(empty($_GET['users'])){
+    header("Location: index.php");
+}
 ?>
 
 <!doctype html>
@@ -78,7 +82,8 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
         <div class="container-fluid gedf-wrapper" style="margin-top:15px;padding-left: 4rem;">
             <h2>Usuários encontrados</h2>
 
-            <?php 
+            <?php
+
             $nomeAluno = "%".trim($_GET['users'])."%";
 
             $min_lenght = 3;
@@ -91,9 +96,10 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
                 $buscaAluno->execute();
                 $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
 
+                    foreach($resBuscaAluno as $resultsAluno){
                 if($resBuscaAluno > 0){
                     echo "<br>";
-                    foreach($resBuscaAluno as $resultsAluno){
+                    
             //echo '<a href="profile.php?id='.$resultsAluno["id_aluno"].'"name="p"<br><p name="p"><h3>'.$resultsAluno['nome_aluno']''.$resultsAluno['name_user_aluno'].'</h3></p></a><br>"';
 
                         echo '<div class="">
@@ -113,9 +119,9 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
                         </div>
                         </div>
                         </div>';
-                    }
-                }else if($resBuscaAluno == 0){
-                    echo "<h1>Nenhum resultado encontrado...</h1>";
+                    }else{
+                    echo "teste";
+                }
                 }
 
             } 
@@ -148,6 +154,7 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
                 type: "GET",
                 url: "functions/busca_aluno.php",
                 data: dados,
+                alert(dados)
                 success: function (data)
                 {
                   //$("#linkResultado").html(data);

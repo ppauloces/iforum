@@ -1,7 +1,7 @@
     
 <aside class="sidebar">
   <div class="toggle">
-    <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+    <a href="#" class="burger js-menu-toggle" id="" data-toggle="collapse" data-target="#main-navbar">
       <span></span>
     </a>
   </div>

@@ -63,7 +63,7 @@ foreach($pubs as $pub){
 		<p class="card-text">            
 		'.$pub['texto_post'].'
 		</p>
-		<img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120">
+		
 		</div>
 		<div class="card-footer">
 		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
