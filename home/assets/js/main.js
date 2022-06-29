@@ -4,17 +4,17 @@ $(function() {
 
   $('.js-menu-toggle').click(function(e) {
 
-  	var $this = $(this);
+    var $this = $(this);
 
-  	if ( $('body').hasClass('show-sidebar') ) {
-  		$('body').removeClass('show-sidebar');
-  		$this.removeClass('active');
-  	} else {
-  		$('body').addClass('show-sidebar');	
-  		$this.addClass('active');
-  	}
+    if ( $('body').hasClass('show-sidebar') ) {
+      $('body').removeClass('show-sidebar');
+      $this.removeClass('active');
+    } else {
+      $('body').addClass('show-sidebar'); 
+      $this.addClass('active');
+    }
 
-  	e.preventDefault();
+    e.preventDefault();
 
   });
 
@@ -49,12 +49,12 @@ function carregaFeed() {
 }
 
 //limpar campo file
-    $("#btn-reset").on('click', function(){
-      $('#file-input').val('');
-      document.getElementById("preview").src = '';
-      document.getElementById("previewMobile").src = '';
-      $(this).hide();
-  });
+$("#btn-reset").on('click', function(){
+  $('#file-input').val('');
+  document.getElementById("preview").src = '';
+  document.getElementById("previewMobile").src = '';
+  $(this).hide();
+});
 
 //função que dá o preview da imagem antes de enviar
 $(document).ready(function(){
@@ -83,7 +83,7 @@ $(document).ready(function(){
     $('#but_upload').prop('disabled', $(this).val().length < 1);
   });
 
-    $('#messageMobile').on('input', function(){
+  $('#messageMobile').on('input', function(){
     $('#but_uploadMobile').prop('disabled', $(this).val().length < 1);
   });
 
@@ -95,52 +95,52 @@ $(document).ready(function(){
 
 
 //funcao para enviar imagem via jquery
-  $("#but_uploadMobile").click(function(){
+$("#but_uploadMobile").click(function(){
 
-    var form=$("#postagemMobile");
-    var data=new FormData($("#postagemMobile")[0]);
+  var form=$("#postagemMobile");
+  var data=new FormData($("#postagemMobile")[0]);
 
-    $.ajax({
-      url:'functions/post.php',
-      type:"POST",
-      data:data,
-      processData: false,
-      contentType: false,
-      success:function(data){
-        carregaFeed();
-        location.reload();
-      }
-
-    });
+  $.ajax({
+    url:'functions/post.php',
+    type:"POST",
+    data:data,
+    processData: false,
+    contentType: false,
+    success:function(data){
+      carregaFeed();
+      location.reload();
+    }
 
   });
 
-    $("#but_upload").click(function(){
+});
 
-    var form=$("#postagem");
-    var data=new FormData($("#postagem")[0]);
+$("#but_upload").click(function(){
 
-    $.ajax({
-      url:'functions/post.php',
-      type:"POST",
-      data:data,
-      processData: false,
-      contentType: false,
-      success:function(data){
-        carregaFeed(console.log('teste'));
-        location.reload();
-      }
+  var form=$("#postagem");
+  var data=new FormData($("#postagem")[0]);
 
-    });
+  $.ajax({
+    url:'functions/post.php',
+    type:"POST",
+    data:data,
+    processData: false,
+    contentType: false,
+    success:function(data){
+      carregaFeed(console.log('teste'));
+      location.reload();
+    }
 
   });
 
-  $("#postagem").submit(function(){ return false;});
-  $("#postagemMobile").submit(function(){ return false;});
+});
+
+$("#postagem").submit(function(){ return false;});
+$("#postagemMobile").submit(function(){ return false;});
 
 //recarregar pagina apos postagem
-  var btn = document.querySelector("#but_upload");
-  btn.addEventListener("click", function() {
+var btn = document.querySelector("#but_upload");
+btn.addEventListener("click", function() {
 
     //location.reload();
 

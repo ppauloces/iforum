@@ -9,7 +9,6 @@ $pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_post DESC");
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
 $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
-print_r($row_pubs);
 
 
 
@@ -118,7 +117,7 @@ print_r($row_pubs);
                                         <label class="sr-only" for="message">post</label>
                                         <textarea name="post_text" class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
                                         <div id="">
-                                            <img id="preview" src="" width="120" style="padding-top:10px">
+                                            <img id="preview" width="120" style="padding-top:10px">
                                         </div>
                                     </div>
 
@@ -137,7 +136,7 @@ print_r($row_pubs);
                                 <label for="btn-reset">
                                     <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>
                                 </label>
-                                <input type="reset" id="btn-reset" onclick="javascript:limpar()" style="display:none">
+                                <input type="reset" id="btn-reset" style="display:none">
                             </div>
                         </div>
                     </form>
@@ -179,7 +178,7 @@ print_r($row_pubs);
                         <label class="sr-only" for="message">post</label>
                         <textarea name="post_text" class="form-control" style="resize: none;" id="messageMobile" rows="3" placeholder="Escreva algo legal!"></textarea>
                         <div id="">
-                            <img id="previewMobile" src="" width="120" style="padding-top:10px">
+                            <img id="" src="" width="120" style="padding-top:10px">
                         </div>
                     </div>
                 </div>
@@ -217,6 +216,9 @@ print_r($row_pubs);
 <script src="../login/js/main.js"></script>
 <script src="assets/js/autocomplete.js"></script>
 <script src="assets/js/main.js"></script>
+<script>
+
+</script>
 
 </body>
 </html>
