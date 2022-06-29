@@ -11,8 +11,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
 
 
 foreach($pubs as $pub){
-
-	if($pub['media_post']== ""){
+	if($pub['media_post'] <> ""){
 		echo '<div class="card gedf-card">
 		<div class="card-header">
 		<div class="d-flex justify-content-between align-items-center">
@@ -34,13 +33,14 @@ foreach($pubs as $pub){
 		<p class="card-text">            
 		'.$pub['texto_post'].'
 		</p>
+		<img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120"> 
 		</div>
 		<div class="card-footer">
 		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
 		<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
 		<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
 		</div>
-		</div>';
+		</div>';	
 	}else{
 		echo '<div class="card gedf-card">
 		<div class="card-header">
@@ -63,7 +63,6 @@ foreach($pubs as $pub){
 		<p class="card-text">            
 		'.$pub['texto_post'].'
 		</p>
-		
 		</div>
 		<div class="card-footer">
 		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>

@@ -127,7 +127,7 @@ $(document).ready(function(){
       processData: false,
       contentType: false,
       success:function(data){
-        carregaFeed();
+        carregaFeed(console.log('teste'));
         location.reload();
       }
 

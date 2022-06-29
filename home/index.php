@@ -9,6 +9,8 @@ $pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_post DESC");
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
 $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
+print_r($row_pubs);
+
 
 
 ?>
