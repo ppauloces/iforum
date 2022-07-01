@@ -42,6 +42,15 @@ while($pub = $pubs->fetch( PDO::FETCH_ASSOC )){
 		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
 		<a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
 		<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+		<div class="dropdown">
+		<i class="fa fa-ellipsis-v" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+		
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		<a class="dropdown-item" href="#">Action</a>
+		<a class="dropdown-item" href="#">Another action</a>
+		<a class="dropdown-item" href="#">Something else here</a>
+		</div>
+		</div>
 		</div>
 		</div>';	
 	}else{

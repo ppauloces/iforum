@@ -1,6 +1,7 @@
 <?php
 //initialize the session
 session_start();
+header('Cache-Control: no-cache, must-revalidate, max-age=0');
 
 if (isset($_SESSION['login'])) {
   $colname_Usuario = $_SESSION['login'] ; 

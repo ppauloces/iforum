@@ -63,47 +63,49 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
 
         <nav class="navbar navbar-light bg-white">
             <a href="#" class="navbar-brand"></a>
+            <!-- Default dropleft button -->
 
-            <form class="form-inline" method="GET" id="buscar_aluno" action="users.php">
-                <div class="input-group" style="margin-top:15px">
-                    <!--<input type="text" class="form-control" id="buscar_aluno_auto" name="buscar_aluno_auto">-->
-                    <input type="text" name="users" id="assunto" placeholder="Pesquisar usuários">
-                    <div class="input-group-append" >
-                        <button class="btn back-ifba" type="submit" id="button-addon2">
-                            <i class="fa fa-search text-white"></i>
-                        </button>
-                    </div>
-                </div>
-                <div id="linkResultado"></div>
-            </form>
-
-        </nav>
-
-
-
-        <div class="container-fluid gedf-wrapper" style="margin-top:15px">
-            <div class="row">
-                <div class="col-md-3 d-none d-md-block">
-                   <div class="card gedf-card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
-                    </div>
+        
+        <form class="form-inline" method="GET" id="buscar_aluno" action="users.php">
+            <div class="input-group" style="margin-top:15px">
+                <!--<input type="text" class="form-control" id="buscar_aluno_auto" name="buscar_aluno_auto">-->
+                <input type="text" name="users" id="assunto" placeholder="Pesquisar usuários">
+                <div class="input-group-append" >
+                    <button class="btn back-ifba" type="submit" id="button-addon2">
+                        <i class="fa fa-search text-white"></i>
+                    </button>
                 </div>
             </div>
-            <div class="col-md-6 gedf-main">
+            <div id="linkResultado"></div>
+        </form>
 
-                <!--- \\\\\\\Post-->
-                <div class="card gedf-card d-none d-md-block">
-                    <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Feed</a>
-                            </li>
+    </nav>
+
+
+
+    <div class="container-fluid gedf-wrapper" style="margin-top:15px">
+        <div class="row">
+            <div class="col-md-3 d-none d-md-block">
+             <div class="card gedf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's content.</p>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 gedf-main">
+
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card d-none d-md-block">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts" role="tab" aria-controls="posts" aria-selected="true">Feed</a>
+                        </li>
                             <!--<li class="nav-item">
                                 <a class="nav-link text-ifba" id="images-tab" data-toggle="tab" role="tab" aria-controls="images" aria-selected="false" href="#images">Images</a>
                             </li>-->
@@ -126,7 +128,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
                             </div>
                             <div class="btn-toolbar justify-content-between">
                                 <div class="btn-group">
-                                    <button type="submit" id="but_upload" disabled name="publicar" class="btn back-ifba text-white">Compartilhar</button>
+                                    <button type="submit" id="but_upload" disabled name="publicar" class="btn back-ifba text-white" style="margin: 5px;border-radius: 5px;">Compartilhar</button>
                                     <label for="file-input">
                                         <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>    
                                     </label>
@@ -146,7 +148,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
                 <div id="feed"><center><img src="assets/svg/loading.svg" width="50"></center></div>
             </div>
             <div class="col-md-3 d-none d-md-block">
-               <div class="card gedf-card">
+             <div class="card gedf-card">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
