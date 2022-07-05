@@ -33,7 +33,7 @@
       <div class="nav-menu">
         <ul>
           <li><a href="index.php"><span class="icon-home mr-3"></span>Feed</a></li>
-          <li><a href="profile.php?=<?= $row_verifica['name_user_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
+          <li><a href="profile.php?id=<?= $alunoInfo['name_user_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
           <li><a href="#"><span class="icon-notifications mr-3"></span>Notificações</a></li>
           <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
           <li><a href="definicoes.php"><span class="icon-gear mr-3"></span>Configurações</a></li>

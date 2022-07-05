@@ -2,7 +2,18 @@
 	require 'functions/conn.php';
 	require 'functions/session.php';
 
-	?>
+	$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
+	$buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
+	$buscaAluno->execute();
+	$resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+
+	if(empty($_GET['id'])){
+		header("Location: index.php");
+	}
+
+foreach($resBuscaAluno as $alunoInfo){
+
+?>
 
 	<!doctype html>
 		<html lang="pt-br">
@@ -45,7 +56,7 @@
 			<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 			<link rel="stylesheet" type="text/css" href="assets/css/profile.css">
 
-			<title><?= $row_verifica['nome_aluno']?> (@<?= $row_verifica['name_user_aluno']?>)</title>
+			<title><?= $alunoInfo['nome_aluno']?> (@<?= $alunoInfo['name_user_aluno']?>)</title>
 		</head>
 		<body>
 
@@ -63,8 +74,8 @@
 									</figure>
 									<div class="cover-body d-flex justify-content-between align-items-center">
 										<div>
-											<img class="profile-pic" src="<?= $row_verifica['foto_perfil'] ?>" alt="profile">
-											<span class="profile-name"><?= $row_verifica['nome_aluno'] ?></span>
+											<img class="profile-pic" src="<?= $alunoInfo['foto_perfil'] ?>" alt="profile">
+											<span class="profile-name"><?= $alunoInfo['nome_aluno'] ?></span>
 										</div>
 										<div class="d-none d-md-block">
 											
@@ -392,3 +403,4 @@
 						<script src="assets/js/main.js"></script>
 					</body>
 					</html>
+<?php } ?>

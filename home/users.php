@@ -8,9 +8,14 @@ $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
+
+
 if(empty($_GET['users'])){
     header("Location: index.php");
 }
+
+
+
 ?>
 
 <!doctype html>
@@ -95,37 +100,42 @@ if(empty($_GET['users'])){
                 $buscaAluno->bindParam(':nome_aluno', $nomeAluno, PDO::PARAM_STR);
                 $buscaAluno->execute();
                 $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+                
+                $amizade = $pdo->prepare("SELECT * FROM amizade");
+                $amizade->execute();
+                $res_verifica_amzd = $amizade->rowCount();
+                $row_verifica_amzd = $amizade->fetchAll();
+
+                //foreach($row_verifica_amzd as $amzd){
 
                     foreach($resBuscaAluno as $resultsAluno){
-                if($resBuscaAluno > 0){
-                    echo "<br>";
-                    
+                        if($resBuscaAluno > 0){
+                            echo "<br>";
+
             //echo '<a href="profile.php?id='.$resultsAluno["id_aluno"].'"name="p"<br><p name="p"><h3>'.$resultsAluno['nome_aluno']''.$resultsAluno['name_user_aluno'].'</h3></p></a><br>"';
-
-                        echo '<div class="">
-                        <div class="card mb-3" style="max-width: 540px; margin:10px">
-                        <div class="row g-0">
-                        <div class="col-md-4">
-                        <a href=""profile.php?id='.$resultsAluno["id_aluno"].'"><img src="'.$resultsAluno["foto_perfil"].'" alt="..." style="margin:20px" width="170"></a>
-                        </div>
-                        <div class="col-md-8">
-                        <div class="card-body">
-                        <h5 class="card-title"><a href=""profile.php?id='.$resultsAluno["id_aluno"].'">'.$resultsAluno["nome_aluno"].'</a></h5>
-                        <p class="card-text">'.$resultsAluno["bio_aluno"].'</p>
-                        <p class="card-text">Estuda no '.$resultsAluno["campus_aluno"].'.</p>
-                        <a href="#" class="btn back-ifba text-white">Seguir</a
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div>';
-                    }else{
-                    echo "teste";
-                }
-                }
-
-            } 
-
+                            echo '<div class="">
+                            <div class="card mb-3" style="max-width: 540px; margin:10px">
+                            <div class="row g-0">
+                            <div class="col-md-4">
+                            <a href="profile.php?id='.$resultsAluno["id_aluno"].'"><img src="'.$resultsAluno["foto_perfil"].'" alt="..." style="margin:20px" width="170"></a>
+                            </div>
+                            <div class="col-md-8">
+                            <div class="card-body">
+                            <h5 class="card-title"><a href="profile.php?id='.$resultsAluno["id_aluno"].'">'.$resultsAluno["nome_aluno"].'</a></h5>
+                            <p class="card-text">'.$resultsAluno["bio_aluno"].'</p>
+                            <p class="card-text">Estuda no '.$resultsAluno["campus_aluno"].'.</p>
+                            <a href="#" class="btn back-ifba text-white">'.$status.'</a>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>';
+                        }else{
+                            echo "teste";
+                        }
+                    }
+                } 
+            //}
             ?>
         </div>
 
@@ -146,23 +156,23 @@ if(empty($_GET['users'])){
         </script>
 
         <script>
-        
-        jQuery('#buscar_aluno').submit(function () {
-            event.preventDefault();
-            var dados = jQuery(this).serialize();
-            jQuery.ajax({
-                type: "GET",
-                url: "functions/busca_aluno.php",
-                data: dados,
-                alert(dados)
-                success: function (data)
-                {
+
+            jQuery('#buscar_aluno').submit(function () {
+                event.preventDefault();
+                var dados = jQuery(this).serialize();
+                jQuery.ajax({
+                    type: "GET",
+                    url: "functions/busca_aluno.php",
+                    data: dados,
+                    alert(dados)
+                    success: function (data)
+                    {
                   //$("#linkResultado").html(data);
               }
           });
-            return false;
-        });
-        
-    </script>
-</body>
-</html>
+                return false;
+            });
+
+        </script>
+    </body>
+    </html>
