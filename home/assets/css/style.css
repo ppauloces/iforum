@@ -1,6 +1,9 @@
 body {
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  background-color: #fcfcfc; }
+  background-color: #fcfcfc;
+  padding: 0;
+  margin: 0; 
+}
 
 p {
   color: #b3b3b3;
@@ -37,7 +40,7 @@ body {
     -o-transition: .3s all ease-in-out;
     transition: .3s all ease-in-out; }
   body.show-sidebar:before {
-    opacity: 1;
+    opacity: 0;
     visibility: visible; }
 
 .site-section {

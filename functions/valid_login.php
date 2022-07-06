@@ -70,4 +70,4 @@ if (empty($num_mat_aluno) || empty($senha_aluno)) {
 	//echo "<div class=\"card-panel amber darken-2 center-align\">Usuário/senha não confere. Tente novamente.</div>";
 					die;
 				}
-			?>
+?>

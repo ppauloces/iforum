@@ -8,13 +8,19 @@ $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
-
+echo $row_verifica['num_matricula_aluno'];
+exit();
 
 if(empty($_GET['users'])){
     header("Location: index.php");
 }
-
-
+   
+    if($row_verifica['num_matricula_aluno'] === $colname_Usuario){
+        $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
+    }else{
+        $btnStatus = '';
+    }
+   
 
 ?>
 
@@ -108,44 +114,73 @@ if(empty($_GET['users'])){
 
                 //foreach($row_verifica_amzd as $amzd){
 
-                    foreach($resBuscaAluno as $resultsAluno){
-                        if($resBuscaAluno > 0){
-                            echo "<br>";
+                foreach($resBuscaAluno as $resultsAluno){
+                    if($resBuscaAluno > 0){
+                        echo "<br>";
 
             //echo '<a href="profile.php?id='.$resultsAluno["id_aluno"].'"name="p"<br><p name="p"><h3>'.$resultsAluno['nome_aluno']''.$resultsAluno['name_user_aluno'].'</h3></p></a><br>"';
-                            echo '<div class="">
-                            <div class="card mb-3" style="max-width: 540px; margin:10px">
-                            <div class="row g-0">
-                            <div class="col-md-4">
-                            <a href="profile.php?id='.$resultsAluno["id_aluno"].'"><img src="'.$resultsAluno["foto_perfil"].'" alt="..." style="margin:20px" width="170"></a>
-                            </div>
-                            <div class="col-md-8">
-                            <div class="card-body">
-                            <h5 class="card-title"><a href="profile.php?id='.$resultsAluno["id_aluno"].'">'.$resultsAluno["nome_aluno"].'</a></h5>
-                            <p class="card-text">'.$resultsAluno["bio_aluno"].'</p>
-                            <p class="card-text">Estuda no '.$resultsAluno["campus_aluno"].'.</p>
-                            <a href="#" class="btn back-ifba text-white">'.$status.'</a>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>';
-                        }else{
-                            echo "teste";
-                        }
+                        echo '<div class="">
+                        <div class="card mb-3" style="max-width: 540px; margin:10px">
+                        <div class="row g-0">
+                        <div class="col-md-4">
+                        <a href="profile.php?id='.$resultsAluno["id_aluno"].'"><img src="'.$resultsAluno["foto_perfil"].'" class="img-thumbnail" style="margin:20px" width="170"></a>
+                        </div>
+                        <div class="col-md-8">
+                        <div class="card-body">
+                        <h5 class="card-title"><a href="profile.php?id='.$resultsAluno["id_aluno"].'">'.$resultsAluno["nome_aluno"].'</a></h5>
+                        <p class="card-text">'.$resultsAluno["bio_aluno"].'</p>
+                        <p class="card-text">Estuda no '.$resultsAluno["campus_aluno"].'.</p>
+                        '.$btnStatus.'
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>';
+                    }else{
+                        echo "teste";
                     }
-                } 
+                }
+            } 
             //}
             ?>
         </div>
 
-
+        <div id="linkResultado"></div>
+        <div id="linkResultado1"></div>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
         <script src="assets/js/autocomplete.js"></script>
         <script src="assets/js/main.js"></script>
+
+
+        <script>
+            $(document).on('click', '#seguir', function() {
+               $(this).attr("id","seguindo").html("Seguindo");
+               var id = $(this).attr("codigo");
+               $.ajax({ 
+                url: 'functions/newAmizade.php', 
+                type: 'POST', 
+                data: {postdata: id},
+                success: function(data) { 
+                    $("#linkResultado").html(data); 
+                } 
+            }); 
+           }); 
+            $(document).on('click', '#seguindo', function() {
+                $(this).attr("id","seguir").html("Seguir");
+                var id = $(this).attr("codigo");
+                $.ajax({ 
+                url: 'functions/deletAmizade.php', 
+                type: 'POST', 
+                data: id,
+                success: function(data) { 
+                    $("#linkResultado1").html(data); 
+                } 
+            }); 
+            });
+        </script>
 
         <script>
             $(function(){
@@ -172,6 +207,13 @@ if(empty($_GET['users'])){
           });
                 return false;
             });
+
+        </script>
+
+
+        <script>
+
+
 
         </script>
     </body>

@@ -1,4 +1,12 @@
-    
+<?php 
+
+  $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE num_matricula_aluno = :id_aluno');
+  $buscaAluno->bindParam(':id_aluno', $colname_Usuario);
+  $buscaAluno->execute();
+  $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($resBuscaAluno as $sidebar){
+?>
 <aside class="sidebar">
   <div class="toggle">
     <a href="#" class="burger js-menu-toggle" id="" data-toggle="collapse" data-target="#main-navbar">
@@ -8,9 +16,9 @@
   <div class="side-inner">
 
     <div class="profile">
-      <img src="<?= $row_verifica['foto_perfil'] ?>" alt="Image" class="img-fluid">
-      <h3 class="name"><?= $row_verifica['nome_aluno'] ?></h3>
-      <span class="country"><?= $row_verifica['campus_aluno']  ?></span>
+      <img src="<?= $sidebar['foto_perfil'] ?>" class="img-thumbnail img-fluid">
+      <h3 class="name"><?= $sidebar['nome_aluno'] ?></h3>
+      <span class="country"><?= $sidebar['campus_aluno']  ?></span>
     </div>
 
     <div class="counter d-flex justify-content-center">
@@ -33,7 +41,7 @@
       <div class="nav-menu">
         <ul>
           <li><a href="index.php"><span class="icon-home mr-3"></span>Feed</a></li>
-          <li><a href="profile.php?id=<?= $alunoInfo['name_user_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
+          <li><a href="profile.php?id=<?= $sidebar['id_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
           <li><a href="#"><span class="icon-notifications mr-3"></span>Notificações</a></li>
           <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
           <li><a href="definicoes.php"><span class="icon-gear mr-3"></span>Configurações</a></li>
@@ -43,3 +51,4 @@
     </div>
     
   </aside>
+  <?php } ?>
