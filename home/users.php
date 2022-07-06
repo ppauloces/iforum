@@ -8,19 +8,15 @@ $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
-echo $row_verifica['num_matricula_aluno'];
-exit();
 
 if(empty($_GET['users'])){
     header("Location: index.php");
 }
-   
-    if($row_verifica['num_matricula_aluno'] === $colname_Usuario){
-        $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
-    }else{
-        $btnStatus = '';
-    }
-   
+
+$amizade = $pdo->prepare("SELECT * FROM amizade");
+$res_verifica_amzd = $amizade->rowCount();
+$row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
+
 
 ?>
 
@@ -107,14 +103,24 @@ if(empty($_GET['users'])){
                 $buscaAluno->execute();
                 $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
                 
-                $amizade = $pdo->prepare("SELECT * FROM amizade");
-                $amizade->execute();
-                $res_verifica_amzd = $amizade->rowCount();
-                $row_verifica_amzd = $amizade->fetchAll();
-
                 //foreach($row_verifica_amzd as $amzd){
 
                 foreach($resBuscaAluno as $resultsAluno){
+
+                    $amizade = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para=:id_aluno_para AND id_aluno_de=:id_aluno_de");
+                    $amizade->execute([
+                        'id_aluno_de' => $row_verifica['id_aluno'],
+                        'id_aluno_para' => $resultsAluno['id_aluno']
+                    ]); 
+                    $res_verifica_amzd = $amizade->rowCount();
+                    $row_verifica_amzd = $amizade->fetch();
+
+                    if($res_verifica_amzd > 0){
+                        $btnStatus = '<a class="btn back-ifba text-white pt-1px d-md-block" id="seguir" codigo="'.$resultsAluno["id_aluno"].'" >Seguindo</a>';
+                    }else if($res_verifica_amzd == 0){
+                        $btnStatus = '<a class="btn back-ifba text-white pt-1px d-md-block" id="seguir" codigo="'.$resultsAluno["id_aluno"].'" >Seguir</a>';
+                    }
+
                     if($resBuscaAluno > 0){
                         echo "<br>";
 
@@ -148,6 +154,7 @@ if(empty($_GET['users'])){
         <div id="linkResultado"></div>
         <div id="linkResultado1"></div>
         <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
@@ -157,64 +164,65 @@ if(empty($_GET['users'])){
 
         <script>
             $(document).on('click', '#seguir', function() {
-               $(this).attr("id","seguindo").html("Seguindo");
-               var id = $(this).attr("codigo");
-               $.ajax({ 
+            // $(this).attr("id","seguindo").html("Seguindo");
+            var id = $(this).attr("codigo");
+            $.ajax({ 
                 url: 'functions/newAmizade.php', 
                 type: 'POST', 
                 data: {postdata: id},
                 success: function(data) { 
                     $("#linkResultado").html(data); 
+
                 } 
             }); 
-           }); 
+        });
             $(document).on('click', '#seguindo', function() {
-                $(this).attr("id","seguir").html("Seguir");
-                var id = $(this).attr("codigo");
-                $.ajax({ 
-                url: 'functions/deletAmizade.php', 
+             //$(this).attr("id","seguir").html("Seguir");
+             var id = $(this).attr("codigo");
+             $.ajax({ 
+                url: 'functions/newAmizade.php', 
                 type: 'POST', 
-                data: id,
+                data: {postdata: id},
                 success: function(data) { 
-                    $("#linkResultado1").html(data); 
+                    $("#linkResultado").html(data); 
+
                 } 
             }); 
+         });  
+     </script>
+
+     <script>
+        $(function(){
+            $("#assunto").autocomplete({
+                source: 'functions/busca_aluno.php'
             });
-        </script>
+        });
+    </script>
 
-        <script>
-            $(function(){
-                $("#assunto").autocomplete({
-                    source: 'functions/busca_aluno.php'
-                });
-            });
-        </script>
+    <script>
 
-        <script>
-
-            jQuery('#buscar_aluno').submit(function () {
-                event.preventDefault();
-                var dados = jQuery(this).serialize();
-                jQuery.ajax({
-                    type: "GET",
-                    url: "functions/busca_aluno.php",
-                    data: dados,
-                    alert(dados)
-                    success: function (data)
-                    {
+        jQuery('#buscar_aluno').submit(function () {
+            event.preventDefault();
+            var dados = jQuery(this).serialize();
+            jQuery.ajax({
+                type: "GET",
+                url: "functions/busca_aluno.php",
+                data: dados
+                success: function (data)
+                {
                   //$("#linkResultado").html(data);
               }
           });
-                return false;
-            });
+            return false;
+        });
 
-        </script>
-
-
-        <script>
+    </script>
 
 
+    <script>
 
-        </script>
-    </body>
-    </html>
+
+
+    </script>
+</body>
+</html>

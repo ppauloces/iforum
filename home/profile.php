@@ -1,47 +1,48 @@
 <?php 
-require 'functions/conn.php';
-require 'functions/session.php';
-
-$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
-$buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
-$buscaAluno->execute();
-$resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-if(empty($_GET['id'])){
-  header("Location: index.php");
-}
-
-foreach($resBuscaAluno as $alunoInfo){
-
-  if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
-    $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
- }else{
-    $btnStatus = '<a class="pt-1px d-md-block" id="seguir" href="#">Seguir</a>';
- }
-
- ?>
- <!doctype html>
-   <html lang="pt-br">
+   require 'functions/conn.php';
+   require 'functions/session.php';
+   
+   
+   $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
+   $buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
+   $buscaAluno->execute();
+   $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+   
+   
+   
+   if(empty($_GET['id'])){
+   	header("Location: index.php");
+   }
+   
+   foreach($resBuscaAluno as $alunoInfo){
+   
+   	if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
+   		$btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
+   	}else{
+   		$btnStatus = '<a class="pt-1px d-md-block" id="seguir" href="#">Seguir</a>';
+   	}
+   
+   	?>
+<!doctype html>
+<html lang="pt-br">
    <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous">
+         crossorigin="anonymous">
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"></script>
+         crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"></script>
+         crossorigin="anonymous"></script>
       <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="assets/fonts/icomoon/style.css">
       <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous">
+         crossorigin="anonymous">
       <!-- Bootstrap CSS -->
       <!-- Style Sidebar-->
       <link rel="stylesheet" href="assets/css/style.css">
@@ -391,7 +392,7 @@ foreach($resBuscaAluno as $alunoInfo){
       </div>
       <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-      crossorigin="anonymous"></script>
+         crossorigin="anonymous"></script>
       <script src="assets/js/autocomplete.js"></script>
       <script src="assets/js/main.js"></script>
       <script>
@@ -405,5 +406,5 @@ foreach($resBuscaAluno as $alunoInfo){
          });
       </script>
    </body>
-   </html>
-   <?php } ?>
+</html>
+<?php } ?>
