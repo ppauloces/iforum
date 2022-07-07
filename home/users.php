@@ -13,10 +13,6 @@ if(empty($_GET['users'])){
     header("Location: index.php");
 }
 
-$amizade = $pdo->prepare("SELECT * FROM amizade");
-$res_verifica_amzd = $amizade->rowCount();
-$row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
-
 
 ?>
 
@@ -113,7 +109,9 @@ $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
                         'id_aluno_para' => $resultsAluno['id_aluno']
                     ]); 
                     $res_verifica_amzd = $amizade->rowCount();
-                    $row_verifica_amzd = $amizade->fetch();
+                    $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
+
+                    echo $res_verifica_amzd;
 
                     if($res_verifica_amzd > 0){
                         $btnStatus = '<a class="btn back-ifba text-white pt-1px d-md-block" id="seguir" codigo="'.$resultsAluno["id_aluno"].'" >Seguindo</a>';
@@ -123,7 +121,6 @@ $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
                     if($resBuscaAluno > 0){
                         echo "<br>";
-
             //echo '<a href="profile.php?id='.$resultsAluno["id_aluno"].'"name="p"<br><p name="p"><h3>'.$resultsAluno['nome_aluno']''.$resultsAluno['name_user_aluno'].'</h3></p></a><br>"';
                         echo '<div class="">
                         <div class="card mb-3" style="max-width: 540px; margin:10px">

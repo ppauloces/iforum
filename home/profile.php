@@ -1,48 +1,100 @@
 <?php 
-   require 'functions/conn.php';
-   require 'functions/session.php';
-   
-   
-   $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
-   $buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
-   $buscaAluno->execute();
-   $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
-   
-   
-   
-   if(empty($_GET['id'])){
-   	header("Location: index.php");
-   }
-   
-   foreach($resBuscaAluno as $alunoInfo){
-   
-   	if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
-   		$btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
-   	}else{
-   		$btnStatus = '<a class="pt-1px d-md-block" id="seguir" href="#">Seguir</a>';
-   	}
-   
-   	?>
+require 'functions/conn.php';
+require 'functions/session.php';
+
+if(empty($_GET['id']) OR !isset($_GET['id'])){
+   header("Location: index.php");
+}
+
+/*
+* Author: Paulo Amaral
+* Função da query:
+* junção da tabela de alunos para a tabela de postagens, trazendo o mesmo ID do aluno que postou juntamente com as informações
+* do aluno diretamente da tabela de alunos
+* Data: 07/07/2022
+*/
+/*
+
+$pubs = $pdo->prepare("SELECT P.id_post, P.id_usuario, P.texto_post, P.media_post, P.data, A.id_aluno, A.nome_aluno, A.name_user_aluno, A.foto_perfil FROM post AS P, alunos AS A WHERE id_usuario = :id_aluno");
+$pubs->bindParam(':id_aluno', $_GET['id']);
+echo $res = $pubs->rowCount();
+$rows = $pubs->fetch();
+$pubs->execute();
+
+
+$pubs = $pdo->prepare("SELECT id_post, id_usuario, texto_post, media_post, data, id_aluno, nome_aluno, name_user_aluno, foto_perfil FROM post INNER JOIN alunos ON id_aluno = id_usuario WHERE id_usuario = :id_aluno");
+$pubs->bindParam(':id_aluno', $_GET['id']);
+echo $res = $pubs->rowCount();
+$rows = $pubs->fetch();
+$pubs->execute();
+
+*/
+
+$pubs = $pdo->prepare("SELECT * FROM post WHERE id_usuario = :id_aluno");
+$pubs->bindParam(':id_aluno', $_GET['id']);
+$pubs->execute();
+$res = $pubs->rowCount();
+$rows = $pubs->fetch();
+
+$buscaAluno = $pdo->prepare('SELECT id_post, id_usuario, texto_post, media_post, data, id_aluno, nome_aluno, name_user_aluno, foto_perfil, num_matricula_aluno FROM post INNER JOIN alunos ON id_aluno = id_usuario WHERE id_usuario = :id_aluno');
+$buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
+$buscaAluno->execute();
+$rowBuscaAluno = $buscaAluno->rowCount();
+
+
+/*
+* Author: Paulo Amaral
+* Função da condição:
+* retornar para a página principal caso o ID não exista
+* Data: 07/07/2022
+*/
+if($rowBuscaAluno == 0){
+   header("Location: index.php");
+}
+
+/*
+* Author: Paulo Amaral
+* Função da query:
+* Contar o número de posts, se for igual a 0 aparecerá o card de que não há postagens, se maior que 0 exibirá as postagens
+* Data: 07/07/2022
+*/
+
+/*$nPosts = "SELECT count(*) FROM post WHERE id_usuario = :id_aluno"; 
+$result = $pdo->prepare($nPosts); 
+$result->execute([':id_aluno' => $_GET['id']]); 
+$number_of_rows = $result->fetchColumn(); 
+*/
+
+
+while($resBuscaAluno = $alunoInfo->fetch( PDO::FETCH_ASSOC )){
+
+ if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
+  $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
+}else{
+  $btnStatus = '<a class="pt-1px d-md-block" id="seguir" href="#">Seguir</a>';
+}
+
+?>
 <!doctype html>
-<html lang="pt-br">
+   <html lang="pt-br">
    <head>
       <!-- Required meta tags -->
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-         crossorigin="anonymous">
+      crossorigin="anonymous">
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-         crossorigin="anonymous"></script>
+      crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-         crossorigin="anonymous"></script>
+      crossorigin="anonymous"></script>
       <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="assets/fonts/icomoon/style.css">
       <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
       <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-         crossorigin="anonymous">
+      crossorigin="anonymous">
       <!-- Bootstrap CSS -->
       <!-- Style Sidebar-->
       <link rel="stylesheet" href="assets/css/style.css">
@@ -176,40 +228,125 @@
                <div class="col-md-8 col-xl-6 middle-wrapper">
                   <div class="row">
                      <div class="col-md-12 grid-margin">
-                        <div class="card gedf-card">
-                           <div class="card-header">
-                              <div class="d-flex justify-content-between align-items-center">
-                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="mr-2">
-                                       <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
+                                            <form method="POST" class="" enctype="multipart/form-data" id="postagem" name="publi" action="#">
+                        <div class="card-body">
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="message">post</label>
+                                        <textarea name="post_text" class="form-control" style="resize: none;" id="message" rows="3" placeholder="Escreva algo legal!"></textarea>
+                                        <div id="">
+                                            <img id="preview" width="120" style="padding-top:10px">
+                                        </div>
                                     </div>
-                                    <div class="ml-2">
-                                       <div class="h5 m-0">@<?= $row_verifica['name_user_aluno'] ?></div>
-                                       <div class="h7 text-muted"><?= $row_verifica['nome_aluno'] ?></div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="card-body">
-                              <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i> Hace 40 min</div>
-                              <a class="card-link" href="#">
-                                 <h5 class="card-title">Totam non adipisci hic! Possimus ducimus amet, dolores illo ipsum quos
-                                    cum.
-                                 </h5>
-                              </a>
-                              <p class="card-text">
-                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam sunt fugit reprehenderit consectetur exercitationem odio,
-                                 quam nobis? Officiis, similique, harum voluptate, facilis voluptas pariatur dolorum tempora sapiente
-                                 eius maxime quaerat.
-                                 <a href="https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU" target="_blank">https://mega.nz/#!1J01nRIb!lMZ4B_DR2UWi9SRQK5TTzU1PmQpDtbZkMZjAIbv97hU</a>
-                              </p>
-                           </div>
-                           <div class="card-footer">
-                              <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
-                              <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-                              <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
-                           </div>
+
+                                </div>
+
+                            </div>
+                            <div class="btn-toolbar justify-content-between">
+                                <div class="btn-group">
+                                    <button type="submit" id="but_upload" disabled name="publicar" class="btn back-ifba text-white" style="margin: 5px;border-radius: 5px;">Compartilhar</button>
+                                    <label for="file-input">
+                                        <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>    
+                                    </label>
+                                    <input type="file" id="file-input" name="file" style="display:none">
+                                    <input type="hidden" name="MM_insert" id="inpuFile" value="publi">
+                                </div>
+                                <label for="btn-reset">
+                                    <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>
+                                </label>
+                                <input type="reset" id="btn-reset" style="display:none">
+                            </div>
                         </div>
+                    </form>
+                        <?php 
+
+                        if($rowBuscaAluno == 0){
+                           echo '<div class="card">
+                           <div class="card-body text-center">
+                           '.$alunoInfo['nome_aluno'].' ainda não postou nada...
+                           </div>
+                           </div>';
+                        }else{
+
+                           while($pub = $pubs->fetch( PDO::FETCH_ASSOC )){
+
+                              if($pub['texto_post'] == 'https:'.$pub['texto_post']){
+                                 $pub['texto_post'] = '<a href='.$pub['texto_post'].'>'.$pub['texto_post'].'</a>';
+                              }
+                              echo '<br>';
+                              if($pub['media_post'] <> ""){
+                                 echo '<div class="card gedf-card">
+                                 <div class="card-header">
+                                 <div class="d-flex justify-content-between align-items-center">
+                                 <div class="d-flex justify-content-between align-items-center">
+                                 <div class="mr-2">
+                                 <img class="rounded-circle" width="45" src="'.$alunoInfo['foto_perfil'].'" alt="">
+                                 </div>
+                                 <div class="ml-2">
+                                 <div class="h5 m-0">@'.$alunoInfo['name_user_aluno'].'</div>
+                                 <div class="h7 text-muted">'.$alunoInfo['nome_aluno'].'</div>
+                                 </div>
+                                 </div>
+                                 </div>
+                                 </div>
+                                 <div class="card-body">
+                                 <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>'.$pub['data'].'</div>
+                                 <p class="card-text">            
+                                 '.$pub['texto_post'].'
+                                 </p>
+                                 <img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120"> 
+                                 </div>
+                                 <div class="card-footer">
+                                 <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
+                                 <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                                 <div class="dropdown">
+                                 <i class="fa fa-ellipsis-v" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></i>
+
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                 <a class="dropdown-item" href="#">Action</a>
+                                 <a class="dropdown-item" href="#">Another action</a>
+                                 <a class="dropdown-item" href="#">Something else here</a>
+                                 </div>
+                                 </div>
+                                 </div>
+                                 </div>'; 
+                              }else{
+                                 echo '<div class="card gedf-card">
+                                 <div class="card-header">
+                                 <div class="d-flex justify-content-between align-items-center">
+                                 <div class="d-flex justify-content-between align-items-center">
+                                 <div class="mr-2">
+                                 <img class="rounded-circle" width="45" src="'.$alunoInfo['foto_perfil'].'" alt="">
+                                 </div>
+                                 <div class="ml-2">
+                                 <div class="h5 m-0">@'.$alunoInfo['name_user_aluno'].'</div>
+                                 <div class="h7 text-muted">'.$alunoInfo['nome_aluno'].'</div>
+                                 </div>
+                                 </div>
+                                 </div>
+                                 </div>
+                                 <div class="card-body">
+                                 <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>'.$pub['data'].'</div>
+                                 <p class="card-text">            
+                                 '.$pub['texto_post'].'
+                                 </p>
+                                 </div>
+                                 <div class="card-footer">
+                                 <a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Like</a>
+                                 <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
+                                 <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+                                 </div>
+                                 </div>';
+                              }
+
+
+
+                           }
+
+                        }
+                        ?>
                      </div>
                      <div class="col-md-12">
                      </div>
@@ -392,7 +529,7 @@
       </div>
       <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-         crossorigin="anonymous"></script>
+      crossorigin="anonymous"></script>
       <script src="assets/js/autocomplete.js"></script>
       <script src="assets/js/main.js"></script>
       <script>
@@ -406,5 +543,5 @@
          });
       </script>
    </body>
-</html>
-<?php } ?>
+   </html>
+   <?php } ?>

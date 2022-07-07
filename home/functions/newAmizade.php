@@ -30,7 +30,10 @@ if($id_aluno_para == $id_aluno_de){
 		$sql = "INSERT INTO amizade (id_aluno_de, id_aluno_para) VALUES (?,?)";
 		$stmt= $pdo->prepare($sql);
 		$stmt->execute([$id_aluno_de, $id_aluno_para]);
-		echo '<script>$(this).attr("id","seguir").html("Seguindo");</script>';
+		
+		$res_verifica_amzd == 1;
+		echo $res_verifica_amzd;
+
 	}else if($res_verifica_amzd > 0){
 		$amizade = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para=:id_aluno_para AND id_aluno_de=:id_aluno_de");
 		$amizade->execute([
@@ -47,7 +50,12 @@ if($id_aluno_para == $id_aluno_de){
 		$stmt->execute([
 			'id' => $id
 		]);
-	}
+		$res_verifica_amzd == 0;
+		echo $res_verifica_amzd;
+
+		}
+
+
 
 /*
 $new_amizade = $pdo->prepare("INSERT INTO amizade (id_aluno_de, id_aluno_para) VALUES (':id_aluno_de',':id_aluno_para')");
