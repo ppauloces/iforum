@@ -9,7 +9,9 @@ foreach($resBuscaAluno as $sidebar){
 ?>
 <aside class="sidebar">
   <div class="toggle">
-    <a href="#" class="burger js-menu-toggle" id="" data-toggle="collapse" data-target="#main-navbar">
+    <a href="#"  style="font-size:30px;padding-left:10px;" class="js-menu-toggle" id="" data-toggle="collapse" data-target="#main-navbar">
+      <i class="fa fa-bars"></i>
+      <span class="sr-only">Toggle Menu</span>
       <span></span>
     </a>
   </div>

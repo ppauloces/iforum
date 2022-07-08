@@ -146,6 +146,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
                 <br>
                 <!-- POST -->
                 <div id="feed"><center><img src="assets/svg/loading.svg" width="50"></center></div>
+                
             </div>
             <div class="col-md-3 d-none d-md-block">
              <div class="card gedf-card">
@@ -218,6 +219,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
 <script src="../login/js/main.js"></script>
 <script src="assets/js/autocomplete.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
 <script>
 
 </script>

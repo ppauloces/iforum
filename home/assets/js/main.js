@@ -34,6 +34,7 @@ $(function() {
 });
 
 //função para carregar o Feed
+
 function carregaFeed() {
 
   jQuery.ajax({
@@ -47,6 +48,7 @@ function carregaFeed() {
 
 
 }
+
 
 //limpar campo file
 $("#btn-reset").on('click', function(){
