@@ -31,7 +31,7 @@ $number_of_rows = $result->fetchColumn();
 foreach($resBuscaAluno as $alunoInfo){
 
    if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
-      $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php">Editar Perfil</a>';
+      $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php?idupd='.$alunoInfo['id_aluno'].'">Editar Perfil</a>';
    }else{
       $btnStatus = '<a class="pt-1px d-md-block" id="seguir" href="#">Seguir</a>';
    }
