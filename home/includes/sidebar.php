@@ -18,7 +18,7 @@ foreach($resBuscaAluno as $sidebar){
   <div class="side-inner">
 
     <div class="profile">
-      <img src="<?= $sidebar['foto_perfil'] ?>" class="img-thumbnail img-fluid">
+      <img src="uploads/<?= $sidebar['foto_perfil'] ?>" class="img-thumbnail img-fluid">
       <h3 class="name"><?= $sidebar['nome_aluno'] ?></h3>
       <span class="country"><?= $sidebar['campus_aluno']  ?></span>
     </div>

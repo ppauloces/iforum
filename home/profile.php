@@ -80,7 +80,7 @@ foreach($resBuscaAluno as $alunoInfo){
                            </figure>
                            <div class="cover-body d-flex justify-content-between align-items-center">
                               <div>
-                                 <img class="img-thumbnail profile-pic" src="<?= $alunoInfo['foto_perfil'] ?>" alt="profile">
+                                 <img class="img-thumbnail profile-pic" src="uploads/<?= $alunoInfo['foto_perfil'] ?>" alt="profile">
                                  <span class="profile-name"><?= $alunoInfo['nome_aluno'] ?></span>
                               </div>
                               <div class="d-none d-md-block">
@@ -169,7 +169,7 @@ foreach($resBuscaAluno as $alunoInfo){
                                  <div class="d-flex justify-content-between align-items-center">
                                  <div class="d-flex justify-content-between align-items-center">
                                  <div class="mr-2">
-                                 <img class="rounded-circle" width="45" src="'.$alunoInfo['foto_perfil'].'" alt="">
+                                 <img class="rounded-circle" width="45" src="uploads/'.$alunoInfo['foto_perfil'].'" alt="">
                                  </div>
                                  <div class="ml-2">
                                  <div class="h5 m-0">@'.$alunoInfo['name_user_aluno'].'</div>
