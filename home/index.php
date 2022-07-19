@@ -3,13 +3,21 @@ require 'functions/conn.php';
 require 'functions/session.php';
 require 'functions/class.upload.php';
 
+$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno');
+$buscaAluno->bindParam(':num_matricula_aluno', $colname_Usuario);
+$buscaAluno->execute();
+$resBuscaAluno = $buscaAluno->fetch(PDO::FETCH_ASSOC);
+$rowBuscaAluno = $buscaAluno->rowCount();
+
+if($rowBuscaAluno == 0){
+    header('Location: ../index.php?erro');
+}
 
 $pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_post DESC");
 //$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
 $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
-
 
 
 ?>

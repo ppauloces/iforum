@@ -73,7 +73,7 @@ foreach($resBuscaAluno as $alunoInfo){
                     <div class="col-12 col-sm-auto mb-3">
                       <div class="mx-auto" style="width: 140px;">
                         <div class="d-flex justify-content-center align-items-center rounded" style="height: 140px;">
-                          <img class="img-thumbnail" width="145" src="uploads/<?=$alunoInfo['foto_perfil']?>" alt="">
+                          <img class="img-thumbnail"src="uploads/<?=$alunoInfo['foto_perfil']?>" alt="">
                         </div>
                       </div>
                     </div>
@@ -160,31 +160,61 @@ foreach($resBuscaAluno as $alunoInfo){
                         <input class="form-control" type="password" id="password1" placeholder="••••••" name="novaSenha1" minlength="6" maxlength="12" onKeyUp="validarSenha('password','password1');">
                         <span id="passwordst"></span>
                       </div>
-                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                 <div class="col d-flex justify-content-end">
-                   <button class="btn back-ifba text-white" id="btnEdit" type="submit">Salvar alterações</button>
-                   <input type="hidden" name="id_aluno" value="<?= $_GET['idupd'] ?>">
-                   <input type="hidden" name="email_antigo" value="<?php echo $alunoInfo['email_aluno']; ?>">
-                 </div>
+              </div>
+              <div class="row">
+               <div class="col d-flex justify-content-end">
+                 <button class="btn back-ifba text-white" id="btnEdit" type="submit">Salvar alterações</button>
+                 <input type="hidden" name="id_aluno" value="<?= $_GET['idupd'] ?>">
+                 <input type="hidden" name="email_antigo" value="<?php echo $alunoInfo['email_aluno']; ?>">
                </div>
-             </form>
+             </div>
+           </form>
 
-           </div>
          </div>
        </div>
      </div>
    </div>
  </div>
 </div>
+</div>
 
 </div>
 </div>
 </div>
 <div id="linkResultado"></div>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Crop Image Before Upload</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="img-container">
+          <div class="row">
+            <div class="col-md-8">
+              <img src="" id="sample_image" />
+            </div>
+            <div class="col-md-4">
+              <div class="preview"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+      </div>
+    </div>
+  </div>
+</div>
+<img src="upload/user.png" id="uploaded_image" class="img-responsive img-circle" />
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
@@ -195,6 +225,7 @@ crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+  
   $("#btnEdit").click(function(){
 
     var form=$("#updProfile");
@@ -213,45 +244,50 @@ crossorigin="anonymous"></script>
     });
   });
   $("#updProfile").submit(function(){ return false;});
+  
 </script>
 
 <script>
-function verificaForcaSenha() 
-{
-  var numeros = /([0-9])/;
-  var alfabeto = /([a-zA-Z])/;
-  var chEspeciais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
-
-  if($('#password').val().length<6) 
+  function verificaForcaSenha() 
   {
-    $('#password-status').html("<span style='color:red'>Fraco, insira no mínimo 6 caracteres</span>");
-  } else {    
-    if($('#password').val().match(numeros) && $('#password').val().match(alfabeto) && $('#password').val().match(chEspeciais))
-    {            
-      $('#password-status').html("<span style='color:green'><b>Forte</b></span>");
-    } else {
-      $('#password-status').html("<span style='color:orange'>Médio, insira um caracter especial</span>");
+    var numeros = /([0-9])/;
+    var alfabeto = /([a-zA-Z])/;
+    var chEspeciais = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+
+    if($('#password').val().length<6) 
+    {
+      $('#password-status').html("<span style='color:red'>Fraco, insira no mínimo 6 caracteres</span>");
+    } else {    
+      if($('#password').val().match(numeros) && $('#password').val().match(alfabeto) && $('#password').val().match(chEspeciais))
+      {            
+        $('#password-status').html("<span style='color:green'><b>Forte</b></span>");
+      } else {
+        $('#password-status').html("<span style='color:orange'>Médio, insira um caracter especial</span>");
+      }
     }
   }
-}
 
-function validarSenha(name1,name2)
-{
+  function validarSenha(name1,name2)
+  {
     var senha1 = document.getElementById(name1).value;
     var senha2 = document.getElementById(name2).value;
     console.log(senha1);
     if (senha1 != "" &&
-        senha2 != "" &&
-        senha1 === senha2)
-        {
-          $('#passwordst').html("<span style='color:green'><b>Senhas iguais</b></span>");
-        }
-        else
-        {
-          $('#passwordst').html("<span style='color:red'>Senhas diferentes</span>");
-        }
-}
+      senha2 != "" &&
+      senha1 === senha2)
+    {
+      $('#passwordst').html("<span style='color:green'><b>Senhas iguais</b></span>");
+    }
+    else
+    {
+      $('#passwordst').html("<span style='color:red'>Senhas diferentes</span>");
+    }
+  }
 </script>
+
+<script>
+
+  </script>
 </body>
 </html>
 <?php } ?>
