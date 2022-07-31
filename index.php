@@ -1,3 +1,5 @@
+<?php setcookie("tentativa", 1, time()+20); ?>
+
 <!doctype html>
 	<html lang="pt-br">
 	<head>
@@ -25,6 +27,7 @@
 								<div class="d-flex">
 									<div class="w-100">
 										<h3 class="mb-4" style="font-weight: 600;">Login</h3>
+
 									</div>
 									<div class="w-100">
 										<img src="login/images/logo.png" class="ml-5" width="100px" height="40px">
@@ -41,7 +44,7 @@
 									<input type="password" class="form-control" name="senha_aluno" placeholder="Senha">
 								</div>
 								<div class="form-group">
-									<button type="submit" id="botao"class="form-control rounded submit px-3 btnifba">Entrar</button>
+									<button type="submit" id="botao" class="form-control rounded submit px-3 btnifba">ENTRAR</button>
 								</div>
 								<div class="form-group d-md-flex">
 										<!--<div class="w-50 text-left">
