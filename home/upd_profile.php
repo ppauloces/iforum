@@ -137,14 +137,6 @@ foreach($resBuscaAluno as $alunoInfo){
                   <div class="col-12 col-sm-6 mb-3">
                     <div class="mb-2"><b>Mudar senha</b></div>
                     <div class="row">
-                      <div class="col">
-                        <div class="form-group">
-                          <label>Senha atual</label>
-                          <input class="form-control" type="password" placeholder="••••••" name="senhaAtual">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
                      <div class="col">
                        <div class="form-group">
                          <label>Nova senha</label>
@@ -225,7 +217,7 @@ crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-  
+
   $("#btnEdit").click(function(){
 
     var form=$("#updProfile");
@@ -248,6 +240,7 @@ crossorigin="anonymous"></script>
 </script>
 
 <script>
+
   function verificaForcaSenha() 
   {
     var numeros = /([0-9])/;
@@ -257,12 +250,15 @@ crossorigin="anonymous"></script>
     if($('#password').val().length<6) 
     {
       $('#password-status').html("<span style='color:red'>Fraco, insira no mínimo 6 caracteres</span>");
+      document.querySelector('#btnEdit').disabled = true;
     } else {    
       if($('#password').val().match(numeros) && $('#password').val().match(alfabeto) && $('#password').val().match(chEspeciais))
       {            
         $('#password-status').html("<span style='color:green'><b>Forte</b></span>");
+        document.querySelector('#btnEdit').disabled = false;
       } else {
         $('#password-status').html("<span style='color:orange'>Médio, insira um caracter especial</span>");
+        document.querySelector('#btnEdit').disabled = true;
       }
     }
   }
@@ -277,17 +273,19 @@ crossorigin="anonymous"></script>
       senha1 === senha2)
     {
       $('#passwordst').html("<span style='color:green'><b>Senhas iguais</b></span>");
+      document.querySelector('#btnEdit').disabled = false;
     }
     else
     {
       $('#passwordst').html("<span style='color:red'>Senhas diferentes</span>");
+      document.querySelector('#btnEdit').disabled = true;
     }
   }
 </script>
 
 <script>
 
-  </script>
+</script>
 </body>
 </html>
 <?php } ?>

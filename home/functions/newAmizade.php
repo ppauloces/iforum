@@ -2,11 +2,10 @@
 require 'conn.php';
 require 'session.php';
 
-$id_aluno_para = $_POST['postdata'];
-$id_aluno_de = $row_verifica['id_aluno'];
+extract($_POST);
 
 
-if($id_aluno_para == $id_aluno_de){
+if($eu == $ele){
 	echo "<script>  
 	Swal.fire({
 		icon: 'warning',
@@ -20,8 +19,8 @@ if($id_aluno_para == $id_aluno_de){
 
 	$amizade = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para=:id_aluno_para AND id_aluno_de=:id_aluno_de");
 	$amizade->execute([
-		'id_aluno_de' => $id_aluno_de,
-		'id_aluno_para' => $id_aluno_para
+		'id_aluno_de' => $eu,
+		'id_aluno_para' => $ele
 	]); 
 	$res_verifica_amzd = $amizade->rowCount();
 	$row_verifica_amzd = $amizade->fetchAll(PDO::FETCH_ASSOC);
@@ -29,16 +28,15 @@ if($id_aluno_para == $id_aluno_de){
 	if($res_verifica_amzd == 0){
 		$sql = "INSERT INTO amizade (id_aluno_de, id_aluno_para) VALUES (?,?)";
 		$stmt= $pdo->prepare($sql);
-		$stmt->execute([$id_aluno_de, $id_aluno_para]);
+		$stmt->execute([$eu, $ele]);
 		
 		$res_verifica_amzd == 1;
-		echo $res_verifica_amzd;
 
 	}else if($res_verifica_amzd > 0){
 		$amizade = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para=:id_aluno_para AND id_aluno_de=:id_aluno_de");
 		$amizade->execute([
-			'id_aluno_de' => $id_aluno_de,
-			'id_aluno_para' => $id_aluno_para
+			'id_aluno_de' => $eu,
+			'id_aluno_para' => $ele
 		]); 
 		$res_verifica_amzd = $amizade->rowCount();
 		$row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
@@ -51,7 +49,8 @@ if($id_aluno_para == $id_aluno_de){
 			'id' => $id
 		]);
 		$res_verifica_amzd == 0;
-		echo $res_verifica_amzd;
+		
+
 
 		}
 

@@ -3,39 +3,50 @@ require 'conn.php';
 require 'session.php';
 require 'class.upload.php';
 
-
 extract($_POST);
 
-$senhaAtualHash = md5($senhaAtual);
+if($novaSenha != $novaSenha1){
+	echo "
+	<script>  
+		Swal.fire({
+		icon: 'warning',
+		title: 'Atenção',
+		text: 'As senhas são diferentes',
+		});
+	</script>
+	";
+	die();
 
-if(empty($senhaAtualHash) || empty($novaSenha) || empty($novaSenha)){
+}
 
-	if ($email_aluno != $email_antigo) {
+	if(empty($novaSenha) || empty($novaSenha1)){
+
+		if ($email_aluno != $email_antigo) {
 
 	//VERIFICA SE JÁ EXISTE UM USUÁRIO
-		$verifica = $pdo->prepare("SELECT * FROM alunos WHERE email_aluno = :email");
-		$verifica->bindParam(':email', $email_aluno);
-		$verifica->execute();
-		$res_verifica = $verifica->rowCount();
-		$row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC ); 
+			$verifica = $pdo->prepare("SELECT * FROM alunos WHERE email_aluno = :email");
+			$verifica->bindParam(':email', $email_aluno);
+			$verifica->execute();
+			$res_verifica = $verifica->rowCount();
+			$row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC ); 
 
-	} else {
-		$res_verifica = 0;	
-	}
+		} else {
+			$res_verifica = 0;	
+		}
 
-	if($res_verifica > 0){
-		echo "
-		<script>  
-		Swal.fire({
-			icon: 'warning',
-			title: 'Atenção',
-			text: 'Esse email já foi obtido!',
-			});
-			</script>
-			";
-			die();
+		if($res_verifica > 0){
+			echo "
+			<script>  
+			Swal.fire({
+				icon: 'warning',
+				title: 'Atenção',
+				text: 'Esse email já foi obtido!',
+				});
+				</script>
+				";
+				die();
 
-		}else{
+			}else{
 
 		/*
 		*Author: Paulo Amaral
@@ -121,15 +132,6 @@ if(empty($senhaAtualHash) || empty($novaSenha) || empty($novaSenha)){
 			}
 
 		}else{
-
-
-
-	/*
-	*Author: Paulo Amaral
-	*Data: 11/07/2022
-	*Função: Verifica se a senha digitada no input da senha atual, está correta, se não cairá no else.
-	*/
-	if($senhaAtualHash === $row_verifica['senha_aluno']){
 
 		/*
 		*Author: Paulo Amaral
@@ -269,26 +271,13 @@ if(empty($senhaAtualHash) || empty($novaSenha) || empty($novaSenha)){
 								";
 								die();
 							}
-						}else{
-
-
-							echo "
-							<script>  
-							Swal.fire({
-								icon: 'warning',
-								title: 'Atenção',
-								text: 'Senha de usuário incorreta ou o campo está vazio!',
-								});
-								</script>
-								";
-								die();
-							}
-
-
-
-
-
 						}
+
+
+
+
+
+						
 
 
 

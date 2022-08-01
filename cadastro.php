@@ -43,7 +43,8 @@ require("home/functions/conn.php");
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">Email</label>
-									<input type="text" class="form-control" name="email_aluno" placeholder="Ex: fulano@tal.com" >
+									<input type="text" class="form-control" name="email_aluno" placeholder="Ex: fulano@tal.com" aria-describedby="emailHelp">
+									<small id="emailHelp" class="form-text text-muted">Não utilize seu email institucional, assim você não conseguirá receber email's de confirmação.</small>
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="name">Username</label>
