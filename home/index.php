@@ -3,6 +3,12 @@ require 'functions/conn.php';
 require 'functions/session.php';
 require 'functions/class.upload.php';
 
+/*
+QUERY PARA VERIFICAÇÃO DE SEGURANÇA
+VAI VERIFICAR SE EXISTE O PERFIL, SE O CARA TENTAR ACESSAR E NÃO EXISTIR, IRA DESTRUIR A SESSÃO 
+AO ENTRAR NO LAÇO
+*/
+
 $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno');
 $buscaAluno->bindParam(':num_matricula_aluno', $colname_Usuario);
 $buscaAluno->execute();
@@ -13,6 +19,7 @@ if($rowBuscaAluno == 0){
     header('Location: ../index.php?erro');
 }
 
+//QUERY PARA FILTRAR OS POSTS EXISTENTES
 $pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_post DESC");
 //$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
 $pubs->execute();
@@ -72,8 +79,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
         <nav class="navbar navbar-light bg-white">
             <a href="#" class="navbar-brand"></a>
             <!-- Default dropleft button -->
-
-        
+            
         <form class="form-inline" method="GET" id="buscar_aluno" action="users.php">
             <div class="input-group" style="margin-top:15px">
                 <!--<input type="text" class="form-control" id="buscar_aluno_auto" name="buscar_aluno_auto">-->

@@ -3,8 +3,6 @@ require '../home/functions/conn.php';
 
 extract($_POST);
 
-
-
 //VERIFICA SE JÁ EXISTE UM USUÁRIO COM O MESMO NUMERO DE MATRICULA
 $verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno");
 $verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
@@ -75,6 +73,7 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
 
         $senha_aluno = md5($_POST['senha_aluno']);
 
+        //QUERY PARA A CRIAÇÃO DE NOVO USUARIO
         $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno)");
         $cad_aluno->execute(array(
           ':nome_aluno' => $nome_aluno,

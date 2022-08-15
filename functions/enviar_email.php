@@ -41,18 +41,18 @@ $mail = new PHPMailer();
 $mail->IsSMTP();
 
 $mail->CharSet = "UTF-8";
-//$mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
+$mail->SMTPDebug = 1;  // debugging: 1 = errors and messages, 2 = messages only
 $mail->SMTPAuth = true;  // authentication enabled
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // secure transfer enabled REQUIRED for GMail
 $mail->SMTPAutoTLS = false;
 $mail->Host = 'smtp.gmail.com';
 $mail->Port = 587;
 
-$mail->Username = "ppauloces27@gmail.com";
-$mail->Password = "ipxmwpfcrihjmaos";
-$mail->SetFrom('ppauloces27@gmail.com','Paulo');
+$mail->Username = "iforum090@gmail.com";
+$mail->Password = "ynhyuapirkwqzzbs";
+$mail->SetFrom('iforum090@gmail.com','Equipe IFórum');
 $mail->addAddress($email, $primeiroNome[0]);     //Add a recipient
-$mail->addReplyTo('ppauloces27@gmail.com', 'Paulo');
+$mail->addReplyTo('iforum90@gmail.com', 'Equipe IFórum');
 //$mail->addAttachment($uploadfile);
 
 $mail->Subject = "Confirme seu Email, ".$primeiroNome[0].'!';

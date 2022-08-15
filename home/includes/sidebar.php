@@ -6,6 +6,12 @@
   $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
 
 foreach($resBuscaAluno as $sidebar){
+     if($sidebar['foto_perfil']==""){
+      $foto = "padrao.png";
+   }else{
+      
+      $foto = $sidebar['foto_perfil'];
+   }
 ?>
 <aside class="sidebar">
   <div class="toggle">
@@ -18,7 +24,7 @@ foreach($resBuscaAluno as $sidebar){
   <div class="side-inner">
 
     <div class="profile">
-      <img src="uploads/<?= $sidebar['foto_perfil'] ?>" class="img-thumbnail img-fluid">
+      <img src="uploads/<?= $foto ?>" class="img-thumbnail img-fluid">
       <h3 class="name"><?= $sidebar['nome_aluno'] ?></h3>
       <span class="country"><?= $sidebar['campus_aluno']  ?></span>
     </div>
