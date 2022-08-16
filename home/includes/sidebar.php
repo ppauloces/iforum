@@ -7,10 +7,10 @@
 
 foreach($resBuscaAluno as $sidebar){
      if($sidebar['foto_perfil']==""){
-      $foto = "padrao.png";
+      $foto1 = "padrao.png";
    }else{
       
-      $foto = $sidebar['foto_perfil'];
+      $foto1 = $sidebar['foto_perfil'];
    }
 ?>
 <aside class="sidebar">
@@ -24,7 +24,7 @@ foreach($resBuscaAluno as $sidebar){
   <div class="side-inner">
 
     <div class="profile">
-      <img src="uploads/<?= $foto ?>" class="img-thumbnail img-fluid">
+      <img src="uploads/<?= $foto1 ?>" class="img-thumbnail img-fluid">
       <h3 class="name"><?= $sidebar['nome_aluno'] ?></h3>
       <span class="country"><?= $sidebar['campus_aluno']  ?></span>
     </div>

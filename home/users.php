@@ -118,8 +118,6 @@ if(empty($_GET['users'])){
                   $res_verifica_amzd = $amizade->rowCount();
                   $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
-                  echo $res_verifica_amzd;
-
                   if($res_verifica_amzd > 0){
                     $btnStatus = '<a class="btn back-ifba text-white pt-1px d-md-block" id="seguir" codigo="'.$resultsAluno["id_aluno"].'" >Seguindo</a>';
                 }else if($res_verifica_amzd == 0){
