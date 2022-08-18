@@ -17,7 +17,6 @@ extract($_POST);
 
 if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 
-
 	echo "<script>
 
 	Swal.fire({
@@ -30,6 +29,10 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 		setTimeout(function () { window.location.reload() }, 20000);
 		</script>";
 
+	/*
+	QUERY PARA FILTRAR O EMAIL PELO NUMERO DE MATRICULA, PARA ENVIAR
+	O EMAIL ATRAVES DO NUMERO DE MATRICULA
+	*/
 	$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno");
 	$verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
 	$verifica->execute();
@@ -47,7 +50,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 
 }else if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>5)){
 
-		echo "<script>
+	echo "<script>
 
 	Swal.fire({
 		icon: 'error',
@@ -60,10 +63,12 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 		</script>";
 
 		die;
-}
+	}
 
 
-
+	/*
+	CONDIÇÃO PARA VERIFICAR SE OS CAMPOS DO FORMULARIO ESTÃO VAZIOS
+	*/
 	if (empty($num_mat_aluno) || empty($senha_aluno)) {
 
 
@@ -77,7 +82,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 			die;
 
 		}else{
-
+			//CRIPTOGRAFAR A SENHA RECEBIDA PELO FORMULARIO
 			$senha = md5($senha_aluno);
 
 			//VERIFICA SE O USUARIO EXISTE PARA CRIAR O LOGIN E ACESSAR
@@ -86,8 +91,8 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 			$verifica->bindParam(':senha_aluno', $senha);
 			$verifica->execute();
 			$res_verifica = $verifica->rowCount();
-			$row_verifica = $verifica->fetchAll( PDO::FETCH_ASSOC );
-
+			$row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
+			echo $row_verifica['id_aluno'];
 
 			if($res_verifica > 0) {
 
@@ -96,8 +101,12 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 				}
 
 				$_SESSION['login'] = $num_mat_aluno;
-
-
+				$data = date("d-m-Y H:s");
+				
+				$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
+						$registro_login->execute(array(
+							':id_usuario_login' => $row_verifica['id_aluno']
+						));
 
 				echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
 				echo "<script>
@@ -134,37 +143,16 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 						}
 
 
+						echo "<script>
 
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Dados não conferem ou usuário não cadastrado. Tente novamente!',
+							footer: ''
+							});
+							</script>";
 
-
-
-
-
-
-
-				//$tentativa = 1;
-
-
-				//setcookie("tentativa", $tentativa, time()+300);
-
-
-				//echo "<h2>" . $_COOKIE["tentativa"] + 1 ."</h2>";
-
-
-
-
-
-				
-				echo "<script>
-
-				Swal.fire({
-					icon: 'error',
-					title: 'Oops...',
-					text: 'Dados não conferem ou usuário não cadastrado. Tente novamente!',
-					footer: ''
-					});
-					</script>";
-					
 
 
 
@@ -172,7 +160,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 
 
 	//echo "<div class=\"card-panel amber darken-2 center-align\">Usuário/senha não confere. Tente novamente.</div>";				
-				}
-			}
+						}
+					}
 
-			?>
+					?>

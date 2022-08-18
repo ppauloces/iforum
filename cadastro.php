@@ -1,8 +1,7 @@
 <?php 
 require("home/functions/conn.php");
-
-
 ?>
+
 <!doctype html>
 	<html lang="pt-br">
 	<head>

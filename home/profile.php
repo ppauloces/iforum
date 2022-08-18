@@ -12,7 +12,7 @@ VAI VERIFICAR SE EXISTE O PERFIL, SE O CARA TENTAR ACESSAR E NÃO EXISTIR, IRA D
 AO ENTRAR NO LAÇO
 */
 
-$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
+$buscaAluno = $pdo->prepare('SELECT * FROM alunos,amizade WHERE id_aluno = :id_aluno');
 $buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
 $buscaAluno->execute();
 $resBuscaAluno1 = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
@@ -55,24 +55,10 @@ foreach($resBuscaAluno1 as $alunoInfo){
    if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
       $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php?idupd='.$alunoInfo['id_aluno'].'">Editar Perfil</a>';
    }else{
-      if($res_verifica_amzd > 0){
-         $btnStatus = '
-         <div id="divamz">
-         <form method="POST" id="amizade">
-         <input type="hidden" name="ele" value="'.$_GET['id'].'">
-         <input type="hidden" name="eu" value="'.$row_verifica['id_aluno'].'">
-         <button type="button"class="form-control rounded submit px-3 btnifba" id="seguir"><span><span>Comprar</span></span></button>
-         </form>
-         </div>';
+      if($alunoInfo['status'] == 0){
+         $btnStatus = '<a id="seguir" ele="'.$_GET['id'].'" eu="'.$row_verifica['id_aluno'].'">Seguir</a>';
       }else{
-         $btnStatus = '
-         <div id="divamz">
-         <form method="POST" id="amizade">
-         <input type="hidden" name="ele" value="'.$_GET['id'].'">
-         <input type="hidden" name="eu" value="'.$row_verifica['id_aluno'].'">
-         <button type="button"class="form-control onclick="seguir('.$_GET['id'].')" rounded submit px-3 btnifba" id="seguir"><span><span>Comprar</span></span></button>
-         </form>
-         </div>';
+         $btnStatus = '<a id="seguir">Seguindo</a>';
       }
    }
    
@@ -317,54 +303,9 @@ foreach($resBuscaAluno1 as $alunoInfo){
 crossorigin="anonymous"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
+
 <script>
-
-   function seguir(<?php $_GET['id'] ?>
-      ){
-      eu = <?php $row_verifica['id_aluno'] ?>
-      ele = <?php $_GET['id'] ?>
-      $j.ajax({
-         type: "POST",
-         url: "functions/newAmizade.php",
-         data: {eu, ele},
-         success: function (data)
-         {
-            i = $j("#seguir");
-            if(php == 0){
-               alert(eu+ele);
-               i.html(i.html().replace("Comprar","Remover"))
-            }else if(php == 1){
-               alert(eu+ele);
-               i.html(i.html().replace("Comprar","Remover"))
-            }
-            $("#seguir").html(data);
-         }
-      });
-      return false;
-   }
-   jQuery('#amizade').submit(function () {
-      event.preventDefault();
-      var dados = jQuery(this).serialize();
-      var php = "<?= $res_verifica_amzd ?>";
-      $( "#div" ).click(function() {
-         $("*").each(function () { 
-            if (this.php > 0){ 
-              $(this).html($(this).html().replace(/Seguindo/g, "Seguir"));
-           }});
-
-      });
-      jQuery.ajax({
-         type: "POST",
-         url: "functions/newAmizade.php",
-         data: dados,
-         success: function (data)
-         {
-            $("#seguir").html(data);
-         }
-      });
-      return false;
-   });
-
+  
 </script>
 </body>
 </html>

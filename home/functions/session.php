@@ -16,6 +16,7 @@ $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 
+$usuarioID = $row_verifica['id_aluno'];
 
 // ** Logout the current user. **
 $logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
@@ -24,6 +25,10 @@ if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
 }
 
 if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
+  $logout = $pdo->prepare("UPDATE registro_login SET data_saida = now() WHERE id_usuario_login = :id_aluno and data_saida is NULL");
+  $logout->bindParam(':id_aluno', $usuarioID);
+      $logout->execute();
+
   //to fully log out a visitor we need to clear the session varialbles
   $_SESSION['MM_Username'] = NULL;
   $_SESSION['MM_UserGroup'] = NULL;

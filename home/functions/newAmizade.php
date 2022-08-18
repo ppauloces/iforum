@@ -24,7 +24,9 @@ if($eu == $ele){
 	]); 
 	$res_verifica_amzd = $amizade->rowCount();
 	$row_verifica_amzd = $amizade->fetchAll(PDO::FETCH_ASSOC);
-
+	$contaAmizade = count($row_verifica_amzd);
+	echo $contaAmizade;
+	die();
 	if($res_verifica_amzd == 0){
 		$sql = "INSERT INTO amizade (id_aluno_de, id_aluno_para) VALUES (?,?)";
 		$stmt= $pdo->prepare($sql);

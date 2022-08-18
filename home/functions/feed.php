@@ -3,10 +3,11 @@ require 'conn.php';
 require 'session.php';
 require 'class.upload.php';
 
-$pubs = $pdo->prepare("SELECT * FROM post ORDER BY id_post DESC");
+$pubs = $pdo->prepare("SELECT *,id_aluno FROM post,alunos WHERE id_aluno = id_usuario ORDER BY id_post DESC");
 //$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
+$row_pubs1 = $pubs->fetch(PDO::FETCH_ASSOC);
 
 $buscaAluno = $pdo->prepare('SELECT * FROM alunos');
 //$buscaAluno->bindParam(':num_matricula_aluno', $colname_Usuario, PDO::PARAM_STR);
@@ -14,6 +15,11 @@ $buscaAluno->execute();
 $resBuscaAluno = $buscaAluno->fetch(PDO::FETCH_ASSOC);
 $rowBuscaAluno = $buscaAluno->rowCount();
 
+if($row_pubs1['foto_perfil'] == ""){
+	$foto = "padrao.png";
+}else{
+	$foto = $row_pubs1['foto_perfil'];
+}
 
 while($pub = $pubs->fetch( PDO::FETCH_ASSOC )){
 
@@ -57,7 +63,7 @@ while($pub = $pubs->fetch( PDO::FETCH_ASSOC )){
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="mr-2">
-		<img class="rounded-circle" width="45" src="uploads/'.$row_verifica['foto_perfil'].'" alt="">
+		<img class="rounded-circle" width="45" src="uploads/'.$foto.'" alt="">
 		</div>
 		<div class="ml-2">
 		<div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
@@ -104,7 +110,7 @@ while($pub = $pubs->fetch( PDO::FETCH_ASSOC )){
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="mr-2">
-		<img class="rounded-circle" width="55" src="uploads/'.$row_verifica['foto_perfil'].'" alt="">
+		<img class="rounded-circle" width="55" src="uploads/'.$foto.'" alt="">
 		</div>
 		<div class="ml-2">
 		<div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
