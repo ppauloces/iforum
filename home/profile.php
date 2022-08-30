@@ -1,10 +1,12 @@
 <?php 
 require 'functions/conn.php';
 require 'functions/session.php';
+require 'functions/functions.php';
 
 if(empty($_GET['id'])){
    header("Location: index.php");
 }
+
 
 /*
 QUERY PARA VERIFICAÇÃO DE SEGURANÇA
@@ -12,7 +14,7 @@ VAI VERIFICAR SE EXISTE O PERFIL, SE O CARA TENTAR ACESSAR E NÃO EXISTIR, IRA D
 AO ENTRAR NO LAÇO
 */
 
-$buscaAluno = $pdo->prepare('SELECT * FROM alunos,amizade WHERE id_aluno = :id_aluno');
+$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
 $buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
 $buscaAluno->execute();
 $resBuscaAluno1 = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
@@ -43,10 +45,9 @@ $number_of_rows = $result->fetchColumn();
 QUERY QUE IRÁ VERIFICAR SE EXISTE AMIZADE NA TABELA AMIZADE
 */
 $amizade = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para=:id_aluno_para AND id_aluno_de=:id_aluno_de");
-$amizade->execute([
-   'id_aluno_de' => $row_verifica['id_aluno'],
-   'id_aluno_para' => $_GET['id']
-]); 
+$amizade->bindParam(':id_aluno_de', $row_verifica['id_aluno']);
+$amizade->bindParam(':id_aluno_para', $_GET['id']);
+$amizade->execute(); 
 $res_verifica_amzd = $amizade->rowCount();
 $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
@@ -55,10 +56,10 @@ foreach($resBuscaAluno1 as $alunoInfo){
    if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
       $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php?idupd='.$alunoInfo['id_aluno'].'">Editar Perfil</a>';
    }else{
-      if($alunoInfo['status'] == 0){
-         $btnStatus = '<a id="seguir" ele="'.$_GET['id'].'" eu="'.$row_verifica['id_aluno'].'">Seguir</a>';
+      if($res_verifica_amzd == 0){
+         $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguir</a>';
       }else{
-         $btnStatus = '<a id="seguir">Seguindo</a>';
+         $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguindo</a>';
       }
    }
    
@@ -297,15 +298,35 @@ foreach($resBuscaAluno1 as $alunoInfo){
 
 <div id="linkResultado"></div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="assets/js/jqueryoff.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquerypopper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-crossorigin="anonymous"></script>
+crossorigin="anonymous"></script>-->
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/main.js"></script>
+<!--<script src="assets/js/jqueryoff.js"></script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquerypopper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+crossorigin="anonymous"></script>-->
 
 <script>
-  
+   $("#seguir").on("click",function(){
+      var eu = $("#seguir").attr("eu");
+      var ele = $("#seguir").attr("ele");
+
+      $.ajax({
+         url: 'functions/newAmizade.php',
+         type: 'POST',
+         data: {eu:eu,ele:ele},
+         success: function(a){
+            $("#seguir").html(a);
+         }
+      })
+   });
 </script>
 </body>
 </html>

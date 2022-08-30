@@ -25,6 +25,8 @@ if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
 }
 
 if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
+
+  //AO ENCERRAR A SESSAO, IRA CADASTRAR A DATA E HORA QUE SAIU
   $logout = $pdo->prepare("UPDATE registro_login SET data_saida = now() WHERE id_usuario_login = :id_aluno and data_saida is NULL");
   $logout->bindParam(':id_aluno', $usuarioID);
       $logout->execute();

@@ -50,8 +50,8 @@ foreach($resBuscaAluno as $sidebar){
         <ul>
           <li><a href="index.php"><span class="icon-home mr-3"></span>Feed</a></li>
           <li><a href="profile.php?id=<?= $sidebar['id_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
-          <li><a href="#"><span class="icon-notifications mr-3"></span>Notificações</a></li>
-          <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
+          <li><a href="notifications.php"><span class="icon-notifications mr-3"></span>Notificações</a></li>
+          <li><a href="messages.php"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
           <li><a href="definicoes.php"><span class="icon-gear mr-3"></span>Configurações</a></li>
           <li><a href="<?php echo $logoutAction ?>"><span class="icon-sign-out mr-3"></span>Sair</a></li>
         </ul>

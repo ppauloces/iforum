@@ -177,52 +177,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
     </div>
 </div>
 
-<div class="modal fade d-sm-none" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <form method="POST" enctype="multipart/form-data" id="postagemMobile" name="publiMobile" action="#">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="submit" id="but_uploadMobile" disabled name="publicar" class="btn back-ifba text-white">Compartilhar</button>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-      </div>
-      <div class="modal-body">
-        <div class="card-body">
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="posts" role="tabpanel" aria-labelledby="posts-tab">
-                    <div class="form-group">
-                        <label class="sr-only" for="message">post</label>
-                        <textarea name="post_text" class="form-control" style="resize: none;" id="messageMobile" rows="3" placeholder="Escreva algo legal!"></textarea>
-                        <div id="">
-                            <img id="" src="" width="120" style="padding-top:10px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-toolbar justify-content-between">
-                <div class="btn-group">   
-                    <label for="file-input">
-                        <i class="fa fa-picture-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>    
-                    </label>
-                    <input type="file" id="file-inputMobile" name="file" style="display:none">
-                    <input type="hidden" name="MM_insertMobile" id="inpuFile" value="publi">
-                </div>
-                <label for="btn-reset">
-                    <i class="fa fa-trash-o" aria-hidden="true" style="font-size: 30px;margin: 5px;padding-top: 5px;cursor: pointer;"></i>
-                </label>
-                <input type="reset" id="btn-reset" onclick="javascript:limpar()" style="display:none">
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-</form>
-</div>
 
-<a href="" class="float d-sm-none" data-toggle="modal" data-target="#exampleModalCenter">
-    <i class="fa fa-pencil my-float"></i>
-</a>
 <div id="linkResultado"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>

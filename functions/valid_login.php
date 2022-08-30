@@ -15,7 +15,8 @@ session_start();
 
 extract($_POST);
 
-if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
+//VERIFICA SE EXISTE TENTATIVA E TENTATIVA FOR IGUAL A 5
+if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 
 	echo "<script>
 
@@ -92,7 +93,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 			$verifica->execute();
 			$res_verifica = $verifica->rowCount();
 			$row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
-			echo $row_verifica['id_aluno'];
+			
 
 			if($res_verifica > 0) {
 
@@ -101,8 +102,8 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 				}
 
 				$_SESSION['login'] = $num_mat_aluno;
-				$data = date("d-m-Y H:s");
 				
+				//INSERE A DATA E HORA DE LOGIN
 				$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
 						$registro_login->execute(array(
 							':id_usuario_login' => $row_verifica['id_aluno']
@@ -130,18 +131,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]==5)) {
 
 						$tentativa = $_COOKIE["tentativa"]+1;
 
-						setcookie("tentativa", $tentativa, time()+10);
-
-
-
-						if(isset($_COOKIE["tentativa"])) {
-
-							//echo "Você errou '".$_COOKIE["tentativa"]."' vez.";
-
-						} else {
-							echo "";
-						}
-
+						setcookie("tentativa", $tentativa, time()+20);
 
 						echo "<script>
 

@@ -1,5 +1,6 @@
 <?php 
 require '../home/functions/conn.php';
+require 'bem_vindo.php';
 
 extract($_POST);
 
@@ -24,7 +25,7 @@ $verificaMail->execute();
 $res_verificaMail = $verificaMail->rowCount();
 $row_verificaMail = $verificaMail->fetchAll( PDO::FETCH_ASSOC );
 
-if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty($username) || empty($_POST['senha_aluno'])) {
+if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty($username) || empty($senha_aluno)) {
 
 
   echo "<script>  
@@ -39,7 +40,6 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
   } else if (filter_var($email_aluno, FILTER_VALIDATE_EMAIL) === FALSE) {
 
     echo "<script>
-
     Swal.fire({
       icon: 'warning',
       title: 'Atenção',
@@ -90,7 +90,7 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
         
 
         $loginUsername=$num_mat_aluno;
-        $password = md5($senha);
+        //$password = md5($senha_aluno);
         $MM_fldUserAuthorization = "";
         $MM_redirectLoginSuccess = "home/";
         $MM_redirectLoginFailed = "index.php?err";
@@ -108,6 +108,8 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
           echo "<script>window.location.href = 'home/'</script>";
         }
 
+        bemVindo($email_aluno,$nome_aluno);
+
         echo "<script>
         Swal.fire({
           icon: 'success',  
@@ -115,13 +117,12 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
           showDenyButton: false,
           showCancelButton: false,
           confirmButtonText: 'Fazer Login',
-          confirmButtonColor: '#3085d6',
+          confirmButtonColor: '#2F9E41',
           }).then((result) => {
             if (result.isConfirmed) {
               setTimeout(function () { window.location.href = 'index.php'; }, 1000);
             } 
             })
-
             </script>";
 
           }
