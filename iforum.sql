@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21-Jul-2022 às 02:29
+-- Tempo de geração: 31-Ago-2022 às 23:44
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.2
 
@@ -44,9 +44,8 @@ CREATE TABLE `alunos` (
 --
 
 INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`, `foto_perfil`, `bio_aluno`, `num_matricula_aluno`, `senha_aluno`, `campus_aluno`) VALUES
-(20, 'Paulo Amaral', 'paulo@gmail.com', 'ppauloces', '86eaae5937c39c5c331ad8357f3bce5d.jpg', 'Olá.... Sou Paulo aa', '201913600047', '202cb962ac59075b964b07152d234b70', 'CAMPUS Eunápolis'),
-(21, 'Otto Maia', 'otto@gmail.com', 'ottomb3', 'uploads/2.jpg', '', '201913600030', '202cb962ac59075b964b07152d234b70', 'CAMPUS Maracanã'),
-(23, 'Ester Viana', 'ester@gmail.com', 'ester', 'uploads/4.jpg', '', '201913600012', '202cb962ac59075b964b07152d234b70', 'CAMPUS Almenara');
+(31, 'Thiago', 'thiago@gmail.com', 'thiago', '', '', '1234', '81dc9bdb52d04dc20036dbd8313ed055', 'CAMPUS Teresina I'),
+(32, 'Paulo Amaral', 'ppauloces27@gmail.com', 'ppauloces', '835fe9e259cb0fd3b698e3091bfaefb3.png', '', '123', '202cb962ac59075b964b07152d234b70', 'CAMPUS Eunápolis');
 
 -- --------------------------------------------------------
 
@@ -57,7 +56,8 @@ INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`
 CREATE TABLE `amizade` (
   `id_amzd` int(11) NOT NULL,
   `id_aluno_de` int(11) NOT NULL,
-  `id_aluno_para` int(11) NOT NULL
+  `id_aluno_para` int(11) NOT NULL,
+  `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -506,7 +506,89 @@ INSERT INTO `post` (`id_post`, `id_usuario`, `texto_post`, `media_post`, `data`)
 (300, 20, 'asda', '', '2022-07-12'),
 (301, 20, 'fgdfgdgdf', '', '2022-07-12'),
 (302, 20, 'Bom dia!', '', '2022-07-12'),
-(303, 20, 'Olá joao', '', '2022-07-19');
+(303, 20, 'Olá joao', '', '2022-07-19'),
+(304, 20, 'oi', '', '2022-07-31'),
+(305, 20, 'oi', '', '2022-08-02'),
+(306, 20, 'teste', '', '2022-08-02'),
+(307, 21, '', '6a206a3099949c45b7f8ec1ee5e10cd6.jpg', '2022-08-09'),
+(308, 21, 'oiiiiiii', '6e125849d65d59c9a690ba97e3bb3b69.jpg', '2022-08-16'),
+(309, 23, 'oi', '', '2022-08-17'),
+(310, 23, 'oi', '', '2022-08-17'),
+(311, 23, 'des', '', '2022-08-17'),
+(312, 23, 'paulo', '', '2022-08-17'),
+(313, 23, 'oi', '', '2022-08-17'),
+(314, 21, 'oi', '', '2022-08-18'),
+(315, 21, 'teste', '', '2022-08-18'),
+(316, 21, 'teste', '', '2022-08-18'),
+(317, 21, 'o', '', '2022-08-18'),
+(318, 21, 'o', '', '2022-08-18'),
+(319, 21, 'p', '', '2022-08-18'),
+(320, 21, 'p', '', '2022-08-18'),
+(321, 21, 'm', '', '2022-08-18'),
+(322, 21, 'm', '', '2022-08-18'),
+(323, 21, 'n', '', '2022-08-18'),
+(324, 21, 'n', '', '2022-08-18'),
+(325, 21, 'l', '', '2022-08-18'),
+(326, 21, 'm', '', '2022-08-18'),
+(327, 21, 'a', '', '2022-08-18'),
+(328, 21, 'j', '', '2022-08-18'),
+(329, 21, 'm', '', '2022-08-18'),
+(330, 21, 'jjjj', '', '2022-08-18'),
+(331, 21, 'o', '', '2022-08-18'),
+(332, 21, 'l', '', '2022-08-20'),
+(333, 21, 'l\r\nl', '', '2022-08-20'),
+(334, 21, 'ç', '', '2022-08-20'),
+(335, 21, 'm', '', '2022-08-21'),
+(336, 32, 'oi', '', '2022-08-28'),
+(337, 32, 'oi', '', '2022-08-28'),
+(338, 32, 'teste', '', '2022-08-28'),
+(339, 32, 'paulo', '', '2022-08-28'),
+(340, 32, 'cesar', '', '2022-08-28'),
+(341, 32, 'oiiii', '', '2022-08-28'),
+(342, 32, 'oi', '9bbcdfcb03890c092ca068dbfed18428.jpg', '2022-08-28');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `registro_login`
+--
+
+CREATE TABLE `registro_login` (
+  `id_login` int(11) NOT NULL,
+  `id_usuario_login` int(11) NOT NULL,
+  `data_entrada` datetime NOT NULL,
+  `data_saida` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `registro_login`
+--
+
+INSERT INTO `registro_login` (`id_login`, `id_usuario_login`, `data_entrada`, `data_saida`) VALUES
+(15, 31, '2022-08-23 07:36:42', '2022-08-23 07:39:13'),
+(16, 31, '2022-08-23 07:39:22', NULL),
+(17, 32, '2022-08-23 08:20:36', '2022-08-23 08:22:07'),
+(18, 32, '2022-08-23 08:24:16', '2022-08-23 08:24:33'),
+(19, 31, '2022-08-23 08:36:51', NULL),
+(20, 31, '2022-08-23 08:36:52', NULL),
+(21, 32, '2022-08-27 15:51:44', NULL),
+(22, 32, '2022-08-28 11:49:53', NULL),
+(23, 32, '2022-08-29 19:26:27', NULL),
+(24, 32, '2022-08-30 19:17:47', NULL),
+(25, 31, '2022-08-30 19:44:47', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `reply`
+--
+
+CREATE TABLE `reply` (
+  `id_reply` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  `id_aluno_reply` int(11) NOT NULL,
+  `mensagem` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tabelas despejadas
@@ -546,6 +628,18 @@ ALTER TABLE `post`
   ADD PRIMARY KEY (`id_post`);
 
 --
+-- Índices para tabela `registro_login`
+--
+ALTER TABLE `registro_login`
+  ADD PRIMARY KEY (`id_login`);
+
+--
+-- Índices para tabela `reply`
+--
+ALTER TABLE `reply`
+  ADD PRIMARY KEY (`id_reply`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -553,13 +647,13 @@ ALTER TABLE `post`
 -- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de tabela `amizade`
 --
 ALTER TABLE `amizade`
-  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
 
 --
 -- AUTO_INCREMENT de tabela `estado`
@@ -577,7 +671,19 @@ ALTER TABLE `institutos`
 -- AUTO_INCREMENT de tabela `post`
 --
 ALTER TABLE `post`
-  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=304;
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
+
+--
+-- AUTO_INCREMENT de tabela `registro_login`
+--
+ALTER TABLE `registro_login`
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT de tabela `reply`
+--
+ALTER TABLE `reply`
+  MODIFY `id_reply` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
