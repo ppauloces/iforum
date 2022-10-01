@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 31-Ago-2022 às 23:44
--- Versão do servidor: 10.4.22-MariaDB
--- versão do PHP: 8.1.2
+-- Generation Time: 01-Set-2022 às 17:01
+-- Versão do servidor: 10.1.40-MariaDB
+-- versão do PHP: 7.1.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `iforum`
+-- Database: `iforum`
 --
 
 -- --------------------------------------------------------
@@ -36,16 +37,17 @@ CREATE TABLE `alunos` (
   `bio_aluno` varchar(255) NOT NULL,
   `num_matricula_aluno` varchar(50) NOT NULL,
   `senha_aluno` varchar(50) NOT NULL,
-  `campus_aluno` varchar(150) NOT NULL
+  `campus_aluno` varchar(150) NOT NULL,
+  `data_cadastro` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`, `foto_perfil`, `bio_aluno`, `num_matricula_aluno`, `senha_aluno`, `campus_aluno`) VALUES
-(31, 'Thiago', 'thiago@gmail.com', 'thiago', '', '', '1234', '81dc9bdb52d04dc20036dbd8313ed055', 'CAMPUS Teresina I'),
-(32, 'Paulo Amaral', 'ppauloces27@gmail.com', 'ppauloces', '835fe9e259cb0fd3b698e3091bfaefb3.png', '', '123', '202cb962ac59075b964b07152d234b70', 'CAMPUS Eunápolis');
+INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`, `foto_perfil`, `bio_aluno`, `num_matricula_aluno`, `senha_aluno`, `campus_aluno`, `data_cadastro`) VALUES
+(31, 'Thiago', 'thiago@gmail.com', 'thiago', '', '', '1234', '81dc9bdb52d04dc20036dbd8313ed055', 'CAMPUS Teresina I', '0000-00-00 00:00:00'),
+(32, 'Paulo Amaral', 'ppauloces27@gmail.com', 'ppauloces', '835fe9e259cb0fd3b698e3091bfaefb3.png', '', '123', '202cb962ac59075b964b07152d234b70', 'CAMPUS Eunápolis', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -57,7 +59,7 @@ CREATE TABLE `amizade` (
   `id_amzd` int(11) NOT NULL,
   `id_aluno_de` int(11) NOT NULL,
   `id_aluno_para` int(11) NOT NULL,
-  `status` int(11) DEFAULT NULL
+  `status_amizade` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -575,7 +577,9 @@ INSERT INTO `registro_login` (`id_login`, `id_usuario_login`, `data_entrada`, `d
 (22, 32, '2022-08-28 11:49:53', NULL),
 (23, 32, '2022-08-29 19:26:27', NULL),
 (24, 32, '2022-08-30 19:17:47', NULL),
-(25, 31, '2022-08-30 19:44:47', NULL);
+(25, 31, '2022-08-30 19:44:47', NULL),
+(26, 32, '2022-09-01 10:58:19', NULL),
+(27, 31, '2022-09-01 11:31:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -591,17 +595,17 @@ CREATE TABLE `reply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Índices para tabelas despejadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `alunos`
+-- Indexes for table `alunos`
 --
 ALTER TABLE `alunos`
   ADD PRIMARY KEY (`id_aluno`);
 
 --
--- Índices para tabela `amizade`
+-- Indexes for table `amizade`
 --
 ALTER TABLE `amizade`
   ADD PRIMARY KEY (`id_amzd`),
@@ -609,78 +613,78 @@ ALTER TABLE `amizade`
   ADD KEY `id_usuario_para` (`id_aluno_para`);
 
 --
--- Índices para tabela `estado`
+-- Indexes for table `estado`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `institutos`
+-- Indexes for table `institutos`
 --
 ALTER TABLE `institutos`
   ADD PRIMARY KEY (`id_instituto`),
   ADD KEY `id_estado` (`id_estado`);
 
 --
--- Índices para tabela `post`
+-- Indexes for table `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`id_post`);
 
 --
--- Índices para tabela `registro_login`
+-- Indexes for table `registro_login`
 --
 ALTER TABLE `registro_login`
   ADD PRIMARY KEY (`id_login`);
 
 --
--- Índices para tabela `reply`
+-- Indexes for table `reply`
 --
 ALTER TABLE `reply`
   ADD PRIMARY KEY (`id_reply`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `alunos`
+-- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
   MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
--- AUTO_INCREMENT de tabela `amizade`
+-- AUTO_INCREMENT for table `amizade`
 --
 ALTER TABLE `amizade`
-  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
+  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
 
 --
--- AUTO_INCREMENT de tabela `estado`
+-- AUTO_INCREMENT for table `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT de tabela `institutos`
+-- AUTO_INCREMENT for table `institutos`
 --
 ALTER TABLE `institutos`
   MODIFY `id_instituto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
 
 --
--- AUTO_INCREMENT de tabela `post`
+-- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
   MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
 
 --
--- AUTO_INCREMENT de tabela `registro_login`
+-- AUTO_INCREMENT for table `registro_login`
 --
 ALTER TABLE `registro_login`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT de tabela `reply`
+-- AUTO_INCREMENT for table `reply`
 --
 ALTER TABLE `reply`
   MODIFY `id_reply` int(11) NOT NULL AUTO_INCREMENT;

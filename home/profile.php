@@ -58,8 +58,10 @@ foreach($resBuscaAluno1 as $alunoInfo){
    }else{
       if($res_verifica_amzd == 0){
          $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguir</a>';
-      }else{
+      }else if($row_verifica_amzd['status_amizade'] == 1){
          $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguindo</a>';
+      }else if($row_verifica_amzd['status_amizade'] == 0){
+         $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Pendente</a>';
       }
    }
    
@@ -300,8 +302,9 @@ foreach($resBuscaAluno1 as $alunoInfo){
 
 <script src="assets/js/jqueryoff.js"></script>
 <script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquerypopper.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" 
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" 
+    crossorigin="anonymous"></script>
 <!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -319,7 +322,7 @@ crossorigin="anonymous"></script>-->
       var ele = $("#seguir").attr("ele");
 
       $.ajax({
-         url: 'functions/newAmizade.php',
+         url: 'functions/SolicitarAmizade.php',
          type: 'POST',
          data: {eu:eu,ele:ele},
          success: function(a){

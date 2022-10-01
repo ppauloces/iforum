@@ -51,6 +51,8 @@ function carregaFeed() {
 }
 
 
+
+
 //limpar campo file
 $("#btn-reset").on('click', function(){
   $('#file-input').val('');

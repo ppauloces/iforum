@@ -82,53 +82,46 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 			</script>";
 			die;
 
-		}else{
-			//CRIPTOGRAFAR A SENHA RECEBIDA PELO FORMULARIO
-			$senha = md5($senha_aluno);
+		}else {
 
 			//VERIFICA SE O USUARIO EXISTE PARA CRIAR O LOGIN E ACESSAR
-			$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno AND senha_aluno =:senha_aluno");
-			$verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
-			$verifica->bindParam(':senha_aluno', $senha);
-			$verifica->execute();
-			$res_verifica = $verifica->rowCount();
-			$row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
-			
+			$stmt = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = ?");
+			$stmt->execute([$_POST['num_mat_aluno']]);
+			$user = $stmt->fetch();
 
-			if($res_verifica > 0) {
-
-				if (!isset($_SESSION)) {
-					session_start();
-				}
-
-				$_SESSION['login'] = $num_mat_aluno;
+			if ($user && password_verify($_POST['senha_aluno'], $user['senha_aluno']))
+			{
 				
+
+					if (!isset($_SESSION)) {
+						session_start();
+					}
+
+					$_SESSION['login'] = $num_mat_aluno;
+
 				//INSERE A DATA E HORA DE LOGIN
-				$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
-						$registro_login->execute(array(
-							':id_usuario_login' => $row_verifica['id_aluno']
-						));
+					$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
+					$registro_login->execute(array(
+						':id_usuario_login' => $user['id_aluno']
+					));
 
-				echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
-				echo "<script>
+					echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
+					echo "<script>
 
-				Swal.fire({
-					icon: 'success',	
-					title: 'Logado com sucesso.',
-					text: 'Redirecionando...',
-					}).then((result) => {
-						if (result.isConfirmed) {
-							setTimeout(function () { window.location.href = 'home/index.php'; }, 500);
-						} 
-						})
+					Swal.fire({
+						icon: 'success',	
+						title: 'Logado com sucesso.',
+						text: 'Redirecionando...',
+						}).then((result) => {
+							if (result.isConfirmed) {
+								setTimeout(function () { window.location.href = 'home/index.php'; }, 500);
+							} 
+							})
 
-						</script>";
+							</script>";
 
-					}else{
-
-
-
-
+					
+					} else {
 						$tentativa = $_COOKIE["tentativa"]+1;
 
 						setcookie("tentativa", $tentativa, time()+20);
@@ -142,6 +135,15 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 							footer: ''
 							});
 							</script>";
+					}
+					die();
+
+
+
+
+
+
+						
 
 
 
@@ -150,7 +152,7 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 
 
 	//echo "<div class=\"card-panel amber darken-2 center-align\">Usuário/senha não confere. Tente novamente.</div>";				
-						}
+						
 					}
 
 					?>

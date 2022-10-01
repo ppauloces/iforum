@@ -71,10 +71,10 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
 
       }else{
 
-        $senha_aluno = md5($_POST['senha_aluno']);
+        $senha_aluno = password_hash($_POST['senha_aluno'], PASSWORD_DEFAULT);
 
         //QUERY PARA A CRIAÇÃO DE NOVO USUARIO
-        $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno)");
+         $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno,data_cadastro) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno,now())");
         $cad_aluno->execute(array(
           ':nome_aluno' => $nome_aluno,
           ':email_aluno' => $email_aluno,
