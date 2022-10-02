@@ -15,6 +15,8 @@ require("home/functions/conn.php");
 
 		<link rel="stylesheet" href="login/css/style.css">
 		<link rel="stylesheet" href="login/css/meustyle.css">
+		<link rel="stylesheet" href="login/css/senha.css">
+		<link rel="icon" type="imagem/png" href="login/images/ifsvg.png">
 
 	</head>
 	<body>
@@ -88,7 +90,7 @@ require("home/functions/conn.php");
 								</div>
 								<div class="form-group mb-3">
 									<label class="label" for="password">Senha</label>
-									<input type="password" class="form-control" name="senha_aluno" placeholder="Senha" >
+									<input type="password" class="form-control" name="senha_aluno" id="myPassword" placeholder="Senha" >
 								</div>
 								<div class="form-group">
 									<button type="submit" id="botao" name="cad_btn" class="form-control rounded submit px-3 btnifba">Cadastrar</button>
@@ -112,9 +114,20 @@ require("home/functions/conn.php");
 		<div id="linkResultado"></div> 
 		<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 		<script src="login/js/popper.js"></script>
+		<script src="login/js/senha.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="login/js/bootstrap.min.js"></script>
 		<script src="login/js/main.js"></script>
+
+		<script type="text/javascript">
+      $(document).ready(function($) {
+        $('#myPassword').passtrength({
+          minChars: 6,
+          passwordToggle: true,
+          tooltip: true
+        });
+      });
+      </script>
 
 		<script>
 			$('#estados').on("change",function(){

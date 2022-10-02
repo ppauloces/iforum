@@ -1,6 +1,6 @@
 <?php 
-ini_set('display_errors', 0 );
-error_reporting(0);
+//ini_set('display_errors', 0 );
+//error_reporting(0);
 
 require '../home/functions/conn.php';
 require 'enviar_email.php';
@@ -85,42 +85,44 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 		}else {
 
 			//VERIFICA SE O USUARIO EXISTE PARA CRIAR O LOGIN E ACESSAR
-			$stmt = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = ?");
-			$stmt->execute([$_POST['num_mat_aluno']]);
-			$user = $stmt->fetch();
+			$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
+			$verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
+			$verifica->bindParam(':name_user_aluno', $num_mat_aluno);
+			$verifica->execute();
+			$user = $verifica->fetch();
 
 			if ($user && password_verify($_POST['senha_aluno'], $user['senha_aluno']))
 			{
 				
 
-					if (!isset($_SESSION)) {
-						session_start();
-					}
+				if (!isset($_SESSION)) {
+					session_start();
+				}
 
-					$_SESSION['login'] = $num_mat_aluno;
+				$_SESSION['login'] = $num_mat_aluno;
 
 				//INSERE A DATA E HORA DE LOGIN
-					$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
-					$registro_login->execute(array(
-						':id_usuario_login' => $user['id_aluno']
-					));
+				$registro_login = $pdo->prepare("INSERT INTO registro_login (id_usuario_login,data_entrada) VALUES (:id_usuario_login,now())");
+				$registro_login->execute(array(
+					':id_usuario_login' => $user['id_aluno']
+				));
 
-					echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
-					echo "<script>
+				echo "<script>setTimeout(function () { window.location.href = 'home/'; }, 3000);</script>";
+				echo "<script>
 
-					Swal.fire({
-						icon: 'success',	
-						title: 'Logado com sucesso.',
-						text: 'Redirecionando...',
-						}).then((result) => {
-							if (result.isConfirmed) {
-								setTimeout(function () { window.location.href = 'home/index.php'; }, 500);
-							} 
-							})
+				Swal.fire({
+					icon: 'success',	
+					title: 'Logado com sucesso.',
+					text: 'Redirecionando...',
+					}).then((result) => {
+						if (result.isConfirmed) {
+							setTimeout(function () { window.location.href = 'home/index.php'; }, 500);
+						} 
+						})
 
-							</script>";
+						</script>";
 
-					
+
 					} else {
 						$tentativa = $_COOKIE["tentativa"]+1;
 
@@ -135,8 +137,8 @@ if(isset($_COOKIE["tentativa"]) && ($_COOKIE["tentativa"]>=5)) {
 							footer: ''
 							});
 							</script>";
-					}
-					die();
+						}
+						die();
 
 
 

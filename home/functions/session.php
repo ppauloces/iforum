@@ -10,8 +10,9 @@ if (isset($_SESSION['login'])) {
 }
 
 
-$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno");
+$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
 $verifica->bindParam(':num_matricula_aluno', $colname_Usuario);
+$verifica->bindParam(':name_user_aluno', $colname_Usuario);
 $verifica->execute();
 $res_verifica = $verifica->rowCount();
 $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );

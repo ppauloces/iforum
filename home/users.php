@@ -57,6 +57,7 @@ if(empty($_GET['users'])){
         <!--style index -->
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+        <link rel="icon" type="imagem/png" href="../login/images/ifsvg.png">
 
         <title>Ifórum | Home</title>
     </head>

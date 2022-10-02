@@ -45,6 +45,7 @@ foreach($resBuscaAluno as $alunoInfo){
    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="assets/fonts/icomoon/style.css">
    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+   <link rel="icon" type="imagem/png" href="../login/images/ifsvg.png">
    <!-- Bootstrap CSS -->
    <!-- Style Sidebar-->
    <link rel="stylesheet" href="assets/css/style.css">

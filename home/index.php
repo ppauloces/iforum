@@ -9,8 +9,9 @@ VAI VERIFICAR SE EXISTE O PERFIL, SE O CARA TENTAR ACESSAR E NÃO EXISTIR, IRA D
 AO ENTRAR NO LAÇO
 */
 
-$buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno');
+$buscaAluno = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
 $buscaAluno->bindParam(':num_matricula_aluno', $colname_Usuario);
+$buscaAluno->bindParam(':name_user_aluno', $colname_Usuario);
 $buscaAluno->execute();
 $resBuscaAluno = $buscaAluno->fetch(PDO::FETCH_ASSOC);
 $rowBuscaAluno = $buscaAluno->rowCount();
@@ -44,6 +45,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
 
+        <link rel="icon" type="imagem/png" href="../login/images/ifsvg.png">
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 

@@ -13,6 +13,7 @@
 
 		<link rel="stylesheet" href="login/css/style.css">
 		<link rel="stylesheet" href="login/css/meustyle.css">
+		<link rel="icon" type="imagem/png" href="login/images/ifsvg.png">
 
 	</head>
 	<body>

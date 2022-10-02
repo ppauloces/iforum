@@ -53,7 +53,7 @@ $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
 foreach($resBuscaAluno1 as $alunoInfo){
    
-   if($alunoInfo['num_matricula_aluno'] === $colname_Usuario){
+   if($alunoInfo['num_matricula_aluno'] === $colname_Usuario || $alunoInfo['name_user_aluno'] === $colname_Usuario){
       $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php?idupd='.$alunoInfo['id_aluno'].'">Editar Perfil</a>';
    }else{
       if($res_verifica_amzd == 0){
@@ -87,6 +87,7 @@ foreach($resBuscaAluno1 as $alunoInfo){
          <!-- Style Sidebar-->
          <link rel="stylesheet" href="assets/css/style.css">
          <link rel="stylesheet" href="assets/css/mystyle.css">
+         <link rel="icon" type="imagem/png" href="../login/images/ifsvg.png">
          <!--style index -->
          <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
          <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">

@@ -1,9 +1,11 @@
 <?php 
 
-  $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE num_matricula_aluno = :id_aluno');
-  $buscaAluno->bindParam(':id_aluno', $colname_Usuario);
-  $buscaAluno->execute();
-  $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+$buscaAluno = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
+$buscaAluno->bindParam(':num_matricula_aluno', $colname_Usuario);
+$buscaAluno->bindParam(':name_user_aluno', $colname_Usuario);
+$buscaAluno->execute();
+$resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
+
 
 foreach($resBuscaAluno as $sidebar){
      if($sidebar['foto_perfil']==""){
