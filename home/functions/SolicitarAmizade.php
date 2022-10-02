@@ -25,7 +25,7 @@ if($eu == $ele){
 	$row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
 	if($res_verifica_amzd == 0){
-		$sql = "INSERT INTO amizade (id_aluno_de, id_aluno_para,status_amizade) VALUES (?,?,?)";
+		$sql = "INSERT INTO amizade (id_aluno_de, id_aluno_para,situacao,data_solicitacao) VALUES (?,?,?,now())";
 		$stmt= $pdo->prepare($sql);
 		$stmt->execute([$eu, $ele,0]);
 		

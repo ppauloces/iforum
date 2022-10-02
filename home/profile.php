@@ -58,9 +58,9 @@ foreach($resBuscaAluno1 as $alunoInfo){
    }else{
       if($res_verifica_amzd == 0){
          $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguir</a>';
-      }else if($row_verifica_amzd['status_amizade'] == 1){
+      }else if($row_verifica_amzd['situacao'] == 1){
          $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Seguindo</a>';
-      }else if($row_verifica_amzd['status_amizade'] == 0){
+      }else if($row_verifica_amzd['situacao'] == 0){
          $btnStatus = '<a class="btn back-ifba text-white" id="seguir" eu="'.$row_verifica['id_aluno'].'" ele="'.$_GET['id'].'">Pendente</a>';
       }
    }

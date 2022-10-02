@@ -6,15 +6,32 @@ $buscaAluno->bindParam(':name_user_aluno', $colname_Usuario);
 $buscaAluno->execute();
 $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
 
+$countAmzd = $pdo->prepare("SELECT COUNT(*) FROM amizade AM, alunos A WHERE A.id_aluno = :id_aluno_para AND situacao = 0;");
+$countAmzd->bindParam(':id_aluno_para', $usuarioID);
+$countAmzd->execute();
+$count = $countAmzd->fetchColumn(); 
+echo $count;
 
 foreach($resBuscaAluno as $sidebar){
-     if($sidebar['foto_perfil']==""){
-      $foto1 = "padrao.png";
-   }else{
-      
-      $foto1 = $sidebar['foto_perfil'];
-   }
+
+ if($sidebar['foto_perfil']==""){
+  $foto1 = "padrao.png";
+}else{
+
+  $foto1 = $sidebar['foto_perfil'];
+}
 ?>
+<style>
+  .badge {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+  }
+</style>
 <aside class="sidebar">
   <div class="toggle">
     <a href="#"  style="font-size:30px;padding-left:10px;" class="js-menu-toggle" id="" data-toggle="collapse" data-target="#main-navbar">
@@ -52,7 +69,12 @@ foreach($resBuscaAluno as $sidebar){
         <ul>
           <li><a href="index.php"><span class="icon-home mr-3"></span>Feed</a></li>
           <li><a href="profile.php?id=<?= $sidebar['id_aluno'] ?>"><span class="icon-person mr-3"></span>Perfil</a></li>
-          <li><a href="notifications.php"><span class="icon-notifications mr-3"></span>Notificações</a></li>
+          <li><a href="notifications.php">
+          <?php if($count > 0){ 
+           echo "<span class='badge'>".$count."</span>";
+          } 
+          ?>
+          <span class="icon-notifications mr-3"></span>Notificações</a></li>
           <li><a href="messages.php"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
           <li><a href="definicoes.php"><span class="icon-gear mr-3"></span>Configurações</a></li>
           <li><a href="<?php echo $logoutAction ?>"><span class="icon-sign-out mr-3"></span>Sair</a></li>

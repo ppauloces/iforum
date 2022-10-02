@@ -2,7 +2,7 @@
 require 'conn.php';
 require 'session.php';
 
-$amzd = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para = :id_aluno_para AND status_amizade = 0");
+$amzd = $pdo->prepare("SELECT * FROM amizade WHERE id_aluno_para = :id_aluno_para AND situacao = 0");
 $amzd->bindParam(':id_aluno_para', $usuarioID);
 $amzd->execute();
 $res_amzd = $amzd->rowCount();
@@ -59,6 +59,22 @@ echo '<script>
          data: {ele:ele},
          success: function(a){
             $("#excluir").html(a);
+            
+         }
+      })
+   });
+</script>';
+
+echo '<script>
+   $("#aceitar").on("click",function(){
+      var ele = $("#aceitar").attr("id_de");
+
+      $.ajax({
+         url: "functions/AceitarAmizade.php",
+         type: "POST",
+         data: {ele:ele},
+         success: function(a){
+            $("#aceitar").html(a);
             
          }
       })
