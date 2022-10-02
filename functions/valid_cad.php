@@ -4,6 +4,12 @@ require 'bem_vindo.php';
 
 extract($_POST);
 
+$estado = $pdo->prepare("SELECT * FROM institutos WHERE nome_instituto = :nome_instituto");
+$estado->bindParam(':nome_instituto',$nome_instituto);
+$estado->execute();
+$pega_id_estado = $estado->fetch(PDO::FETCH_ASSOC);
+$idEstado = $pega_id_estado['id_estado'];
+
 //VERIFICA SE JÁ EXISTE UM USUÁRIO COM O MESMO NUMERO DE MATRICULA
 $verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno");
 $verifica->bindParam(':num_matricula_aluno', $num_mat_aluno);
@@ -74,14 +80,15 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
         $senha_aluno = password_hash($_POST['senha_aluno'], PASSWORD_DEFAULT);
 
         //QUERY PARA A CRIAÇÃO DE NOVO USUARIO
-         $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno,data_cadastro) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno,now())");
+         $cad_aluno = $pdo->prepare("INSERT INTO alunos (nome_aluno, email_aluno,name_user_aluno, num_matricula_aluno, senha_aluno,campus_aluno,data_cadastro,estado_aluno) VALUES (:nome_aluno, :email_aluno,:name_user_aluno, :num_matricula_aluno, :senha_aluno,:campus_aluno,now(),:estado_aluno)");
         $cad_aluno->execute(array(
           ':nome_aluno' => $nome_aluno,
           ':email_aluno' => $email_aluno,
           ':name_user_aluno' => $username,
           ':num_matricula_aluno' => $num_mat_aluno,
           ':senha_aluno' => $senha_aluno,
-          ':campus_aluno' => $nome_instituto
+          ':campus_aluno' => $nome_instituto,
+          ':estado_aluno' => $idEstado
         ));
 
         if (!isset($_SESSION)) {

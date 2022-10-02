@@ -116,7 +116,7 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
         <div class="col-md-6 gedf-main">
 
             <!--- \\\\\\\Post-->
-            <div class="card gedf-card d-none d-md-block">
+            <div class="card gedf-card d-md-block">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item">

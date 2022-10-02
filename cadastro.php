@@ -120,18 +120,19 @@ require("home/functions/conn.php");
 		<script src="login/js/main.js"></script>
 
 		<script type="text/javascript">
-      $(document).ready(function($) {
-        $('#myPassword').passtrength({
-          minChars: 6,
-          passwordToggle: true,
-          tooltip: true
-        });
-      });
-      </script>
+			$(document).ready(function($) {
+				$('#myPassword').passtrength({
+					minChars: 6,
+					passwordToggle: true,
+					tooltip: true
+				});
+			});
+		</script>
 
 		<script>
 			$('#estados').on("change",function(){
 				var idEstado = $('#estados').val();
+
 				$.ajax({
 					url: 'login/functions/pega_institutos.php',
 					type: 'POST',
@@ -147,7 +148,6 @@ require("home/functions/conn.php");
 			jQuery('#cadastro').submit(function () {
 				event.preventDefault();
 				var dados = jQuery(this).serialize();
-
 				$("#botao").attr("disabled", true);
 				$("#botao").css({'background':'grey'});
 				$("#botao").text("AGUARDE..."); 
@@ -155,7 +155,7 @@ require("home/functions/conn.php");
 				jQuery.ajax({
 					type: "POST",
 					url: "functions/valid_cad.php",
-					data: dados,
+					data:dados,
 					success: function (data)
 					{
           //alert("TUDO CERTO");
@@ -163,8 +163,8 @@ require("home/functions/conn.php");
           $("#botao").attr("disabled", false);
           $("#botao").css({'background':'#2F9E41'});
           $("#botao").text("CADASTRAR");
-      }
-  });
+        }
+      });
 				return false;
 			});
 		</script>
