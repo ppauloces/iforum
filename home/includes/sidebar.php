@@ -6,7 +6,7 @@ $buscaAluno->bindParam(':name_user_aluno', $colname_Usuario);
 $buscaAluno->execute();
 $resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);
 
-$countAmzd = $pdo->prepare("SELECT COUNT(*) FROM amizade AM, alunos A WHERE A.id_aluno = :id_aluno_para AND situacao = 0;");
+$countAmzd = $pdo->prepare("SELECT COUNT(*) FROM amizade AM, alunos A WHERE A.id_aluno = :id_aluno_para AND A.id_aluno != AM.id_aluno_de AND situacao = 0;");
 $countAmzd->bindParam(':id_aluno_para', $usuarioID);
 $countAmzd->execute();
 $count = $countAmzd->fetchColumn(); 
