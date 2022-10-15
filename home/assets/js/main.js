@@ -122,9 +122,8 @@ $("#but_uploadMobile").click(function(){
 
 $("#but_upload").click(function(){
 
-  var form=$("#postagem");
+  var form =$("#postagem");
   var data=new FormData($("#postagem")[0]);
-
   $.ajax({
     url:'functions/post.php',
     type:"POST",

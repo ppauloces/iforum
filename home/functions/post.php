@@ -5,6 +5,7 @@ require 'class.upload.php';
 
 extract($_POST);
 
+
 $pubs = $pdo->prepare("SELECT * FROM post ");
 //$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
 $pubs->execute();

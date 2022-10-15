@@ -68,10 +68,6 @@ $row_pubs = $pubs->fetch( PDO::FETCH_ASSOC );
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
 
-        <style>
-
-        </style>
-
         <title>Ifórum | Home</title>
     </head>
     <body onload="javascript:carregaFeed()">
