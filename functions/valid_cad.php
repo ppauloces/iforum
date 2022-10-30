@@ -91,6 +91,11 @@ if (empty($nome_aluno) || empty($email_aluno) || empty($num_mat_aluno) || empty(
           ':estado_aluno' => $idEstado
         ));
 
+        if(!$pdo){
+          echo "<script>setTimeout(function () { window.location.href = 'error-404/'; });</script>";
+          die;
+        }
+        
         if (!isset($_SESSION)) {
           session_start();
         }

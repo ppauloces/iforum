@@ -43,7 +43,7 @@ function carregaFeed() {
     success: function (data)
     {
       $("#feed").html(data);
-      load("#feed");
+      //load("#feed");
     }
   });
 

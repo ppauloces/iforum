@@ -100,5 +100,3 @@ if ($handle->processed)
 
 }   
 }
-
-?>

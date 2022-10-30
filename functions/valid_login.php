@@ -1,6 +1,5 @@
 <?php 
-//ini_set('display_errors', 0 );
-//error_reporting(0);
+
 
 require '../home/functions/conn.php';
 require 'enviar_email.php';
@@ -10,6 +9,10 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../vendor/autoload.php';
 
+if(!$pdo){
+	echo "<script>setTimeout(function () { window.location.href = 'error-404/'; });</script>";
+	die;
+}
 
 session_start();
 

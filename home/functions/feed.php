@@ -3,8 +3,8 @@ require 'conn.php';
 require 'session.php';
 require 'class.upload.php';
 
-$pubs = $pdo->prepare("SELECT *,id_aluno FROM post,alunos WHERE id_aluno = id_usuario ORDER BY id_post DESC");
-//$pubs->bindParam(':num_matricula_aluno', $colname_Usuario);
+$pubs = $pdo->prepare("SELECT *,id_aluno FROM post,alunos,comentarios WHERE id_aluno = id_usuario AND id_post = id_post_resposta ORDER BY id_post DESC");
+//$pubs->bindParam(':id_usuario', $usuarioID);
 $pubs->execute();
 $res_pubs = $pubs->rowCount();
 $row_pubs1 = $pubs->fetchAll(PDO::FETCH_ASSOC);
@@ -15,16 +15,42 @@ $buscaAluno->execute();
 $resBuscaAluno = $buscaAluno->fetch(PDO::FETCH_ASSOC);
 $rowBuscaAluno = $buscaAluno->rowCount();
 
-foreach($row_pubs1 as $pub){
+foreach ($row_pubs1 as $pub) {
 
-	if($pub['foto_perfil'] == ""){
+	if ($pub['foto_perfil'] == "") {
 		$foto = "padrao.png";
-	}else{
+	} else {
 		$foto = $pub['foto_perfil'];
 	}
 
 
-	if($resBuscaAluno['num_matricula_aluno'] != $colname_Usuario){
+
+	$verifica_query = "SELECT * FROM count_likes WHERE id_post=:id_post AND id_curtiu=:id_curtiu";
+	$verifica = $pdo->prepare($verifica_query);
+	$verifica->execute([
+		'id_post' => $pub['id_post'],
+		'id_curtiu' => $usuarioID
+	]); 
+	$res_verifica_like = $verifica->rowCount();
+	if($res_verifica_like == 0){
+		$buttonLike = '<button class="card-link" id="like" id_post='. $pub['id_post'] .' style="all: unset;cursor:pointer"><div id="exibe"><i class="icon-thumbs-o-up"></i> Concordo com você</div></button>';
+	}
+	if($res_verifica_like > 0){
+
+		$verifica_like = $pdo->prepare("SELECT COUNT(id_count) AS qnt_likes FROM count_likes");
+        $verifica_like->execute();
+        $qnt_likes = $verifica_like->fetch(PDO::FETCH_ASSOC);
+
+        $countLike = $qnt_likes['qnt_likes'] -1;
+        if($countLike == 0){
+            $buttonLike = '<button class="card-link" id="like" id_post='. $pub['id_post'] .' style="all: unset;cursor:pointer"><div id="exibe"><i class="fa fa-thumbs-up"></i> Somente você concordou, por enquanto</div></button>';
+        }elseif($countLike == 1){
+            $buttonLike = '<button class="card-link" id="like" id_post='. $pub['id_post'] .' style="all: unset;cursor:pointer"><div id="exibe"><i class="fa fa-thumbs-up"></i> Você, e mais '.$countLike.' pessoa concordaram</div></button>';
+        }elseif($countLike > 1){
+            $buttonLike = '<button class="card-link" id="like" id_post='. $pub['id_post'] .' style="all: unset;cursor:pointer"><div id="exibe"><i class="fa fa-thumbs-up"></i> Você, e mais '.$countLike.' pessoas concordaram</div></button>';
+        }
+	}
+	if ($resBuscaAluno['num_matricula_aluno'] != $colname_Usuario) {
 		$dropPost = '
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 		<a class="dropdown-item d-flex align-items-center" href="#">
@@ -32,7 +58,7 @@ foreach($row_pubs1 as $pub){
 		<span class="">&nbspCompartilhar</span>
 		</a>
 		</div>';
-	}else{
+	} else {
 		$dropPost = '
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 		<a class="dropdown-item d-flex align-items-center" href="#">
@@ -47,7 +73,7 @@ foreach($row_pubs1 as $pub){
 		';
 	}
 	echo '<br>';
-	if($pub['media_post'] <> ""){
+	if ($pub['media_post'] <> "") {
 		echo '
 		<div class="card gedf-card">
 		<div class="card-header">
@@ -59,80 +85,158 @@ foreach($row_pubs1 as $pub){
 		<circle cx="5" cy="12" r="1"></circle>
 		</svg>
 		</button>
-		'.$dropPost.'
+		' . $dropPost . '
 		</div>
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="d-flex justify-content-between align-items-center">
 		<div class="mr-2">
-		<img class="rounded-circle" width="45" src="uploads/'.$foto.'" alt="">
+		<img class="rounded-circle" width="45" src="uploads/' . $foto . '" alt="">
 		</div>
 		<div class="ml-2">
-		<div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
-		<div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
+		<div class="h5 m-0">@' . $row_verifica['name_user_aluno'] . '</div>
+		<div class="h7 text-muted">' . $row_verifica['nome_aluno'] . '</div>
 		</div>
 		</div>
 		</div>
 		</div>
 		<div class="card-body">
-		<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>'.$pub['data'].'</div>
+		<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>' . $pub['data'] . '</div>
 		<p class="card-text">            
-		'.$pub['texto_post'].'
+		' . $pub['texto_post'] . '
 		</p>
-		<img src="uploads/posts/'.$pub['media_post'].'" width="160" height="120"> 
+		<img src="uploads/posts/' . $pub['media_post'] . '" width="160" height="120"> 
 		</div>
 		<div class="card-footer">
-		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Concordo com você</a>
+		'.$buttonLike.'
 		<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Up</a>
-		<div class="input-group" style="padding-top:8px"> 
-		<input class="form-control" placeholder="Add a comment" type="text">
-		<span class="input-group-addon">
-		<a href="#"><i class="fa fa-edit"></i></a>  
-		</span>
+		<form method="POST" id="comment">
+		<div class="input-group mb-3 pt-2">
+		<input name="reply" id="resposta" type="text" class="form-control" placeholder="Adicionar comentário" aria-label="Adicionar comentário" aria-describedby="basic-addon2">
+		<div class="input-group-append">
+		<label for="reply" class="">
+			<input type="hidden" name="post_id" value="'.$pub['id_post'].'">
+			<a class="input-group-text"><button type="submit" id="comentario" style="all:unset"><i class="fa fa-mail-forward"></i></button></a>
+		</label>
 		</div>
-		</div>
-		</div>';	
-	}else{
-		echo '
-		<div class="card gedf-card">
-		<div class="card-header">
-		<div class="float-right">
-		<button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg text-muted pb-3px">
-		<circle cx="12" cy="12" r="1"></circle>
-		<circle cx="19" cy="12" r="1"></circle>
-		<circle cx="5" cy="12" r="1"></circle>
-		</svg>
-		</button>
-		'.$dropPost.'
-		</div>
-		<div class="d-flex justify-content-between align-items-center">
-		<div class="d-flex justify-content-between align-items-center">
-		<div class="mr-2">
-		<img class="rounded-circle" width="55" src="uploads/'.$foto.'" alt="">
-		</div>
-		<div class="ml-2">
-		<div class="h5 m-0">@'.$row_verifica['name_user_aluno'].'</div>
-		<div class="h7 text-muted">'.$row_verifica['nome_aluno'].'</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		<div class="card-body">
-		<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>'.$pub['data'].'</div>
-		<p class="card-text">            
-		'.$pub['texto_post'].'
+	</div>
+	</form>
+		<hr>
+		<div class="media-block pad-all">
+		<a class="media-left" href="#"><img class="rounded-circle img-sm" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar2.png"></a>
+		<div class="media-body">
+		  <div class="mar-btm">
+			<a href="#" class="btn-link text-semibold media-heading box-inline text-sm">Maria Leanz</a>
+			<p class="text-muted text-sm"><i class="fa fa-globe fa-lg"></i> - From Web - 2 min ago</p>
+		  </div>
+		  <p class="card-text">            
+		Resposta!
 		</p>
-		</div>
-		<div class="card-footer">
-		<a href="#" class="card-link"><i class="icon-thumbs-o-up"></i> Concordo com você</a>
-		<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Up</a>
-		<div class="input-group" style="padding-top:8px"> 
-		<input class="form-control" placeholder="Adicionar um comentário" type="text">
-		<span class="input-group-addon">
-		<a href="#"><i class="fa fa-edit"></i></a>  
-		</span>
+		  <div>
+		  <hr>
+			<div class="btn-group">
+			<h5><a href="#" class="card-link"><i class="icon-thumbs-o-up"></i></a></h5>
+			</div>
+		  </div>
 		</div>
 		</div>
 		</div>';
-	}
+	} else {
+		echo '
+		<div class="card gedf-card">
+		<div class="card-header">
+		<div class="float-right">
+		<button class="btn p-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg text-muted pb-3px">
+		<circle cx="12" cy="12" r="1"></circle>
+		<circle cx="19" cy="12" r="1"></circle>
+		<circle cx="5" cy="12" r="1"></circle>
+		</svg>
+		</button>
+		' . $dropPost . '
+		</div>
+		<div class="d-flex justify-content-between align-items-center">
+		<div class="d-flex justify-content-between align-items-center">
+		<div class="mr-2">
+		<img class="rounded-circle" width="55" src="uploads/' . $foto . '" alt="">
+		</div>
+		<div class="ml-2">
+		<div class="h5 m-0">@' . $row_verifica['name_user_aluno'] . '</div>
+		<div class="h7 text-muted">' . $row_verifica['nome_aluno'] . '</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		<div class="card-body">
+		<div class="text-muted h7 mb-2"> <i class="fa fa-clock-o">&nbsp</i>' . $pub['data'] . '</div>
+		<p class="card-text">            
+		' . $pub['texto_post'] . '
+		</p>
+		</div>
+		<div class="card-footer">
+		'.$buttonLike.'
+		<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Up</a>
+		<div class="input-group mb-3 pt-2">
+		<input name="reply" id="comentario" type="text" class="form-control" placeholder="Adicionar comentário" aria-label="Adicionar comentário" aria-describedby="basic-addon2">
+		<div class="input-group-append">
+		<label for="reply" class="">
+			<input type="hidden" id="post_id" value="'.$pub['id_post'].'">
+			<a class="input-group-text"><button type="submit" id="getComentario" style="all:unset"><i class="fa fa-mail-forward"></i></button></a>
+		</label>
+		</div>
+	</div>
+	<hr>
+	<div class="media-block pad-all">
+	<a class="media-left" href="#"><img class="rounded-circle img-sm" alt="Profile Picture" src="https://bootdey.com/img/Content/avatar/avatar2.png"></a>
+	<div class="media-body">
+	  <div class="mar-btm">
+		<a href="#" class="btn-link text-semibold media-heading box-inline text-sm">Maria Leanz</a>
+		<p class="text-muted text-sm"><i class="fa fa-globe fa-lg"></i> - From Web - 2 min ago</p>
+	  </div>
+	  <p class="card-text" id="reply">            
+	'.$pub['resposta'].'
+	</p>
+	  <div>
+	  <hr>
+		<div class="btn-group">
+		<h5><a href="#" class="card-link"><i class="icon-thumbs-o-up"></i></a></h5>
+		</div>
+	  </div>
+	</div>
+	<div id="replys"></div>
+		</div>
+		</div>';
+		
 }
+}
+echo '<script>
+$("#getComentario").on("click",function(){
+	var reply = $("#comentario").val();
+	var id_post = $("#post_id").val();
+   $.ajax({
+	  url: "functions/comentarios.php",
+	  type: "POST",
+	  data: {reply:reply,id_post:id_post},
+	  success: function(a){
+		 $("#reply").html(a);
+		 
+	  }
+   })
+});
+</script>';
+
+
+echo '<script>
+$("#like").on("click",function(){
+   var id_post = $("#like").attr("id_post");
+
+   $.ajax({
+	  url: "functions/like_post.php",
+	  type: "POST",
+	  data: {id_post:id_post},
+	  success: function(a){
+		 $("#like").html(a);
+		 
+	  }
+   })
+});
+</script>';
