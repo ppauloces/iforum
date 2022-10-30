@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 01-Set-2022 às 17:01
--- Versão do servidor: 10.1.40-MariaDB
--- versão do PHP: 7.1.29
+-- Tempo de geração: 30-Out-2022 às 23:14
+-- Versão do servidor: 10.4.25-MariaDB
+-- versão do PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `iforum`
+-- Banco de dados: `iforum`
 --
 
 -- --------------------------------------------------------
@@ -36,18 +35,24 @@ CREATE TABLE `alunos` (
   `foto_perfil` varchar(255) NOT NULL,
   `bio_aluno` varchar(255) NOT NULL,
   `num_matricula_aluno` varchar(50) NOT NULL,
-  `senha_aluno` varchar(50) NOT NULL,
+  `senha_aluno` varchar(255) NOT NULL,
   `campus_aluno` varchar(150) NOT NULL,
-  `data_cadastro` datetime NOT NULL
+  `data_cadastro` datetime NOT NULL,
+  `estado_aluno` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`, `foto_perfil`, `bio_aluno`, `num_matricula_aluno`, `senha_aluno`, `campus_aluno`, `data_cadastro`) VALUES
-(31, 'Thiago', 'thiago@gmail.com', 'thiago', '', '', '1234', '81dc9bdb52d04dc20036dbd8313ed055', 'CAMPUS Teresina I', '0000-00-00 00:00:00'),
-(32, 'Paulo Amaral', 'ppauloces27@gmail.com', 'ppauloces', '835fe9e259cb0fd3b698e3091bfaefb3.png', '', '123', '202cb962ac59075b964b07152d234b70', 'CAMPUS Eunápolis', '0000-00-00 00:00:00');
+INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`, `foto_perfil`, `bio_aluno`, `num_matricula_aluno`, `senha_aluno`, `campus_aluno`, `data_cadastro`, `estado_aluno`) VALUES
+(37, 'Paulo Amaral', 'paulo@gmail.com', 'ppauloces', 'padrao.png', '', '201913600047', '$2y$10$YxEJUbg9S3dsHhkomJ0lU.Z91/3j6qh9wrdDwVIZ8Mc1mlGIie3p2', 'CAMPUS Belém', '2022-09-30 23:06:17', 0),
+(38, 'Ryan Lima', 'ryan@gmail.com', 'ryan', '', '', '1234', '$2y$10$Bk8WqHxhtpewaGeR7s4om.c5Dq4X9wWCFCOlsdHhIej7lC4IZgIo6', 'CAMPUS Porto Seguro', '2022-10-01 19:44:35', 0),
+(39, 'Lara Beatriz', 'lara@gmail.com', 'larabia', '', '', '123', '$2y$10$4le0G5ukJhxv8RHh1xs7Huf9tGTbTbrIlpwbgmXiPReB.zMHoo082', 'CAMPUS Montes Claros', '2022-10-01 19:45:21', 0),
+(40, 'João Sobral', 'joao@gmail.com', 'joao', '', '', '2010', '$2y$10$5rFv.Hj3mWq3jn8gompF5.HPM7tLrSPv0PyZ2tlWIlFzmMXPwufJq', 'CAMPUS Acaraú', '2022-10-01 19:50:07', 0),
+(41, 'Usuario', 'usuario@gmail.com', 'usuario', '', '', '12345', '$2y$10$UObov4ESYoJ9eHS8I0YxIu3FYoXsZoba3o.4x0zfh/GDHBm4gq7m6', 'CAMPUS Feira de Santana', '2022-10-01 21:37:00', 0),
+(42, 'kyara', 'kyara@gmail.com', 'eukyara', '', '', '1122233344', '$2y$10$d5VYAAqsBjdcR.kfnkMpJ.qL/LhVbNWMGSnJh5FFeE4KcIf/aWpbu', 'CAMPUS Eunápolis', '2022-10-01 21:42:01', 0),
+(43, 'Ian Luca Oliveira', 'ianlucaoliveira@gmail.com', 'LuquinhasRDAX21', 'b461534c1d652d23382111af3b8bba2e.jpg', 'COMO DIMINUI A FONTE GOOGLE PESQUISAR', '20201ITI0073', '$2y$10$oNwu0IT65V6IooUUJ6zq2OldeR/cu3Wms7RqzDjAVSss/aIQh9Yy2', 'CAMPUS Ilhéus', '2022-10-02 10:54:11', 5);
 
 -- --------------------------------------------------------
 
@@ -57,10 +62,56 @@ INSERT INTO `alunos` (`id_aluno`, `nome_aluno`, `email_aluno`, `name_user_aluno`
 
 CREATE TABLE `amizade` (
   `id_amzd` int(11) NOT NULL,
+  `data_solicitacao` datetime DEFAULT NULL,
   `id_aluno_de` int(11) NOT NULL,
   `id_aluno_para` int(11) NOT NULL,
-  `status_amizade` int(11) DEFAULT NULL
+  `situacao` int(11) DEFAULT NULL,
+  `data_confirmacao` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `comentarios`
+--
+
+CREATE TABLE `comentarios` (
+  `id_resposta` int(11) NOT NULL,
+  `id_post_resposta` int(11) NOT NULL,
+  `id_aluno_resposta` int(11) DEFAULT NULL,
+  `resposta` varchar(255) DEFAULT NULL,
+  `data_resposta` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `comentarios`
+--
+
+INSERT INTO `comentarios` (`id_resposta`, `id_post_resposta`, `id_aluno_resposta`, `resposta`, `data_resposta`) VALUES
+(1, 359, 37, 'bom dia, paulo 1', '2022-10-30 17:54:40');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `count_likes`
+--
+
+CREATE TABLE `count_likes` (
+  `id_count` int(11) NOT NULL,
+  `id_curtiu` int(11) NOT NULL,
+  `id_post` int(11) NOT NULL,
+  `data_curtida` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `count_likes`
+--
+
+INSERT INTO `count_likes` (`id_count`, `id_curtiu`, `id_post`, `data_curtida`) VALUES
+(30, 37, 357, '2022-10-30 12:54:36'),
+(31, 38, 357, '2022-10-30 12:54:45'),
+(32, 40, 357, '2022-10-30 12:58:24'),
+(37, 37, 359, '2022-10-30 17:06:29');
 
 -- --------------------------------------------------------
 
@@ -456,98 +507,8 @@ CREATE TABLE `post` (
 --
 
 INSERT INTO `post` (`id_post`, `id_usuario`, `texto_post`, `media_post`, `data`) VALUES
-(251, 20, 'oi', '', '2022-06-29'),
-(252, 20, 'po', '', '2022-06-29'),
-(253, 20, 'oi', '', '2022-06-29'),
-(254, 20, 'teste', '', '2022-06-29'),
-(255, 20, 'opa', '', '2022-06-29'),
-(256, 20, 'teste', '', '2022-06-29'),
-(257, 21, 'oi', '03dc38993af623335e2e5ae71b4047a9.gif', '2022-06-29'),
-(258, 21, 'OI', '', '2022-06-29'),
-(259, 21, '', '249022e2960aab97665f1634a4d0218a.gif', '2022-06-29'),
-(260, 21, 'o post finalmente funciona', '6ea2895d62df4a1891b04442dae4b9d7.jpg', '2022-06-29'),
-(261, 21, 'aeeeeee', '460a32ddc9e2c753a5c99404c1bcd8ab.jpg', '2022-06-29'),
-(262, 21, 'postagem com imagem', 'd99087451a349038a12cdfd1cfd59d9d.jpg', '2022-06-29'),
-(263, 21, 'oi', '8a5422a47e644e96c079a0a93f64af50.jpg', '2022-06-29'),
-(264, 21, '', 'd88b7098f6877c0e3b4a2e92bde32a08.jpg', '2022-06-29'),
-(265, 21, 'que dia lindo\r\nhttps://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/640px-Google_Images_2015_logo.svg.png', '', '2022-06-29'),
-(266, 21, 'https', '', '2022-06-29'),
-(267, 21, 'otto é muito bonito', '', '2022-06-29'),
-(268, 21, 'https://www.google.com/search?q=compartilhar+link+no+textarea+php&oq=compartilhar+link+no+textarea&aqs=chrome.3.69i57j33i160l3.6945j1j9&sourceid=chrome&ie=UTF-8', '', '2022-06-29'),
-(269, 21, 'https://codepen.io/pen/', '', '2022-06-29'),
-(270, 21, 'oi, bom dia', '2a8ed02b8445fde1db64957e025db25d.jpg', '2022-06-30'),
-(271, 21, 'bom dia', '1ce1d48b62112020f6b5204c42f0b6ae.jpg', '2022-06-30'),
-(272, 19, 'Olá mundo!', '', '2022-06-30'),
-(273, 19, 'olaa', '', '2022-06-30'),
-(274, 19, 'teste', '', '2022-06-30'),
-(275, 19, 'boa noite', '', '2022-06-30'),
-(276, 19, 'opa', '', '2022-06-30'),
-(277, 19, 'oi', '', '2022-06-30'),
-(278, 19, 'boa noite', '', '2022-06-30'),
-(279, 19, 'que dia lindo!', 'ae8740eea5f811f122e4d2fc6110f7f7.jpg', '2022-06-30'),
-(280, 20, 'otto é gay', '', '2022-06-30'),
-(281, 20, 'otto', '', '2022-06-30'),
-(282, 20, 'oi', '', '2022-06-30'),
-(283, 20, 'oi', '83ec53f8fd8d8edae6d3c0cbada8be4b.jpg', '2022-06-30'),
-(284, 20, 'oi', 'bbe5a24ca5642c6448fffb3f9e385ffd.jpg', '2022-06-30'),
-(285, 20, 'oi', '', '2022-06-30'),
-(286, 20, 'oi', '', '2022-06-30'),
-(287, 20, 'oi', '', '2022-06-30'),
-(288, 20, 'oi', '', '2022-06-30'),
-(289, 20, 'oi', '', '2022-06-30'),
-(290, 20, 'teste', '', '2022-06-30'),
-(291, 20, 'oi', '315b0d3cd4a86a06fcc87067279c95e6.png', '2022-06-30'),
-(292, 20, 'teste', '', '2022-06-30'),
-(293, 20, 'ola', '', '2022-07-05'),
-(294, 21, 'bom dia!!', '', '2022-07-05'),
-(295, 20, 'oi', '', '2022-07-07'),
-(296, 20, 'oi', '', '0000-00-00'),
-(297, 20, 'oi', '', '2022-07-08'),
-(298, 20, 'teste', '', '2022-07-08'),
-(299, 20, 'coco', '', '2022-07-08'),
-(300, 20, 'asda', '', '2022-07-12'),
-(301, 20, 'fgdfgdgdf', '', '2022-07-12'),
-(302, 20, 'Bom dia!', '', '2022-07-12'),
-(303, 20, 'Olá joao', '', '2022-07-19'),
-(304, 20, 'oi', '', '2022-07-31'),
-(305, 20, 'oi', '', '2022-08-02'),
-(306, 20, 'teste', '', '2022-08-02'),
-(307, 21, '', '6a206a3099949c45b7f8ec1ee5e10cd6.jpg', '2022-08-09'),
-(308, 21, 'oiiiiiii', '6e125849d65d59c9a690ba97e3bb3b69.jpg', '2022-08-16'),
-(309, 23, 'oi', '', '2022-08-17'),
-(310, 23, 'oi', '', '2022-08-17'),
-(311, 23, 'des', '', '2022-08-17'),
-(312, 23, 'paulo', '', '2022-08-17'),
-(313, 23, 'oi', '', '2022-08-17'),
-(314, 21, 'oi', '', '2022-08-18'),
-(315, 21, 'teste', '', '2022-08-18'),
-(316, 21, 'teste', '', '2022-08-18'),
-(317, 21, 'o', '', '2022-08-18'),
-(318, 21, 'o', '', '2022-08-18'),
-(319, 21, 'p', '', '2022-08-18'),
-(320, 21, 'p', '', '2022-08-18'),
-(321, 21, 'm', '', '2022-08-18'),
-(322, 21, 'm', '', '2022-08-18'),
-(323, 21, 'n', '', '2022-08-18'),
-(324, 21, 'n', '', '2022-08-18'),
-(325, 21, 'l', '', '2022-08-18'),
-(326, 21, 'm', '', '2022-08-18'),
-(327, 21, 'a', '', '2022-08-18'),
-(328, 21, 'j', '', '2022-08-18'),
-(329, 21, 'm', '', '2022-08-18'),
-(330, 21, 'jjjj', '', '2022-08-18'),
-(331, 21, 'o', '', '2022-08-18'),
-(332, 21, 'l', '', '2022-08-20'),
-(333, 21, 'l\r\nl', '', '2022-08-20'),
-(334, 21, 'ç', '', '2022-08-20'),
-(335, 21, 'm', '', '2022-08-21'),
-(336, 32, 'oi', '', '2022-08-28'),
-(337, 32, 'oi', '', '2022-08-28'),
-(338, 32, 'teste', '', '2022-08-28'),
-(339, 32, 'paulo', '', '2022-08-28'),
-(340, 32, 'cesar', '', '2022-08-28'),
-(341, 32, 'oiiii', '', '2022-08-28'),
-(342, 32, 'oi', '9bbcdfcb03890c092ca068dbfed18428.jpg', '2022-08-28');
+(357, 37, 'Oi', '', '2022-10-30'),
+(359, 37, 'Bom dia!', '', '2022-10-30');
 
 -- --------------------------------------------------------
 
@@ -573,39 +534,86 @@ INSERT INTO `registro_login` (`id_login`, `id_usuario_login`, `data_entrada`, `d
 (18, 32, '2022-08-23 08:24:16', '2022-08-23 08:24:33'),
 (19, 31, '2022-08-23 08:36:51', NULL),
 (20, 31, '2022-08-23 08:36:52', NULL),
-(21, 32, '2022-08-27 15:51:44', NULL),
-(22, 32, '2022-08-28 11:49:53', NULL),
-(23, 32, '2022-08-29 19:26:27', NULL),
-(24, 32, '2022-08-30 19:17:47', NULL),
+(21, 32, '2022-08-27 15:51:44', '2022-09-30 22:06:17'),
+(22, 32, '2022-08-28 11:49:53', '2022-09-30 22:06:17'),
+(23, 32, '2022-08-29 19:26:27', '2022-09-30 22:06:17'),
+(24, 32, '2022-08-30 19:17:47', '2022-09-30 22:06:17'),
 (25, 31, '2022-08-30 19:44:47', NULL),
-(26, 32, '2022-09-01 10:58:19', NULL),
-(27, 31, '2022-09-01 11:31:50', NULL);
+(26, 32, '2022-09-01 15:39:15', '2022-09-30 22:06:17'),
+(27, 31, '2022-09-01 15:41:45', NULL),
+(28, 32, '2022-09-30 21:28:32', '2022-09-30 22:06:17'),
+(29, 35, '2022-09-30 22:40:47', NULL),
+(30, 35, '2022-09-30 22:40:57', NULL),
+(31, 37, '2022-09-30 23:12:10', '2022-10-01 19:43:44'),
+(32, 37, '2022-10-01 19:39:30', '2022-10-01 19:43:44'),
+(33, 37, '2022-10-01 19:54:52', '2022-10-01 19:56:26'),
+(34, 37, '2022-10-01 19:56:37', '2022-10-01 20:08:37'),
+(35, 37, '2022-10-01 19:56:50', '2022-10-01 20:08:37'),
+(36, 37, '2022-10-01 19:57:53', '2022-10-01 20:08:37'),
+(37, 37, '2022-10-01 19:59:40', '2022-10-01 20:08:37'),
+(38, 37, '2022-10-01 20:00:07', '2022-10-01 20:08:37'),
+(39, 37, '2022-10-01 20:53:18', '2022-10-01 21:36:19'),
+(40, 37, '2022-10-01 21:36:04', '2022-10-01 21:36:19'),
+(41, 37, '2022-10-01 21:38:59', '2022-10-02 10:52:00'),
+(42, 42, '2022-10-01 21:42:39', NULL),
+(43, 37, '2022-10-01 21:42:50', '2022-10-02 10:52:00'),
+(44, 42, '2022-10-01 21:44:26', NULL),
+(45, 37, '2022-10-02 10:51:28', '2022-10-02 10:52:00'),
+(46, 43, '2022-10-02 10:54:38', NULL),
+(47, 37, '2022-10-02 11:59:10', '2022-10-30 09:38:57'),
+(48, 37, '2022-10-02 15:55:49', '2022-10-30 09:38:57'),
+(49, 37, '2022-10-21 22:55:45', '2022-10-30 09:38:57'),
+(50, 37, '2022-10-22 19:15:14', '2022-10-30 09:38:57'),
+(51, 37, '2022-10-25 07:20:53', '2022-10-30 09:38:57'),
+(52, 37, '2022-10-25 08:21:32', '2022-10-30 09:38:57'),
+(53, 37, '2022-10-25 08:27:11', '2022-10-30 09:38:57'),
+(54, 37, '2022-10-26 22:02:59', '2022-10-30 09:38:57'),
+(55, 37, '2022-10-30 09:38:03', '2022-10-30 09:38:57'),
+(56, 37, '2022-10-30 09:43:02', '2022-10-30 09:43:58'),
+(57, 37, '2022-10-30 09:46:44', NULL),
+(58, 37, '2022-10-30 09:50:16', NULL),
+(59, 37, '2022-10-30 09:51:52', NULL),
+(60, 37, '2022-10-30 10:04:03', NULL),
+(61, 39, '2022-10-30 12:31:39', NULL),
+(62, 40, '2022-10-30 12:32:23', NULL),
+(63, 38, '2022-10-30 12:52:33', '2022-10-30 12:58:16'),
+(64, 40, '2022-10-30 12:58:19', NULL),
+(65, 40, '2022-10-30 13:00:31', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `reply`
+-- Estrutura da tabela `situacao_amizade`
 --
 
-CREATE TABLE `reply` (
-  `id_reply` int(11) NOT NULL,
-  `id_post` int(11) NOT NULL,
-  `id_aluno_reply` int(11) NOT NULL,
-  `mensagem` varchar(255) NOT NULL
+CREATE TABLE `situacao_amizade` (
+  `id_situacao` int(11) NOT NULL,
+  `situacao` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Extraindo dados da tabela `situacao_amizade`
+--
+
+INSERT INTO `situacao_amizade` (`id_situacao`, `situacao`) VALUES
+(1, 'PENDENTE'),
+(2, 'APROVADO'),
+(3, 'REJEITADO'),
+(4, 'BLOQUEADO'),
+(5, 'SILENCIADO');
+
+--
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `alunos`
+-- Índices para tabela `alunos`
 --
 ALTER TABLE `alunos`
   ADD PRIMARY KEY (`id_aluno`);
 
 --
--- Indexes for table `amizade`
+-- Índices para tabela `amizade`
 --
 ALTER TABLE `amizade`
   ADD PRIMARY KEY (`id_amzd`),
@@ -613,81 +621,105 @@ ALTER TABLE `amizade`
   ADD KEY `id_usuario_para` (`id_aluno_para`);
 
 --
--- Indexes for table `estado`
+-- Índices para tabela `comentarios`
+--
+ALTER TABLE `comentarios`
+  ADD PRIMARY KEY (`id_resposta`);
+
+--
+-- Índices para tabela `count_likes`
+--
+ALTER TABLE `count_likes`
+  ADD PRIMARY KEY (`id_count`);
+
+--
+-- Índices para tabela `estado`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `institutos`
+-- Índices para tabela `institutos`
 --
 ALTER TABLE `institutos`
   ADD PRIMARY KEY (`id_instituto`),
   ADD KEY `id_estado` (`id_estado`);
 
 --
--- Indexes for table `post`
+-- Índices para tabela `post`
 --
 ALTER TABLE `post`
   ADD PRIMARY KEY (`id_post`);
 
 --
--- Indexes for table `registro_login`
+-- Índices para tabela `registro_login`
 --
 ALTER TABLE `registro_login`
   ADD PRIMARY KEY (`id_login`);
 
 --
--- Indexes for table `reply`
+-- Índices para tabela `situacao_amizade`
 --
-ALTER TABLE `reply`
-  ADD PRIMARY KEY (`id_reply`);
+ALTER TABLE `situacao_amizade`
+  ADD PRIMARY KEY (`id_situacao`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `alunos`
+-- AUTO_INCREMENT de tabela `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id_aluno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
--- AUTO_INCREMENT for table `amizade`
+-- AUTO_INCREMENT de tabela `amizade`
 --
 ALTER TABLE `amizade`
-  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
+  MODIFY `id_amzd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=267;
 
 --
--- AUTO_INCREMENT for table `estado`
+-- AUTO_INCREMENT de tabela `comentarios`
+--
+ALTER TABLE `comentarios`
+  MODIFY `id_resposta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `count_likes`
+--
+ALTER TABLE `count_likes`
+  MODIFY `id_count` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT de tabela `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `institutos`
+-- AUTO_INCREMENT de tabela `institutos`
 --
 ALTER TABLE `institutos`
   MODIFY `id_instituto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
 
 --
--- AUTO_INCREMENT for table `post`
+-- AUTO_INCREMENT de tabela `post`
 --
 ALTER TABLE `post`
-  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
+  MODIFY `id_post` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=360;
 
 --
--- AUTO_INCREMENT for table `registro_login`
+-- AUTO_INCREMENT de tabela `registro_login`
 --
 ALTER TABLE `registro_login`
-  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_login` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
--- AUTO_INCREMENT for table `reply`
+-- AUTO_INCREMENT de tabela `situacao_amizade`
 --
-ALTER TABLE `reply`
-  MODIFY `id_reply` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `situacao_amizade`
+  MODIFY `id_situacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
