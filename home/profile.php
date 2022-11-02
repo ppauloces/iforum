@@ -8,11 +8,9 @@ if(empty($_GET['id'])){
 }
 
 
-/*
-QUERY PARA VERIFICAÇÃO DE SEGURANÇA
+/* QUERY PARA VERIFICAÇÃO DE SEGURANÇA
 VAI VERIFICAR SE EXISTE O PERFIL, SE O CARA TENTAR ACESSAR E NÃO EXISTIR, IRA DESTRUIR A SESSÃO 
-AO ENTRAR NO LAÇO
-*/
+AO ENTRAR NO LAÇO */
 
 $buscaAluno = $pdo->prepare('SELECT * FROM alunos WHERE id_aluno = :id_aluno');
 $buscaAluno->bindParam(':id_aluno', $_GET['id'], PDO::PARAM_STR);
@@ -53,7 +51,7 @@ $row_verifica_amzd = $amizade->fetch(PDO::FETCH_ASSOC);
 
 foreach($resBuscaAluno1 as $alunoInfo){
    
-   if($alunoInfo['num_matricula_aluno'] === $colname_Usuario || $alunoInfo['name_user_aluno'] === $colname_Usuario){
+   if($alunoInfo['id_aluno'] === $usuarioID){
       $btnStatus = '<a class="pt-1px d-md-block" href="upd_profile.php?idupd='.$alunoInfo['id_aluno'].'">Editar Perfil</a>';
    }else{
       if($res_verifica_amzd == 0){

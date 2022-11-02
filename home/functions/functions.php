@@ -1,16 +1,25 @@
 <?php 
 
-function writeLog($string) {
-  $log_file = 'log.txt'; 
-  $string = strval($string);       
+function timing($time){
+  $time = time() - $time;
+  $time = ($time<1) ? 1 : $time;
+  $tokens = array(
+    31536000 => 'ano',
+    2592000 => 'mês',
+    604800 => 'semana',
+    86400 => 'dia',
+    3600 => 'hora',
+    60 => 'minuto',
+    1 => 'segundo'
+  );
 
-  if ($fh = @fopen($log_file, "a+")) {
-    fputs($fh, $string, strlen($string));
-    fclose($fh);
-    return true;
-  }
-  else {
-    return false;
+  foreach ($tokens as $unit => $text) {
+    if($time < $unit) continue;
+    $numberOfUnits = floor($time / $unit);
+    if($text == "segundo"){
+      return "agora mesmo";
+    }
+    return 'Há '.$numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
   }
 }
 
