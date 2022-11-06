@@ -183,7 +183,29 @@ foreach ($row_pubs1 as $pub) {
 				</div>
 				<div class="card-footer">
 					<?= $buttonLike ?>
-					<a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Up</a>
+					<div class="main">
+                <!-- Reaction system start -->
+                <div class="reaction-container"><!-- container div for reaction system -->
+                    <span class="reaction-btn"> <!-- Default like button -->
+                        <span class="reaction-btn-emo like-btn-default"></span> <!-- Default like button emotion-->
+                        <span class="reaction-btn-text">Reagir</span> <!-- Default like button text,(Like, wow, sad..) default:Like  -->
+                        <ul class="emojies-box"> <!-- Reaction buttons container-->
+                            <li class="emoji emo-like" data-reaction="Like"></li>
+                            <li class="emoji emo-love" data-reaction="Love"></li>
+                            <li class="emoji emo-haha" data-reaction="HaHa"></li>
+                            <li class="emoji emo-wow" data-reaction="Wow"></li>
+                            <li class="emoji emo-sad" data-reaction="Sad"></li>
+                            <li class="emoji emo-angry" data-reaction="Angry"></li>
+                        </ul>
+                    </span>
+					<div class="like-stat"> <!-- Like statistic container-->
+                        <span class="like-emo"> <!-- like emotions container -->
+                            <span class="like-btn-like"></span> <!-- given emotions like, wow, sad (default:Like) -->
+                        </span>
+                    </div>
+                </div>
+                <!-- Reaction system end -->
+            </div>
 					<div class="input-group mb-3 pt-2">
 						<?php 
 						if($res_verifica_amzd == 1){
@@ -302,4 +324,47 @@ foreach ($row_pubs1 as $pub) {
 					}
 				})
 			});
+		</script>
+		<script>
+			$(document).ready(function () {
+    $(".emoji").on("click", function () {
+        // Here we are getting the reaction which is tapped by using the data-reaction attribute defined in main page
+        var data_reaction = $(this).attr("data-reaction");
+        // Sending Ajax request in handler page to perform the database operations
+        $.ajax({
+            type: "POST",
+            url: "functions/like.php",
+            data: "data_reaction=" + data_reaction,
+            success: function (response) {
+                // This code will run after the Ajax is successful
+                $(".like-details").html("You, Knowband and 10k others");
+                $(".reaction-btn-emo").removeClass().addClass('reaction-btn-emo').addClass('like-btn-' + data_reaction.toLowerCase());
+                $(".reaction-btn-text").text(data_reaction).removeClass().addClass('reaction-btn-text').addClass('reaction-btn-text-' + data_reaction.toLowerCase()).addClass("active");
+
+                if (data_reaction == "Like")
+                    $(".like-emo").html('<span class="like-btn-like"></span>');
+                else
+                    $(".like-emo").html('<span class="like-btn-like"></span><span class="like-btn-' + data_reaction.toLowerCase() + '"></span>');
+            }
+        })
+    });
+
+    $(".reaction-btn-text").on("click", function () { // undo like click
+        if ($(this).hasClass("active")) {
+            // Sending Ajax request in handler page to perform the database operations
+            $.ajax({
+                type: "POST",
+                url: "functions/undo_like.php",
+                data: "",
+                success: function (response) {
+                    // Handle when the Ajax is successful
+                    $(".reaction-btn-text").text("Like").removeClass().addClass('reaction-btn-text');
+                    $(".reaction-btn-emo").removeClass().addClass('reaction-btn-emo').addClass("like-btn-default");
+                    $(".like-emo").html('<span class="like-btn-like"></span>');
+                    $(".like-details").html("Knowband and 1k others");
+                }
+            })
+        }
+    })
+});
 		</script>

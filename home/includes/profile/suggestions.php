@@ -1,5 +1,5 @@
 <?php 
-$verifica = $pdo->prepare("SELECT * FROM alunos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
+$verifica = $pdo->prepare("SELECT * FROM alunos,institutos WHERE num_matricula_aluno = :num_matricula_aluno OR name_user_aluno = :name_user_aluno");
 $verifica->bindParam(':num_matricula_aluno', $colname_Usuario);
 $verifica->bindParam(':name_user_aluno', $colname_Usuario);
 $verifica->execute();
@@ -10,7 +10,8 @@ $row_verifica = $verifica->fetch( PDO::FETCH_ASSOC );
 <div class="col-md-12 grid-margin">
 	<div class="card rounded">
 		<?php 
-		$buscaAluno = $pdo->prepare("SELECT * FROM alunos A, institutos I, estado E WHERE I.id_estado = :estado_id AND I.id_estado = E.id AND A.campus_aluno = I.nome_instituto");
+
+		$buscaAluno = $pdo->prepare("SELECT * FROM pega_estados WHERE id_estado = :estado_id ORDER BY id_estado DESC");
 		$buscaAluno->bindParam(':estado_id', $row_verifica['estado_aluno']);
 		$buscaAluno->execute();
 		$resBuscaAluno = $buscaAluno->fetchAll(PDO::FETCH_ASSOC);

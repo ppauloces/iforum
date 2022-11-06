@@ -14,7 +14,7 @@ $rowBuscaAluno = $buscaAluno->rowCount();
 
 if($_GET['idupd'] != $row_verifica['id_aluno']){
  session_destroy();
- header("Location: index.php");
+ header("Location: ../index.php");
 }
 
 $buscaPost = $pdo->prepare('SELECT * FROM post WHERE id_usuario = :id_aluno');

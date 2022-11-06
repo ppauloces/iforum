@@ -10,7 +10,7 @@ $countAmzd = $pdo->prepare("SELECT COUNT(*) FROM amizade AM, alunos A WHERE A.id
 $countAmzd->bindParam(':id_aluno_para', $usuarioID);
 $countAmzd->execute();
 $count = $countAmzd->fetchColumn(); 
-echo $count;
+
 
 foreach($resBuscaAluno as $sidebar){
 
